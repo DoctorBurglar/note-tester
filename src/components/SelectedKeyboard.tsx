@@ -44,7 +44,7 @@ const SelectedKeyboard: React.FC<ISelectedKeyboardProps> = ({
                   }}
                 />
                 <BlackKey
-                  onClick={() => setSelectedNote(note[0] + "#" + note[1])}
+                  onClick={() => setSelectedNote(note[0] + "s" + note[1])}
                 />
               </>
             )}

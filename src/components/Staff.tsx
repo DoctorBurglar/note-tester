@@ -130,22 +130,22 @@ const Staff: React.FC<{ selectedNote: string; selectedClef: string }> = ({
       <Flex transform={`translateY(${notePosition}) `} position="relative">
         <Box
           position="absolute"
-          top="-1.4rem"
+          top="-1.9rem"
           left="-3.5rem"
           transform="skewY(-10deg)"
-          display={selectedNote[1] === "#" ? "block" : "none"}
+          display={selectedNote[1] === "s" ? "block" : "none"}
         >
           <Box
-            borderRight="8px solid black"
-            borderLeft="8px solid black"
-            w={0.65 * lineHeightInt + "rem"}
-            h={2 * lineHeightInt + "rem"}
+            borderRight="6px solid black"
+            borderLeft="6px solid black"
+            w={0.6 * lineHeightInt + "rem"}
+            h={2.3 * lineHeightInt + "rem"}
           ></Box>
           <Box
             w={1.3 * lineHeightInt + "rem"}
             h={0.9 * lineHeightInt + "rem"}
             position="absolute"
-            top="1.6rem"
+            top="2rem"
             left="-.9rem"
             borderTop="12px solid black"
             borderBottom="12px solid black"
