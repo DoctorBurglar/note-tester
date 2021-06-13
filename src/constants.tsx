@@ -156,4 +156,7 @@ export const keyboardWidth = "85rem";
 
 const numberOfWhiteKeys = Object.keys(bassNotes).length;
 
-export const keyWidth = Number.parseFloat(keyboardWidth) / numberOfWhiteKeys;
+export const whiteKeyWidth =
+  Number.parseFloat(keyboardWidth) / numberOfWhiteKeys + "rem";
+
+export const blackKeyWidth = 0.7 * Number.parseFloat(whiteKeyWidth) + "rem";

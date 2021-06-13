@@ -1,7 +1,12 @@
 import * as React from "react";
 import { Flex, Box, Heading } from "@chakra-ui/react";
 import { WhiteKey, BlackKey } from "../styles";
-import { keyboardWidth, keyWidth, trebleNotes } from "../constants";
+import {
+  keyboardWidth,
+  whiteKeyWidth,
+  blackKeyWidth,
+  trebleNotes,
+} from "../constants";
 import { IKeyboardProps } from "../interfacesAndTypes";
 
 interface ISelectedKeyboardProps extends IKeyboardProps {
@@ -48,7 +53,7 @@ const SelectedKeyboard: React.FC<ISelectedKeyboardProps> = ({
                   }}
                 />
                 {ind === 0 ? (
-                  <BlackKey left={`calc((-0.7 * (${keyWidth}rem)) / 2)`}>
+                  <BlackKey left={`calc((-${blackKeyWidth} / 2))`}>
                     <Flex
                       position="relative"
                       h="100%"
@@ -98,7 +103,7 @@ const SelectedKeyboard: React.FC<ISelectedKeyboardProps> = ({
                       ? "lightblue"
                       : "",
                   }}
-                  left={`calc(${keyWidth}rem - ((0.7 * (${keyWidth}rem)) / 2))`}
+                  left={`calc(${whiteKeyWidth} - (${blackKeyWidth} / 2))`}
                 >
                   <Flex
                     position="absolute"
