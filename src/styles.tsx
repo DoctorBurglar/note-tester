@@ -17,7 +17,7 @@ export const BlackKey = styled(Box)`
   border-radius: 0 0 8px 8px;
   height: 65%;
   position: absolute;
-  left: calc(${keyWidth}rem - ((0.7 * (${keyWidth}rem)) / 2));
+
   top: 0;
   z-index: 5;
 `;

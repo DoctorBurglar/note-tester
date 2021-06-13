@@ -206,8 +206,8 @@ export const determineNotePosition = (
         notePosition = -(8.5 * lineHeightInt + positionAdjustment) + "rem";
         break;
       case bassNotes.G3:
-      case accidentals.Fs3:
-      case accidentals.Fb3:
+      case accidentals.Gs3:
+      case accidentals.Gb3:
         notePosition = -(8 * lineHeightInt + positionAdjustment) + "rem";
         break;
       case bassNotes.F3:
