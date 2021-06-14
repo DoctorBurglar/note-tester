@@ -4,6 +4,7 @@ import { WhiteKey, BlackKey } from "../styles";
 import { trebleNotes, blackKeyWidth, whiteKeyWidth } from "../constants";
 import Sharp from "../components/Sharp";
 import Flat from "../components/Flat";
+import LowestBlackKey from "../components/LowestBlackKey";
 
 type WhiteKeyWithBlackKeyProps = {
   note: string;
@@ -67,44 +68,13 @@ const WhiteKeyWithBlackKey: React.FC<WhiteKeyWithBlackKeyProps> = ({
       </WhiteKey>
 
       {note[0] !== "C" && note[0] !== "F" && ind === 0 ? (
-        <BlackKey left={`calc((-${blackKeyWidth} / 2))`}>
-          <Flex
-            position="relative"
-            h="100%"
-            zIndex="10"
-            justify="center"
-            align="center"
-            onClick={() => setSelectedNote(note[0] + "b" + note[1])}
-            overflow="hidden"
-            borderRadius="0 0 5px 5px"
-            style={
-              thisBlackKeyIsSelected(note, ind)
-                ? {
-                    backgroundColor: "lightblue",
-                    color: "black",
-                  }
-                : {}
-            }
-          >
-            <Heading
-              color={thisBlackKeyIsSelected(note, ind) ? "black" : "white"}
-              as="h1"
-              textAlign="center"
-              borderBottom={
-                thisBlackKeyIsSelected(note, ind) &&
-                selectedNote[1] === "b" &&
-                note[0] === selectedNote[0]
-                  ? "2px solid black"
-                  : "none"
-              }
-            >
-              <Flat
-                width={13}
-                fill={thisBlackKeyIsSelected(note, ind) ? "black" : "white"}
-              />
-            </Heading>
-          </Flex>
-        </BlackKey>
+        <LowestBlackKey
+          ind={ind}
+          note={note}
+          setSelectedNote={setSelectedNote}
+          selectedNote={selectedNote}
+          thisBlackKeyIsSelected={thisBlackKeyIsSelected}
+        />
       ) : null}
       <BlackKey
         style={{
