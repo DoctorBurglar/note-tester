@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Flex, Button } from "@chakra-ui/react";
-import { clefs, bassNotes, trebleNotes } from "../constants";
+import { clefs } from "../constants";
 import styled from "@emotion/styled";
 
 const StyledButton = styled(Button)`
@@ -15,7 +15,7 @@ const TeacherControls: React.FC<{
   setSelectedClef: React.Dispatch<React.SetStateAction<string>>;
   selectedClef: string;
   selectedNote: string;
-}> = ({ setSelectedNote, setSelectedClef, selectedClef, selectedNote }) => {
+}> = ({ setSelectedClef, selectedClef, selectedNote }) => {
   console.log(selectedNote);
 
   return (
@@ -38,36 +38,6 @@ const TeacherControls: React.FC<{
           Bass Clef
         </StyledButton>
       </Flex>
-      {/* <Flex
-        width="100%"
-        flexWrap="wrap"
-        margin="0 auto"
-        flexDirection="row-reverse"
-        justifyContent="flex-end"
-      >
-        {Object.keys(
-          selectedClef === clefs.BASS
-            ? bassNotes
-            : selectedClef === clefs.TREBLE
-            ? trebleNotes
-            : []
-        ).map((note) => {
-          return (
-            <Button
-              key={note}
-              padding=".5rem 1rem"
-              margin="1rem"
-              width="5rem"
-              fontSize="2rem"
-              backgroundColor={note === selectedNote ? "lightblue" : undefined}
-              borderRadius="5px"
-              onClick={() => setSelectedNote(note)}
-            >
-              {note}
-            </Button>
-          );
-        })}
-      </Flex> */}
     </Flex>
   );
 };
