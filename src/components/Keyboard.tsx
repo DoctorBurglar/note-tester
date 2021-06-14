@@ -1,6 +1,4 @@
-import { Flex, Box } from "@chakra-ui/react";
 import * as React from "react";
-import styled from "@emotion/styled";
 import { trebleNotes, bassNotes, clefs } from "../constants";
 import SelectedKeyboard from "./SelectedKeyboard";
 import { IKeyboardProps } from "../interfacesAndTypes";

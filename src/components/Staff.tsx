@@ -2,14 +2,18 @@ import * as React from "react";
 import styled from "@emotion/styled";
 import { Flex, Box } from "@chakra-ui/react";
 import { determineNotePosition } from "../helpers";
-import TrebleClef from "../assets/TrebleClef.svg";
-import BassClef from "../assets/BassClef.svg";
+import flat from "../assets/flat.svg";
+import sharp from "../assets/sharp.svg";
 import {
   clefs,
   lineHeightInt,
   lineHeight,
   positionAdjustment,
 } from "../constants";
+import TrebleClef from "../components/TrebleClef";
+import BassClef from "../components/BassClef";
+import Flat from "../components/Flat";
+import Sharp from "../components/Sharp";
 
 const StyledLedger = styled(Box)`
   min-height: ${lineHeight};
@@ -42,7 +46,7 @@ const Staff: React.FC<{ selectedNote: string; selectedClef: string }> = ({
       align="center"
       w="100%"
       position="relative"
-      marginTop="1rem"
+      marginTop="2.5rem"
     >
       <StyledLedger
         style={{
@@ -129,28 +133,31 @@ const Staff: React.FC<{ selectedNote: string; selectedClef: string }> = ({
       {/* This is the note*/}
       <Flex transform={`translateY(${notePosition}) `} position="relative">
         <Box
+          maxWidth="5rem"
+          objectFit="contain"
           position="absolute"
-          top="-1.4rem"
-          left="-3.5rem"
-          transform="skewY(-10deg)"
-          display={selectedNote[1] === "#" ? "block" : "none"}
+          top={-0.9 * lineHeightInt + "rem"}
+          left={-0.9 * lineHeightInt + "rem"}
+          display={selectedNote[1] === "b" ? "block" : "none"}
         >
-          <Box
-            borderRight="8px solid black"
-            borderLeft="8px solid black"
-            w={0.65 * lineHeightInt + "rem"}
-            h={2 * lineHeightInt + "rem"}
-          ></Box>
-          <Box
-            w={1.3 * lineHeightInt + "rem"}
-            h={0.9 * lineHeightInt + "rem"}
-            position="absolute"
-            top="1.6rem"
-            left="-.9rem"
-            borderTop="12px solid black"
-            borderBottom="12px solid black"
-          ></Box>
+          {/* <img src={flat} alt="flat sign" /> */}
+          <Flat width={11 * lineHeightInt} fill="black" />
         </Box>
+        <Box
+          position="absolute"
+          top={-0.65 * lineHeightInt + "rem"}
+          left={-1.26 * lineHeightInt + "rem"}
+          display={selectedNote[1] === "s" ? "block" : "none"}
+        >
+          {/* <img src={sharp} alt="sharp sign" /> */}
+          <Sharp
+            width={18 * lineHeightInt}
+            fill="black"
+            height={37 * lineHeightInt}
+          />{" "}
+          ;
+        </Box>
+
         <Box
           border={!notePosition ? "none" : "7px solid black"}
           w={1.6 * lineHeightInt + "rem"}
@@ -160,12 +167,23 @@ const Staff: React.FC<{ selectedNote: string; selectedClef: string }> = ({
       </Flex>
 
       {selectedClef === clefs.TREBLE ? (
-        <Box position="absolute" top="9.6rem" left="-1.5rem">
-          <img src={TrebleClef} alt="Treble Clef" />
+        <Box
+          position="absolute"
+          top={3.35 * lineHeightInt + "rem"}
+          left="-1.5rem"
+        >
+          <TrebleClef
+            width={4.6666666667 * lineHeightInt + "rem"}
+            fill="black"
+          />
         </Box>
       ) : selectedClef === clefs.BASS ? (
-        <Box position="absolute" top="9.8rem" left="-1.5rem">
-          <img src={BassClef} alt="Bass Clef" />
+        <Box
+          position="absolute"
+          top={3.1666666667 * lineHeightInt + "rem"}
+          left="-1.5rem"
+        >
+          <BassClef width={4.8 * lineHeightInt + "rem"} fill="black" />
         </Box>
       ) : null}
     </Flex>
