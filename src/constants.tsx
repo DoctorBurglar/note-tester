@@ -6,7 +6,7 @@ export enum clefs {
 // source of truth for line height and note height.  If changed position of treble and bass clefs have to be adjusted
 export const lineHeight = "3rem";
 
-export const lineHeightInt = Number.parseInt(lineHeight);
+export const lineHeightInt = Number.parseFloat(lineHeight);
 
 export const positionAdjustment = 0.2;
 

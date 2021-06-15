@@ -2,8 +2,6 @@ import * as React from "react";
 import styled from "@emotion/styled";
 import { Flex, Box } from "@chakra-ui/react";
 import { determineNotePosition } from "../helpers";
-import flat from "../assets/flat.svg";
-import sharp from "../assets/sharp.svg";
 import {
   clefs,
   lineHeightInt,
