@@ -70,6 +70,30 @@ export enum trebleNotes {
   A6 = "A6",
 }
 
+type accidentalsType = {
+  [key: string]: boolean;
+};
+
+const accidentals2: accidentalsType = {};
+
+for (let key in bassNotes) {
+  accidentals2[key[0] + "b" + key[1]] = true;
+  accidentals2[key[0] + "s" + key[1]] = true;
+}
+
+for (let key in trebleNotes) {
+  if (!accidentals2[key[0] + "b" + key[1]]) {
+    accidentals2[key[0] + "b" + key[1]] = true;
+  }
+  if (!accidentals2[key[0] + "s" + key[1]]) {
+    accidentals2[key[0] + "s" + key[1]] = true;
+  }
+}
+
+console.log(accidentals2);
+
+export const accidentals3 = accidentals2;
+
 export enum accidentals {
   Es1 = "Es1",
   Fs1 = "Fs1",
