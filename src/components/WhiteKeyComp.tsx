@@ -47,7 +47,7 @@ const WhiteKeyComp: React.FC<WhiteKeyCompProps> = ({
               overflow="hidden"
               borderRadius="0 0 5px 5px"
             >
-              {ind !== 0 ? (
+              {ind === 0 && isCOrF ? null : (
                 <Box
                   marginRight={
                     isBOrE ? `calc(0.11 * ${whiteKeyWidth})` : "none"
@@ -63,7 +63,7 @@ const WhiteKeyComp: React.FC<WhiteKeyCompProps> = ({
                 >
                   {children}
                 </Box>
-              ) : null}
+              )}
             </Flex>
           </>
         ) : null}
