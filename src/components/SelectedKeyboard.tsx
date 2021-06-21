@@ -2,17 +2,22 @@ import * as React from "react";
 import { Flex, Box } from "@chakra-ui/react";
 import { keyboardWidth } from "../constants";
 import { IKeyboardProps } from "../interfacesAndTypes";
-import WhiteKeyWithNoBlackKey from "./WhiteKeyWithNoBlackKey";
-import WhiteKeyWithBlackKey from "./WhiteKeyWithBlackKey";
+import WhiteKeyComp from "./WhiteKeyComp";
+import BlackKeyComp from "./BlackKeyComp";
+import LowestBlackKey from "./LowestBlackKey";
+import Flat from "./Flat";
+import Sharp from "./Sharp";
 
 interface ISelectedKeyboardProps extends IKeyboardProps {
   notes: string[];
+  displayingNotes: boolean;
 }
 
 const SelectedKeyboard: React.FC<ISelectedKeyboardProps> = ({
   notes,
   selectedNote,
   setSelectedNote,
+  displayingNotes,
 }) => {
   const handleFlat = (ind: number) => {
     console.log("made it here");
@@ -89,30 +94,48 @@ const SelectedKeyboard: React.FC<ISelectedKeyboardProps> = ({
       {notes.map((note, ind) => {
         return (
           <Box position="relative" key={note}>
-            {note[0] === "B" || note[0] === "E" ? (
-              <WhiteKeyWithNoBlackKey
-                handleWhiteFlat={handleWhiteFlat}
-                ind={ind}
-                note={note}
-                selectedNote={selectedNote}
-                setSelectedNote={setSelectedNote}
+            <WhiteKeyComp
+              note={note}
+              ind={ind}
+              handleWhiteAccidental={
+                note[0] === "B" || note[0] === "E"
+                  ? handleWhiteFlat
+                  : handleWhiteSharp
+              }
+              thisWhiteKeyIsSelected={thisWhiteKeyIsSelected}
+              selectedNote={selectedNote}
+              setSelectedNote={setSelectedNote}
+              displayingNotes={displayingNotes}
+            >
+              {note[0] === "B" || note[0] === "E" ? (
+                <Flat width={13} fill="black" />
+              ) : (
+                <Sharp fill="black" width={17} height={30} />
+              )}
+            </WhiteKeyComp>
+
+            {note[0] !== "B" && note[0] !== "E" ? (
+              <BlackKeyComp
                 thisBlackKeyIsSelected={thisBlackKeyIsSelected}
-                thisWhiteKeyIsSelected={thisWhiteKeyIsSelected}
-              />
-            ) : (
-              <WhiteKeyWithBlackKey
-                handleWhiteFlat={handleWhiteFlat}
-                ind={ind}
-                note={note}
-                selectedNote={selectedNote}
                 setSelectedNote={setSelectedNote}
-                thisBlackKeyIsSelected={thisBlackKeyIsSelected}
-                thisWhiteKeyIsSelected={thisWhiteKeyIsSelected}
-                handleFlat={handleFlat}
-                handleWhiteSharp={handleWhiteSharp}
+                selectedNote={selectedNote}
+                note={note}
+                ind={ind}
                 notes={notes}
+                handleFlat={handleFlat}
               />
-            )}
+            ) : null}
+
+            {/*Special case lowest black key */}
+            {note[0] !== "C" && note[0] !== "F" && ind === 0 ? (
+              <LowestBlackKey
+                ind={ind}
+                note={note}
+                setSelectedNote={setSelectedNote}
+                selectedNote={selectedNote}
+                thisBlackKeyIsSelected={thisBlackKeyIsSelected}
+              />
+            ) : null}
           </Box>
         );
       })}
