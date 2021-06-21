@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Flex, Button } from "@chakra-ui/react";
+import { Flex, Button, Checkbox } from "@chakra-ui/react";
 import { clefs } from "../constants";
 import styled from "@emotion/styled";
 
@@ -12,11 +12,16 @@ const StyledButton = styled(Button)`
 
 const TeacherControls: React.FC<{
   setSelectedNote: React.Dispatch<React.SetStateAction<string>>;
-  setSelectedClef: React.Dispatch<React.SetStateAction<string>>;
+  setSelectedClef: React.Dispatch<React.SetStateAction<clefs>>;
   selectedClef: string;
   selectedNote: string;
-}> = ({ setSelectedClef, selectedClef, selectedNote }) => {
+  setDisplayingNotes: React.Dispatch<React.SetStateAction<boolean>>;
+}> = ({ setSelectedClef, selectedClef, selectedNote, setDisplayingNotes }) => {
   console.log(selectedNote);
+
+  const handleCheck = (e: React.SyntheticEvent) => {
+    setDisplayingNotes((prevState) => !prevState);
+  };
 
   return (
     <Flex direction="column" width="100%" margin="2rem 0 1rem 0">
@@ -38,6 +43,9 @@ const TeacherControls: React.FC<{
           Bass Clef
         </StyledButton>
       </Flex>
+      <Checkbox alignSelf="center" onChange={handleCheck}>
+        Display Note Names
+      </Checkbox>
     </Flex>
   );
 };

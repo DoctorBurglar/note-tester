@@ -4,4 +4,5 @@ export interface IKeyboardProps {
   selectedClef: string;
   selectedNote: string;
   setSelectedNote: React.Dispatch<React.SetStateAction<string>>;
+  displayingNotes: boolean;
 }

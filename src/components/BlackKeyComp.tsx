@@ -1,8 +1,8 @@
 import * as React from "react";
 import { Box, Flex, Heading } from "@chakra-ui/react";
 import { BlackKey } from "../styles";
-import Flat from "../components/Flat";
-import Sharp from "../components/Sharp";
+import Flat from "./Flat";
+import Sharp from "./Sharp";
 import { whiteKeyWidth, blackKeyWidth } from "../constants";
 
 type BlackKeyCompProps = {

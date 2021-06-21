@@ -2,7 +2,7 @@ import * as React from "react";
 import { Flex, Heading } from "@chakra-ui/react";
 import { blackKeyWidth } from "../constants";
 import { BlackKey } from "../styles";
-import Flat from "../components/Flat";
+import Flat from "./Flat";
 
 type LowestBlackKeyProps = {
   selectedNote: string;

@@ -2,14 +2,16 @@ import React from "react";
 import "./App.css";
 import Staff from "./components/Staff";
 import TeacherControls from "./components/TeacherControls";
-import Keyboard from "./components/Keyboard";
+import { trebleNotes, bassNotes, clefs } from "./constants";
 import { Flex } from "@chakra-ui/react";
+import SelectedKeyboard from "./components/SelectedKeyboard";
 
 function App() {
   const [selectedNote, setSelectedNote] = React.useState("");
-  const [selectedClef, setSelectedClef] = React.useState("");
+  const [selectedClef, setSelectedClef] = React.useState(clefs.TREBLE);
+  const [displayingNotes, setDisplayingNotes] = React.useState(false);
 
-  console.log(selectedNote);
+  console.log(displayingNotes);
 
   return (
     <div className="App">
@@ -26,11 +28,18 @@ function App() {
           setSelectedClef={setSelectedClef}
           selectedClef={selectedClef}
           selectedNote={selectedNote}
+          setDisplayingNotes={setDisplayingNotes}
         />
-        <Keyboard
+        <SelectedKeyboard
+          notes={
+            selectedClef === clefs.TREBLE
+              ? Object.keys(trebleNotes)
+              : Object.keys(bassNotes)
+          }
           selectedClef={selectedClef}
           selectedNote={selectedNote}
           setSelectedNote={setSelectedNote}
+          displayingNotes={displayingNotes}
         />
       </Flex>
     </div>

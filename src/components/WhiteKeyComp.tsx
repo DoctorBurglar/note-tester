@@ -1,69 +1,84 @@
 import * as React from "react";
 import { WhiteKey } from "../styles";
-import { Flex, Box } from "@chakra-ui/react";
-import { whiteKeyWidth, trebleNotes } from "../constants";
+import { Flex, Box, Heading } from "@chakra-ui/react";
+import { whiteKeyWidth } from "../constants";
 
 type WhiteKeyCompProps = {
-  keyNames: "BE" | "CF";
   note: string;
   ind: number;
   selectedNote: string;
   setSelectedNote: React.Dispatch<React.SetStateAction<string>>;
   thisWhiteKeyIsSelected: (note: string, ind: number) => boolean;
   handleWhiteAccidental: (event: React.SyntheticEvent, ind: number) => void;
+  displayingNotes: boolean;
 };
 
 const WhiteKeyComp: React.FC<WhiteKeyCompProps> = ({
   children,
-  keyNames,
   note,
   ind,
   handleWhiteAccidental,
   thisWhiteKeyIsSelected,
   selectedNote,
   setSelectedNote,
+  displayingNotes,
 }) => {
-  const accidentalType = keyNames === "BE" ? "b" : "s";
+  const accidentalType = note[0] === "B" || note[0] === "E" ? "b" : "s";
+
+  const isBOrE = note[0] === "B" || note[0] === "E";
+
+  const isCOrF = note[0] === "C" || note[0] === "F";
 
   return (
-    <WhiteKey
-      onClick={() => setSelectedNote(note)}
-      style={{
-        border: note === trebleNotes.C4 ? "2px solid blue" : "",
-        backgroundColor: thisWhiteKeyIsSelected(note, ind) ? "lightblue" : "",
-      }}
-    >
-      {note[0] === keyNames[0] || note[0] === keyNames[1] ? (
-        <Flex
-          position="relative"
-          h="60%"
-          justify={keyNames === "BE" ? "flex-end" : "flex-start"}
-          align="center"
-          overflow="hidden"
-          borderRadius="0 0 5px 5px"
-        >
-          {ind !== 0 ? (
-            <Box
-              marginRight={
-                keyNames === "BE" ? `calc(0.11 * ${whiteKeyWidth})` : "none"
-              }
-              marginLeft={
-                keyNames === "CF" ? `calc(0.11 * ${whiteKeyWidth})` : "none"
-              }
-              onClick={(event) => handleWhiteAccidental(event, ind)}
-              borderBottom={
-                thisWhiteKeyIsSelected(note, ind) &&
-                selectedNote[1] === accidentalType
-                  ? "2px solid black"
-                  : ""
-              }
+    <>
+      <WhiteKey
+        onClick={() => setSelectedNote(note)}
+        style={{
+          backgroundColor: thisWhiteKeyIsSelected(note, ind) ? "lightblue" : "",
+        }}
+      >
+        {isBOrE || isCOrF ? (
+          <>
+            <Flex
+              position="relative"
+              h="60%"
+              justify={isBOrE ? "flex-end" : "flex-start"}
+              align="center"
+              overflow="hidden"
+              borderRadius="0 0 5px 5px"
             >
-              {children}
-            </Box>
-          ) : null}
+              {ind !== 0 ? (
+                <Box
+                  marginRight={
+                    isBOrE ? `calc(0.11 * ${whiteKeyWidth})` : "none"
+                  }
+                  marginLeft={isCOrF ? `calc(0.11 * ${whiteKeyWidth})` : "none"}
+                  onClick={(event) => handleWhiteAccidental(event, ind)}
+                  borderBottom={
+                    thisWhiteKeyIsSelected(note, ind) &&
+                    selectedNote[1] === accidentalType
+                      ? "2px solid black"
+                      : ""
+                  }
+                >
+                  {children}
+                </Box>
+              ) : null}
+            </Flex>
+          </>
+        ) : null}
+        <Flex flex="1" direction="column" justify="flex-end">
+          <Heading as="h1" textAlign="center">
+            {displayingNotes ? note[0] : ""}
+          </Heading>
         </Flex>
+      </WhiteKey>
+      {note === "C4" ? (
+        <Heading as="h1" textAlign="center" marginTop=".5rem">
+          M
+        </Heading>
       ) : null}
-    </WhiteKey>
+    </>
   );
 };
 
