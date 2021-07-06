@@ -1,7 +1,7 @@
 import * as React from "react";
 import styled from "@emotion/styled";
-import { Flex, Box } from "@chakra-ui/react";
-import { determineNotePosition } from "../helpers";
+import {Flex, Box} from "@chakra-ui/react";
+import {determineNotePosition} from "../helpers";
 import {
   clefs,
   lineHeightInt,
@@ -25,7 +25,7 @@ const StyledLine = styled(Box)`
   width: 100%;
 `;
 
-const Staff: React.FC<{ selectedNote: string; selectedClef: string }> = ({
+const Staff: React.FC<{selectedNote: string; selectedClef: string}> = ({
   selectedNote,
   selectedClef,
 }) => {
@@ -136,7 +136,7 @@ const Staff: React.FC<{ selectedNote: string; selectedClef: string }> = ({
           position="absolute"
           top={-0.9 * lineHeightInt + "rem"}
           left={-0.9 * lineHeightInt + "rem"}
-          display={selectedNote[1] === "b" ? "block" : "none"}
+          display={selectedNote && selectedNote[1] === "b" ? "block" : "none"}
         >
           {/* <img src={flat} alt="flat sign" /> */}
           <Flat width={11 * lineHeightInt} fill="black" />
@@ -145,7 +145,7 @@ const Staff: React.FC<{ selectedNote: string; selectedClef: string }> = ({
           position="absolute"
           top={-0.65 * lineHeightInt + "rem"}
           left={-1.26 * lineHeightInt + "rem"}
-          display={selectedNote[1] === "s" ? "block" : "none"}
+          display={selectedNote && selectedNote[1] === "s" ? "block" : "none"}
         >
           {/* <img src={sharp} alt="sharp sign" /> */}
           <Sharp
