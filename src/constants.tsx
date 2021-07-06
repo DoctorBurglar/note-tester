@@ -4,7 +4,7 @@ export enum clefs {
 }
 
 // source of truth for line height and note height.  If changed position of treble and bass clefs have to be adjusted
-export const lineHeight = "3rem";
+export const lineHeight = "2.3rem";
 
 export const lineHeightInt = Number.parseFloat(lineHeight);
 
@@ -68,6 +68,16 @@ export enum trebleNotes {
   F6 = "F6",
   G6 = "G6",
   A6 = "A6",
+}
+
+export enum studentKeyboard {
+  C = "C",
+  D = "D",
+  E = "E",
+  F = "F",
+  G = "G",
+  A = "A",
+  B = "B",
 }
 
 type accidentalsType = {

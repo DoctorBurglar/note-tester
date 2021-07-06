@@ -1,13 +1,13 @@
 import * as React from "react";
-import { Flex, Heading } from "@chakra-ui/react";
-import { blackKeyWidth } from "../constants";
-import { BlackKey } from "../styles";
+import {Flex, Heading} from "@chakra-ui/react";
+import {blackKeyWidth} from "../constants";
+import {BlackKey} from "../styles";
 import Flat from "./Flat";
 
 type LowestBlackKeyProps = {
   selectedNote: string;
   ind: number;
-  setSelectedNote: React.Dispatch<React.SetStateAction<string>>;
+  setSelectedNote: (note: string) => void;
   thisBlackKeyIsSelected: (note: string, ind: number) => boolean;
   note: string;
 };
