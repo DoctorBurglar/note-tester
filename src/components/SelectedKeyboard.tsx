@@ -14,7 +14,7 @@ interface ISelectedKeyboardProps extends IKeyboardProps {
   notes: string[];
   displayingNotes: boolean;
   isStudentKeyboard: boolean;
-  answerStatus?: string;
+  sessionId: string;
 }
 
 const SelectedKeyboard: React.FC<ISelectedKeyboardProps> = ({
@@ -23,7 +23,7 @@ const SelectedKeyboard: React.FC<ISelectedKeyboardProps> = ({
   setSelectedNote,
   displayingNotes,
   isStudentKeyboard,
-  answerStatus,
+  sessionId,
 }) => {
   const handleFlat = (ind: number) => {
     console.log("made it here");
@@ -106,6 +106,9 @@ const SelectedKeyboard: React.FC<ISelectedKeyboardProps> = ({
               thisWhiteKeyIsSelected={thisWhiteKeyIsSelected}
               setSelectedNote={setSelectedNote}
               displayingNotes={displayingNotes}
+              notes={notes}
+              isStudentKeyboard={isStudentKeyboard}
+              sessionId={sessionId}
             >
               {!isStudentKeyboard ? (
                 <WhiteKeyOverlay
@@ -137,7 +140,8 @@ const SelectedKeyboard: React.FC<ISelectedKeyboardProps> = ({
                 ind={ind}
                 setSelectedNote={setSelectedNote}
                 isStudentKeyboard={isStudentKeyboard}
-                answerStatus={answerStatus}
+                sessionId={sessionId}
+                notes={notes}
               >
                 {!isStudentKeyboard ? (
                   <BlackKeyOverlay

@@ -2,6 +2,7 @@ import * as React from "react";
 import {Flex, Button, Checkbox} from "@chakra-ui/react";
 import {clefs} from "../constants";
 import styled from "@emotion/styled";
+import {useSession} from "../hooks";
 
 const StyledButton = styled(Button)`
   font-size: 2rem;
@@ -10,17 +11,46 @@ const StyledButton = styled(Button)`
   padding: 0.5rem 1.5rem;
 `;
 
-const TeacherControls: React.FC<{
+interface teacherControlsProps {
   setSelectedNote: (note: string) => void;
   setSelectedClef: (clef: string) => void;
   selectedClef: string;
   selectedNote: string;
   setDisplayingNotes: React.Dispatch<React.SetStateAction<boolean>>;
-}> = ({setSelectedClef, selectedClef, selectedNote, setDisplayingNotes}) => {
+  sessionId: string;
+}
+
+const TeacherControls: React.FC<teacherControlsProps> = ({
+  setSelectedClef,
+  selectedClef,
+  selectedNote,
+  setDisplayingNotes,
+  sessionId,
+}) => {
   console.log(selectedNote);
+
+  const {sessionRef, sessionDoc} = useSession(sessionId);
 
   const handleCheck = (e: React.SyntheticEvent) => {
     setDisplayingNotes((prevState) => !prevState);
+  };
+
+  const handleLineMnemonic = () => {
+    sessionRef.update({
+      mnemonics: {
+        ...sessionDoc.mnemonics,
+        showLinesOnStaff: !sessionDoc.mnemonics.showLinesOnStaff,
+      },
+    });
+  };
+
+  const handleSpaceMnemonic = () => {
+    sessionRef.update({
+      mnemonics: {
+        ...sessionDoc.mnemonics,
+        showSpacesOnStaff: !sessionDoc.mnemonics.showSpacesOnStaff,
+      },
+    });
   };
 
   return (
@@ -43,9 +73,13 @@ const TeacherControls: React.FC<{
           Bass Clef
         </StyledButton>
       </Flex>
-      <Checkbox alignSelf="center" onChange={handleCheck}>
-        Display Note Names
-      </Checkbox>
+      <Flex>
+        <Checkbox alignSelf="center" onChange={handleCheck}>
+          Display Note Names
+        </Checkbox>
+        <Button onClick={handleLineMnemonic}>Line Mnemonic</Button>
+        <Button onClick={handleSpaceMnemonic}>Space Mnemonic</Button>
+      </Flex>
     </Flex>
   );
 };

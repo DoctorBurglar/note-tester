@@ -33,11 +33,11 @@ function NoteTester() {
   }, [sessionDoc, history, data.uid]);
 
   const handleSelectNote = (note: string) => {
-    sessionRef.update({selectedNote: note, answer: ""});
+    sessionRef.update({selectedNote: note, answer: "", answerStatus: ""});
   };
 
   const handleSelectClef = (clef: string) => {
-    sessionRef.update({selectedClef: clef});
+    sessionRef.update({selectedClef: clef, selectedNote: "", answer: ""});
   };
 
   return (
@@ -53,6 +53,7 @@ function NoteTester() {
         <Staff
           selectedNote={sessionDoc?.selectedNote}
           selectedClef={sessionDoc?.selectedClef}
+          sessionId={sessionId}
         />
 
         <TeacherControls
@@ -61,6 +62,7 @@ function NoteTester() {
           selectedClef={sessionDoc?.selectedClef}
           selectedNote={sessionDoc?.selectedNote}
           setDisplayingNotes={setDisplayingNotes}
+          sessionId={sessionId}
         />
         <SelectedKeyboard
           notes={
@@ -73,6 +75,7 @@ function NoteTester() {
           setSelectedNote={handleSelectNote}
           displayingNotes={displayingNotes}
           isStudentKeyboard={false}
+          sessionId={sessionId}
         />
       </Flex>
     </div>
