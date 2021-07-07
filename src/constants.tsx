@@ -3,6 +3,11 @@ export enum clefs {
   BASS = "BASS",
 }
 
+export enum answerStatus {
+  CORRECT = "CORRECT",
+  INCORRECT = "INCORRECT",
+}
+
 // source of truth for line height and note height.  If changed position of treble and bass clefs have to be adjusted
 export const lineHeight = "2.3rem";
 

@@ -1,6 +1,6 @@
 import * as React from "react";
 import styled from "@emotion/styled";
-import {Flex, Box} from "@chakra-ui/react";
+import {Flex, Box, Heading} from "@chakra-ui/react";
 import {determineNotePosition} from "../helpers";
 import {
   clefs,
@@ -12,6 +12,7 @@ import TrebleClef from "../components/TrebleClef";
 import BassClef from "../components/BassClef";
 import Flat from "../components/Flat";
 import Sharp from "../components/Sharp";
+import {useSession} from "../hooks";
 
 const StyledLedger = styled(Box)`
   min-height: ${lineHeight};
@@ -25,10 +26,23 @@ const StyledLine = styled(Box)`
   width: 100%;
 `;
 
-const Staff: React.FC<{selectedNote: string; selectedClef: string}> = ({
-  selectedNote,
-  selectedClef,
-}) => {
+const StaffLineMnemonic = styled(Heading)`
+  position: absolute;
+  font-size: 3rem;
+  top: -2.4rem;
+`;
+
+const StaffSpaceMnemonic = styled(Heading)`
+  position: absolute;
+  font-size: 3rem;
+  top: -1rem;
+`;
+
+const Staff: React.FC<{
+  selectedNote: string;
+  selectedClef: string;
+  sessionId: string;
+}> = ({selectedNote, selectedClef, sessionId}) => {
   // This is the translateY value that positions the note
 
   let notePosition = determineNotePosition(selectedNote, selectedClef);
@@ -36,7 +50,7 @@ const Staff: React.FC<{selectedNote: string; selectedClef: string}> = ({
   // This value determines if ledger lines are needed
   const ledgerValue = Number.parseFloat(notePosition);
 
-  console.log(ledgerValue);
+  const {sessionDoc} = useSession(sessionId);
 
   return (
     <Flex
@@ -53,7 +67,7 @@ const Staff: React.FC<{selectedNote: string; selectedClef: string}> = ({
               ? "5px solid black"
               : "none",
         }}
-      />
+      ></StyledLedger>
 
       <StyledLedger
         style={{
@@ -82,15 +96,65 @@ const Staff: React.FC<{selectedNote: string; selectedClef: string}> = ({
         }}
       />
 
-      <StyledLine />
+      <StyledLine position="relative">
+        {sessionDoc?.mnemonics.showLinesOnStaff ? (
+          <StaffLineMnemonic as="h2" left="26%">
+            {selectedClef === "TREBLE" ? "Fine" : "Always"}
+          </StaffLineMnemonic>
+        ) : null}
+        {sessionDoc?.mnemonics.showSpacesOnStaff ? (
+          <StaffSpaceMnemonic as="h2" left="77%">
+            {selectedClef === "TREBLE" ? "E" : "Grass"}
+          </StaffSpaceMnemonic>
+        ) : null}
+      </StyledLine>
 
-      <StyledLine />
+      <StyledLine position="relative">
+        {sessionDoc?.mnemonics.showLinesOnStaff ? (
+          <StaffLineMnemonic as="h2" left="22%">
+            {selectedClef === "TREBLE" ? "Does" : "Fine"}
+          </StaffLineMnemonic>
+        ) : null}
+        {sessionDoc?.mnemonics.showSpacesOnStaff ? (
+          <StaffSpaceMnemonic as="h2" left="73%">
+            {selectedClef === "TREBLE" ? "C" : "Eat"}
+          </StaffSpaceMnemonic>
+        ) : null}
+      </StyledLine>
 
-      <StyledLine />
+      <StyledLine position="relative">
+        {sessionDoc?.mnemonics.showLinesOnStaff ? (
+          <StaffLineMnemonic as="h2" left="18%">
+            {selectedClef === "TREBLE" ? "Boy" : "Do"}
+          </StaffLineMnemonic>
+        ) : null}
+        {sessionDoc?.mnemonics.showSpacesOnStaff ? (
+          <StaffSpaceMnemonic as="h2" left="69%">
+            {selectedClef === "TREBLE" ? "A" : "Cows"}
+          </StaffSpaceMnemonic>
+        ) : null}
+      </StyledLine>
 
-      <StyledLine />
+      <StyledLine position="relative">
+        {sessionDoc?.mnemonics.showLinesOnStaff ? (
+          <StaffLineMnemonic as="h2" left="14%">
+            {selectedClef === "TREBLE" ? "Good" : "Boys"}
+          </StaffLineMnemonic>
+        ) : null}
+        {sessionDoc?.mnemonics.showSpacesOnStaff ? (
+          <StaffSpaceMnemonic as="h2" left="65%">
+            {selectedClef === "TREBLE" ? "F" : "All"}
+          </StaffSpaceMnemonic>
+        ) : null}
+      </StyledLine>
 
-      <StyledLine />
+      <StyledLine position="relative">
+        {sessionDoc?.mnemonics.showLinesOnStaff ? (
+          <StaffLineMnemonic as="h2" left="10%">
+            {selectedClef === "TREBLE" ? "Every" : "Good"}
+          </StaffLineMnemonic>
+        ) : null}
+      </StyledLine>
 
       <StyledLedger
         style={{

@@ -1,6 +1,6 @@
 import React from "react";
 import Staff from "./Staff";
-import {trebleNotes, bassNotes, clefs} from "../constants";
+import {trebleNotes, bassNotes, clefs, answerStatus} from "../constants";
 import {Flex, Heading, Button} from "@chakra-ui/react";
 import SelectedKeyboard from "./SelectedKeyboard";
 import {SignOut} from "./SignOut";
@@ -16,21 +16,13 @@ interface IParams {
 function GuestNoteTester() {
   // const [answer, setAnswer] = React.useState("");
   const [displayingNotes, setDisplayingNotes] = React.useState(false);
-  const [answerStatus, setAnswerStatus] = React.useState("");
-
-  console.log(displayingNotes);
+  // const [answerStatus, setAnswerStatus] = React.useState("");
 
   const {sessionId} = useParams<IParams>();
   const history = useHistory();
 
   const {data} = useUser();
   const {sessionRef, sessionDoc} = useSession(sessionId);
-
-  React.useEffect(() => {
-    if (sessionDoc?.answer === "") {
-      setAnswerStatus("");
-    }
-  }, [sessionDoc?.answer]);
 
   const notes =
     sessionDoc?.selectedClef === clefs.TREBLE
@@ -43,26 +35,31 @@ function GuestNoteTester() {
     }
   }, [sessionDoc, data, history]);
 
-  const handleAnswer = (note: string, status: "CORRECT" | "INCORRECT") => {
-    if (status === "CORRECT") {
-      setAnswerStatus("Correct");
+  const handleAnswer = (
+    note: string,
+    status: answerStatus.CORRECT | answerStatus.INCORRECT
+  ) => {
+    if (status === answerStatus.CORRECT) {
+      // setAnswerStatus("CORRECT");
       sessionRef.update({
         answer: note,
         identifiedNotes: sessionDoc.identifiedNotes + 1,
         totalNotes: sessionDoc.totalNotes + 1,
+        answerStatus: "CORRECT",
       });
     } else {
-      setAnswerStatus("Incorrect");
+      // setAnswerStatus("INCORRECT");
       sessionRef.update({
         answer: note,
         totalNotes: sessionDoc.totalNotes + 1,
+        answerStatus: "INCORRECT",
       });
     }
   };
 
   const handleSelectNote = (note: string) => {
-    if (sessionDoc.answer !== "") {
-      return console.log(note);
+    if (sessionDoc.answer !== "" || sessionDoc.selectedNote === "") {
+      return;
     }
     const noteWithoutSharp = note[1] === "s" ? note[0] + note[2] : note;
     const nextNote = notes[notes.indexOf(noteWithoutSharp) + 1];
@@ -71,21 +68,21 @@ function GuestNoteTester() {
 
     sessionRef.update({answer: note});
     if (note === selectedNote) {
-      return handleAnswer(note, "CORRECT");
+      return handleAnswer(note, answerStatus.CORRECT);
     } else if (note[1] === "s") {
       if (nextNote[0] + "b" + nextNote[1] === selectedNote) {
-        return handleAnswer(note, "CORRECT");
+        return handleAnswer(note, answerStatus.CORRECT);
       }
     } else if (note[0] === "E" || note[0] === "B") {
       if (nextNote[0] + "b" + nextNote[1] === selectedNote) {
-        return handleAnswer(note, "CORRECT");
+        return handleAnswer(note, answerStatus.CORRECT);
       }
     } else if (note[0] === "C" || note[0] === "F") {
       if (prevNote[0] + "s" + prevNote[1] === selectedNote) {
-        return handleAnswer(note, "CORRECT");
+        return handleAnswer(note, answerStatus.CORRECT);
       }
     }
-    handleAnswer(note, "INCORRECT");
+    handleAnswer(note, answerStatus.INCORRECT);
   };
 
   const handleResetScore = () => {
@@ -105,6 +102,7 @@ function GuestNoteTester() {
         <Staff
           selectedNote={sessionDoc?.selectedNote}
           selectedClef={sessionDoc?.selectedClef}
+          sessionId={sessionId}
         />
         <Flex justifyContent="space-between">
           <Flex justifyContent="space-between" w="30%">
@@ -127,7 +125,7 @@ function GuestNoteTester() {
           </Flex>
 
           <Heading as="h2" marginLeft="2rem">
-            {answerStatus}
+            {sessionDoc?.answerStatus}
           </Heading>
         </Flex>
         <SelectedKeyboard
@@ -137,7 +135,7 @@ function GuestNoteTester() {
           setSelectedNote={handleSelectNote}
           displayingNotes={displayingNotes}
           isStudentKeyboard={true}
-          answerStatus={answerStatus}
+          sessionId={sessionId}
         />
       </Flex>
     </div>

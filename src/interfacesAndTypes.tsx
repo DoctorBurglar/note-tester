@@ -25,6 +25,7 @@ export interface ISession {
   selectedNote: string;
   answer: string;
   sessionCode: string;
+  answerStatus: string;
 }
 
 interface IMnemonics {
