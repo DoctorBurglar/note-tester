@@ -75,7 +75,7 @@ export enum trebleNotes {
   A6 = "A6",
 }
 
-export enum studentKeyboard {
+export enum guestKeyboard {
   C = "C",
   D = "D",
   E = "E",

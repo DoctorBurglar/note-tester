@@ -1,7 +1,6 @@
 import * as React from "react";
 import {Flex, Box} from "@chakra-ui/react";
 import {keyboardWidth} from "../constants";
-import {IKeyboardProps} from "../interfacesAndTypes";
 import WhiteKeyComp from "./WhiteKeyComp";
 import BlackKeyComp from "./BlackKeyComp";
 import LowestBlackKey from "./LowestBlackKey";
@@ -9,22 +8,24 @@ import Flat from "./Flat";
 import Sharp from "./Sharp";
 import BlackKeyOverlay from "./BlackKeyOverlay";
 import WhiteKeyOverlay from "./WhiteKeyOverlay";
+import {useSession} from "../hooks";
 
-interface ISelectedKeyboardProps extends IKeyboardProps {
+interface IKeyboardProps {
   notes: string[];
-  displayingNotes: boolean;
-  isStudentKeyboard: boolean;
+  isGuestKeyboard: boolean;
   sessionId: string;
+  selectedClef: string;
+  setSelectedNote: (note: string) => void;
 }
 
-const SelectedKeyboard: React.FC<ISelectedKeyboardProps> = ({
+const Keyboard: React.FC<IKeyboardProps> = ({
   notes,
-  selectedNote,
   setSelectedNote,
-  displayingNotes,
-  isStudentKeyboard,
+  isGuestKeyboard,
   sessionId,
 }) => {
+  const {sessionDoc} = useSession(sessionId);
+
   const handleFlat = (ind: number) => {
     console.log("made it here");
     if (notes.length - 1 <= ind) {
@@ -33,14 +34,18 @@ const SelectedKeyboard: React.FC<ISelectedKeyboardProps> = ({
   };
 
   const thisWhiteKeyIsSelected = (note: string, ind: number) => {
+    let compareNote = sessionDoc?.selectedNote;
+    if (isGuestKeyboard) {
+      compareNote = sessionDoc?.answer;
+    }
     let keyIsSelected = false;
     // if natural white key
-    if (note === selectedNote) {
+    if (note === compareNote) {
       keyIsSelected = true;
     }
     // if Cb or Fb
     if (note[0] === "B" || (note[0] === "E" && ind < notes.length - 1)) {
-      if (notes[ind + 1][0] + "b" + notes[ind + 1][1] === selectedNote) {
+      if (notes[ind + 1][0] + "b" + notes[ind + 1][1] === compareNote) {
         keyIsSelected = true;
       }
     }
@@ -48,7 +53,7 @@ const SelectedKeyboard: React.FC<ISelectedKeyboardProps> = ({
     if (note[0] === "C" || (note[0] === "F" && ind > 0)) {
       if (
         ind > 0 &&
-        notes[ind - 1][0] + "s" + notes[ind - 1][1] === selectedNote
+        notes[ind - 1][0] + "s" + notes[ind - 1][1] === compareNote
       ) {
         keyIsSelected = true;
       }
@@ -57,20 +62,24 @@ const SelectedKeyboard: React.FC<ISelectedKeyboardProps> = ({
   };
 
   const thisBlackKeyIsSelected = (note: string, ind: number) => {
+    let compareNote = sessionDoc?.selectedNote;
+    if (isGuestKeyboard) {
+      compareNote = sessionDoc?.answer;
+    }
     let keyIsSelected = false;
     // if note is a selected sharp
-    if (note[0] + "s" + note[1] === selectedNote) {
+    if (note[0] + "s" + note[1] === compareNote) {
       keyIsSelected = true;
     }
     // if note is the lowest key and a flat
-    if (ind === 0 && note[0] + "b" + note[1] === selectedNote) {
+    if (ind === 0 && note[0] + "b" + note[1] === compareNote) {
       keyIsSelected = true;
     }
     // if the note is any other black key flat
     if (
       ind < notes.length - 1 &&
       !thisWhiteKeyIsSelected(note, ind) &&
-      notes[ind + 1][0] + "b" + notes[ind + 1][1] === selectedNote
+      notes[ind + 1][0] + "b" + notes[ind + 1][1] === compareNote
     ) {
       keyIsSelected = true;
     }
@@ -105,22 +114,21 @@ const SelectedKeyboard: React.FC<ISelectedKeyboardProps> = ({
               ind={ind}
               thisWhiteKeyIsSelected={thisWhiteKeyIsSelected}
               setSelectedNote={setSelectedNote}
-              displayingNotes={displayingNotes}
               notes={notes}
-              isStudentKeyboard={isStudentKeyboard}
+              isGuestKeyboard={isGuestKeyboard}
               sessionId={sessionId}
             >
-              {!isStudentKeyboard ? (
+              {!isGuestKeyboard ? (
                 <WhiteKeyOverlay
                   handleWhiteAccidental={
                     note[0] === "B" || note[0] === "E"
                       ? handleWhiteFlat
                       : handleWhiteSharp
                   }
-                  displayingNotes={displayingNotes}
+                  displayingNotes={sessionDoc?.displayingNotes}
                   ind={ind}
                   note={note}
-                  selectedNote={selectedNote}
+                  selectedNote={sessionDoc?.selectedNote}
                   thisWhiteKeyIsSelected={thisWhiteKeyIsSelected}
                 >
                   {" "}
@@ -139,18 +147,18 @@ const SelectedKeyboard: React.FC<ISelectedKeyboardProps> = ({
                 note={note}
                 ind={ind}
                 setSelectedNote={setSelectedNote}
-                isStudentKeyboard={isStudentKeyboard}
+                isGuestKeyboard={isGuestKeyboard}
                 sessionId={sessionId}
                 notes={notes}
               >
-                {!isStudentKeyboard ? (
+                {!isGuestKeyboard ? (
                   <BlackKeyOverlay
                     handleFlat={handleFlat}
                     ind={ind}
                     note={note}
                     thisBlackKeyIsSelected={thisBlackKeyIsSelected}
                     notes={notes}
-                    selectedNote={selectedNote}
+                    selectedNote={sessionDoc?.selectedNote}
                     setSelectedNote={setSelectedNote}
                   />
                 ) : null}
@@ -163,7 +171,7 @@ const SelectedKeyboard: React.FC<ISelectedKeyboardProps> = ({
                 ind={ind}
                 note={note}
                 setSelectedNote={setSelectedNote}
-                selectedNote={selectedNote}
+                selectedNote={sessionDoc?.selectedNote}
                 thisBlackKeyIsSelected={thisBlackKeyIsSelected}
               />
             ) : null}
@@ -174,4 +182,4 @@ const SelectedKeyboard: React.FC<ISelectedKeyboardProps> = ({
   );
 };
 
-export default SelectedKeyboard;
+export default Keyboard;

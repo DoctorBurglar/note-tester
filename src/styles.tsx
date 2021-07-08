@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
-import { Box, Flex } from "@chakra-ui/react";
-import { whiteKeyWidth, blackKeyWidth } from "./constants";
+import {Box, Flex} from "@chakra-ui/react";
+import {whiteKeyWidth, blackKeyWidth} from "./constants";
 
 export const WhiteKey = styled(Flex)`
   flex-direction: column;
@@ -10,11 +10,11 @@ export const WhiteKey = styled(Flex)`
   height: 100%;
   border-radius: 0 0 8px 8px;
 
-  & > * {
+  & > .accidentals {
     display: none !important;
   }
 
-  &:hover > * {
+  &:hover > .accidentals {
     display: flex !important;
   }
 `;

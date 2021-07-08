@@ -7,7 +7,7 @@ const GuestScore: React.FC<{sessionId: string}> = ({sessionId}) => {
 
   return (
     <Flex w="28%" justify="space-between" align="center">
-      <Heading as="h2">StudentScore:</Heading>
+      <Heading as="h2">Score:</Heading>
       <Heading as="h2">{`${sessionDoc?.identifiedNotes} / ${sessionDoc?.totalNotes}`}</Heading>
       <Heading as="h2">
         {sessionDoc?.totalNotes === 0

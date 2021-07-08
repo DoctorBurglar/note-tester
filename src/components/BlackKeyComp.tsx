@@ -8,7 +8,7 @@ type BlackKeyCompProps = {
   ind: number;
   thisBlackKeyIsSelected: (note: string, ind: number) => boolean;
   setSelectedNote: (note: string) => void;
-  isStudentKeyboard: boolean;
+  isGuestKeyboard: boolean;
   sessionId: string;
   notes: string[];
 };
@@ -17,7 +17,7 @@ const BlackKeyComp: React.FC<BlackKeyCompProps> = ({
   thisBlackKeyIsSelected,
   note,
   ind,
-  isStudentKeyboard,
+  isGuestKeyboard,
   setSelectedNote,
   sessionId,
   notes,
@@ -32,10 +32,11 @@ const BlackKeyComp: React.FC<BlackKeyCompProps> = ({
     }
 
     let backgroundColor = "";
-    if (isStudentKeyboard) {
+    if (isGuestKeyboard) {
+      console.log(isGuestKeyboard);
       if (
         thisBlackKeyIsSelected(note, ind) &&
-        sessionDoc.answerStatus === answerStatus.CORRECT
+        sessionDoc?.answerStatus === answerStatus.CORRECT
       ) {
         backgroundColor = "lightblue";
       } else if (
@@ -43,12 +44,13 @@ const BlackKeyComp: React.FC<BlackKeyCompProps> = ({
         (note[0] + "s" + note[1] === sessionDoc?.selectedNote ||
           nextNote[0] + "b" + nextNote[1] === sessionDoc?.selectedNote)
       ) {
-        console.log(isStudentKeyboard, sessionDoc?.answerStatus);
+        console.log("2");
         backgroundColor = "lightblue";
       } else if (
         thisBlackKeyIsSelected(note, ind) &&
         sessionDoc?.answerStatus === answerStatus.INCORRECT
       ) {
+        console.log("3");
         backgroundColor = "red";
       }
     } else if (
@@ -78,7 +80,7 @@ const BlackKeyComp: React.FC<BlackKeyCompProps> = ({
         backgroundColor: determineBackgroundColor(),
       }}
       left={`calc(${whiteKeyWidth} - (${blackKeyWidth} / 2))`}
-      onClick={isStudentKeyboard ? handleClick : () => {}}
+      onClick={isGuestKeyboard ? handleClick : () => {}}
     >
       {children}
     </BlackKey>
