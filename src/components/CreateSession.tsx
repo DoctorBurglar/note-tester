@@ -86,7 +86,6 @@ const CreateSession: React.FC = () => {
         await userRef.update({
           guestSessionId: sessionToJoinId,
         });
-        console.log(sessionToJoinId);
         history.push(`/guest-session/${sessionToJoinId}`);
       } else {
         console.log("bad code");

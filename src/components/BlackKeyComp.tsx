@@ -33,7 +33,6 @@ const BlackKeyComp: React.FC<BlackKeyCompProps> = ({
 
     let backgroundColor = "";
     if (isGuestKeyboard) {
-      console.log(isGuestKeyboard);
       if (
         thisBlackKeyIsSelected(note, ind) &&
         sessionDoc?.answerStatus === answerStatus.CORRECT
@@ -44,13 +43,11 @@ const BlackKeyComp: React.FC<BlackKeyCompProps> = ({
         (note[0] + "s" + note[1] === sessionDoc?.selectedNote ||
           nextNote[0] + "b" + nextNote[1] === sessionDoc?.selectedNote)
       ) {
-        console.log("2");
         backgroundColor = "lightblue";
       } else if (
         thisBlackKeyIsSelected(note, ind) &&
         sessionDoc?.answerStatus === answerStatus.INCORRECT
       ) {
-        console.log("3");
         backgroundColor = "red";
       }
     } else if (
@@ -71,7 +68,6 @@ const BlackKeyComp: React.FC<BlackKeyCompProps> = ({
 
   const handleClick = () => {
     setSelectedNote(note[0] + "s" + note[1]);
-    console.log(thisBlackKeyIsSelected(note, ind));
   };
 
   return (

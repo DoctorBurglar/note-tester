@@ -27,7 +27,6 @@ const Keyboard: React.FC<IKeyboardProps> = ({
   const {sessionDoc} = useSession(sessionId);
 
   const handleFlat = (ind: number) => {
-    console.log("made it here");
     if (notes.length - 1 <= ind) {
       return;
     } else setSelectedNote(notes[ind + 1][0] + "b" + notes[ind + 1][1]);

@@ -17,8 +17,6 @@ function HostNoteTester() {
   const {sessionId} = useParams<IParams>();
   const history = useHistory();
 
-  console.log(sessionId);
-
   const {data} = useUser();
   const {sessionRef, sessionDoc} = useSession(sessionId);
 
