@@ -54,6 +54,9 @@ const CreateSession: React.FC = () => {
       }
 
       const newSession = await sessionsRef.add({
+        answer: "",
+        answerStatus: "",
+        displayingNotes: false,
         sessionCode: newSessionCode,
         hostId: data.uid,
         guestId: "",

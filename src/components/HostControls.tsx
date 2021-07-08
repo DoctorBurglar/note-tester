@@ -4,20 +4,13 @@ import {clefs} from "../constants";
 import styled from "@emotion/styled";
 import {useSession} from "../hooks";
 import GuestScore from "./GuestScore";
+import {StyledButtonSmall} from "../styles";
 
 const StyledButtonLarge = styled(Button)`
   font-size: 2rem;
   margin: 0 1rem;
   border-radius: 5px;
   padding: 0.5rem 1.5rem;
-  cursor: pointer;
-`;
-
-const StyledButtonSmall = styled(Button)`
-  font-size: 1rem;
-  margin: 0 0.3rem;
-  border-radius: 5px;
-  padding: 0.3rem 1rem;
   cursor: pointer;
 `;
 
@@ -32,10 +25,6 @@ const HostControls: React.FC<hostControlsProps> = ({
   sessionId,
 }) => {
   const {sessionRef, sessionDoc} = useSession(sessionId);
-
-  // const handleCheck = (e: React.SyntheticEvent) => {
-  //   setDisplayingNotes((prevState) => !prevState);
-  // };
 
   const handleLineMnemonic = () => {
     sessionRef.update({
@@ -55,20 +44,13 @@ const HostControls: React.FC<hostControlsProps> = ({
     });
   };
 
-  const handleResetScore = () => {
-    sessionRef.update({
-      identifiedNotes: 0,
-      totalNotes: 0,
-    });
-  };
-
   const handleDisplayNotes = () => [
     sessionRef.update({displayingNotes: !sessionDoc?.displayingNotes}),
   ];
 
   return (
     <>
-      <GuestScore sessionId={sessionId} />
+      <GuestScore sessionId={sessionId} isHost />
       <Flex justifyContent="center" marginBottom="1rem" w="40%">
         <StyledButtonLarge
           onClick={() => setSelectedClef(clefs.TREBLE)}
@@ -107,7 +89,6 @@ const HostControls: React.FC<hostControlsProps> = ({
         >
           Spaces
         </StyledButtonSmall>
-        <StyledButtonSmall onClick={handleResetScore}>Reset</StyledButtonSmall>
       </Flex>
     </>
   );

@@ -2,6 +2,7 @@ import * as React from "react";
 import {BlackKey} from "../styles";
 import {whiteKeyWidth, blackKeyWidth, answerStatus} from "../constants";
 import {useSession} from "../hooks";
+import {Heading, Flex} from "@chakra-ui/react";
 
 type BlackKeyCompProps = {
   note: string;
@@ -54,7 +55,7 @@ const BlackKeyComp: React.FC<BlackKeyCompProps> = ({
       note[0] + "s" + note[1] === sessionDoc?.answer &&
       thisBlackKeyIsSelected(note, ind)
     ) {
-      backgroundColor = "green";
+      backgroundColor = "lightblue";
     } else if (thisBlackKeyIsSelected(note, ind)) {
       backgroundColor = "lightblue";
     } else if (
@@ -79,6 +80,20 @@ const BlackKeyComp: React.FC<BlackKeyCompProps> = ({
       onClick={isGuestKeyboard ? handleClick : () => {}}
     >
       {children}
+      {!isGuestKeyboard &&
+      thisBlackKeyIsSelected(note, ind) &&
+      sessionDoc?.answerStatus === answerStatus.CORRECT ? (
+        <Flex height="100%" align="flex-end" justify="center">
+          <Heading
+            as="h2"
+            color="white"
+            fontSize="2.5rem"
+            transform="translateY(1.5rem)"
+          >
+            &#10003;
+          </Heading>
+        </Flex>
+      ) : null}
     </BlackKey>
   );
 };
