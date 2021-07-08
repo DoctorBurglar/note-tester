@@ -28,33 +28,31 @@ const WhiteKeyOverlay: React.FC<WhiteKeyOverlayProps> = ({
   return (
     <>
       {isBOrE || isCOrF ? (
-        <>
-          <Flex
-            position="relative"
-            h="60%"
-            justify={isBOrE ? "flex-end" : "flex-start"}
-            align="center"
-            overflow="hidden"
-            borderRadius="0 0 5px 5px"
-            className="accidentals"
-          >
-            {ind === 0 && isCOrF ? null : (
-              <Box
-                marginRight={isBOrE ? `calc(0.11 * ${whiteKeyWidth})` : "none"}
-                marginLeft={isCOrF ? `calc(0.11 * ${whiteKeyWidth})` : "none"}
-                onClick={(event) => handleWhiteAccidental(event, ind)}
-                borderBottom={
-                  thisWhiteKeyIsSelected(note, ind) &&
-                  selectedNote[1] === accidentalType
-                    ? "2px solid black"
-                    : ""
-                }
-              >
-                {children}
-              </Box>
-            )}
-          </Flex>
-        </>
+        <Flex
+          position="relative"
+          h="60%"
+          justify={isBOrE ? "flex-end" : "flex-start"}
+          align="center"
+          overflow="hidden"
+          borderRadius="0 0 5px 5px"
+          className="accidentals"
+        >
+          {ind === 0 && isCOrF ? null : (
+            <Box
+              marginRight={isBOrE ? `calc(0.11 * ${whiteKeyWidth})` : "none"}
+              marginLeft={isCOrF ? `calc(0.11 * ${whiteKeyWidth})` : "none"}
+              onClick={(event) => handleWhiteAccidental(event, ind)}
+              borderBottom={
+                thisWhiteKeyIsSelected(note, ind) &&
+                selectedNote[1] === accidentalType
+                  ? "2px solid black"
+                  : ""
+              }
+            >
+              {children}
+            </Box>
+          )}
+        </Flex>
       ) : null}
     </>
   );
