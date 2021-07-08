@@ -2,7 +2,7 @@ import React from "react";
 import Staff from "./Staff";
 import {trebleNotes, bassNotes, clefs, answerStatus} from "../constants";
 import {Flex, Heading} from "@chakra-ui/react";
-import SelectedKeyboard from "./SelectedKeyboard";
+import Keyboard from "./Keyboard";
 import {SignOut} from "./SignOut";
 import {useUser} from "reactfire";
 import {useParams} from "react-router-dom";
@@ -15,10 +15,6 @@ interface IParams {
 }
 
 function GuestNoteTester() {
-  // const [answer, setAnswer] = React.useState("");
-  const [displayingNotes, setDisplayingNotes] = React.useState(false);
-  // const [answerStatus, setAnswerStatus] = React.useState("");
-
   const {sessionId} = useParams<IParams>();
   const history = useHistory();
 
@@ -41,7 +37,6 @@ function GuestNoteTester() {
     status: answerStatus.CORRECT | answerStatus.INCORRECT
   ) => {
     if (status === answerStatus.CORRECT) {
-      // setAnswerStatus("CORRECT");
       sessionRef.update({
         answer: note,
         identifiedNotes: sessionDoc.identifiedNotes + 1,
@@ -49,7 +44,6 @@ function GuestNoteTester() {
         answerStatus: "CORRECT",
       });
     } else {
-      // setAnswerStatus("INCORRECT");
       sessionRef.update({
         answer: note,
         totalNotes: sessionDoc.totalNotes + 1,
@@ -108,13 +102,11 @@ function GuestNoteTester() {
             {sessionDoc?.answerStatus}
           </Heading>
         </Flex>
-        <SelectedKeyboard
+        <Keyboard
           notes={notes}
           selectedClef={sessionDoc?.selectedClef}
-          selectedNote={sessionDoc?.answer}
           setSelectedNote={handleSelectNote}
-          displayingNotes={displayingNotes}
-          isStudentKeyboard={true}
+          isGuestKeyboard={true}
           sessionId={sessionId}
         />
       </Flex>

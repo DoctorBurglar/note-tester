@@ -1,12 +1,3 @@
-import * as React from "react";
-
-export interface IKeyboardProps {
-  selectedClef: string;
-  selectedNote: string;
-  setSelectedNote: (note: string) => void;
-  displayingNotes: boolean;
-}
-
 export interface IUser {
   uid: string;
   email: string;
@@ -26,6 +17,7 @@ export interface ISession {
   answer: string;
   sessionCode: string;
   answerStatus: string;
+  displayingNotes: boolean;
 }
 
 interface IMnemonics {

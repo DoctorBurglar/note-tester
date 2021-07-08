@@ -1,9 +1,9 @@
 import React from "react";
 import Staff from "./Staff";
-import TeacherControls from "./TeacherControls";
+import HostControls from "./HostControls";
 import {trebleNotes, bassNotes, clefs} from "../constants";
 import {Flex} from "@chakra-ui/react";
-import SelectedKeyboard from "./SelectedKeyboard";
+import Keyboard from "./Keyboard";
 import {SignOut} from "./SignOut";
 import {useUser} from "reactfire";
 import {useHistory, useParams} from "react-router-dom";
@@ -13,11 +13,7 @@ interface IParams {
   sessionId: string;
 }
 
-function NoteTester() {
-  const [displayingNotes, setDisplayingNotes] = React.useState(false);
-
-  console.log(displayingNotes);
-
+function HostNoteTester() {
   const {sessionId} = useParams<IParams>();
   const history = useHistory();
 
@@ -59,27 +55,22 @@ function NoteTester() {
         />
 
         <Flex justifyContent="space-between" w="100%">
-          <TeacherControls
+          <HostControls
             setSelectedNote={handleSelectNote}
             setSelectedClef={handleSelectClef}
-            selectedClef={sessionDoc?.selectedClef}
-            selectedNote={sessionDoc?.selectedNote}
-            setDisplayingNotes={setDisplayingNotes}
             sessionId={sessionId}
           />
         </Flex>
 
-        <SelectedKeyboard
+        <Keyboard
           notes={
             sessionDoc?.selectedClef === clefs.TREBLE
               ? Object.keys(trebleNotes)
               : Object.keys(bassNotes)
           }
           selectedClef={sessionDoc?.selectedClef}
-          selectedNote={sessionDoc?.selectedNote}
           setSelectedNote={handleSelectNote}
-          displayingNotes={displayingNotes}
-          isStudentKeyboard={false}
+          isGuestKeyboard={false}
           sessionId={sessionId}
         />
       </Flex>
@@ -87,4 +78,4 @@ function NoteTester() {
   );
 }
 
-export default NoteTester;
+export default HostNoteTester;

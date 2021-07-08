@@ -9,10 +9,9 @@ type WhiteKeyCompProps = {
   ind: number;
   setSelectedNote: (note: string) => void;
   thisWhiteKeyIsSelected: (note: string, ind: number) => boolean;
-  displayingNotes: boolean;
   sessionId: string;
   notes: string[];
-  isStudentKeyboard: boolean;
+  isGuestKeyboard: boolean;
 };
 
 const WhiteKeyComp: React.FC<WhiteKeyCompProps> = ({
@@ -21,82 +20,74 @@ const WhiteKeyComp: React.FC<WhiteKeyCompProps> = ({
   ind,
   thisWhiteKeyIsSelected,
   setSelectedNote,
-  displayingNotes,
   sessionId,
   notes,
-  isStudentKeyboard,
+  isGuestKeyboard,
 }) => {
   const {sessionDoc} = useSession(sessionId);
 
-  const determineBackgroundColor = () => {
-    let nextNote = "";
-    let prevNote = "";
-    if (ind < notes.length - 1) {
-      nextNote = notes[notes.indexOf(note) + 1];
-    }
-    if (ind > 0) {
-      prevNote = notes[notes.indexOf(note) - 1];
-    }
+  let nextNote = "";
+  let prevNote = "";
+  if (ind < notes.length - 1) {
+    nextNote = notes[notes.indexOf(note) + 1];
+  }
+  if (ind > 0) {
+    prevNote = notes[notes.indexOf(note) - 1];
+  }
 
-    let backgroundColor = "";
-    if (isStudentKeyboard) {
-      if (
-        thisWhiteKeyIsSelected(note, ind) &&
-        sessionDoc?.answerStatus === answerStatus.CORRECT
-      ) {
-        backgroundColor = "lightblue";
-      } else if (
-        sessionDoc?.answerStatus !== "" &&
-        (note[0] === "B" || note[0] === "E") &&
-        nextNote[0] + "b" + nextNote[1] === sessionDoc?.selectedNote
-      ) {
-        console.log(isStudentKeyboard, sessionDoc?.answerStatus);
-        backgroundColor = "lightblue";
-      } else if (
-        sessionDoc?.answerStatus !== "" &&
-        (note[0] === "C" || note[0] === "F") &&
-        prevNote[0] + "s" + prevNote[1] === sessionDoc?.selectedNote
-      ) {
-        backgroundColor = "lightblue";
-      } else if (
-        sessionDoc?.answerStatus !== "" &&
-        note === sessionDoc?.selectedNote
-      ) {
-        backgroundColor = "lightblue";
-      } else if (
-        thisWhiteKeyIsSelected(note, ind) &&
-        sessionDoc?.answerStatus === answerStatus.INCORRECT
-      ) {
-        backgroundColor = "red";
-      }
-    } else if (
-      note === sessionDoc?.answer &&
-      thisWhiteKeyIsSelected(note, ind)
+  let backgroundColor = "";
+  if (isGuestKeyboard) {
+    if (
+      thisWhiteKeyIsSelected(note, ind) &&
+      sessionDoc?.answerStatus === answerStatus.CORRECT
     ) {
-      backgroundColor = "green";
-    } else if (thisWhiteKeyIsSelected(note, ind)) {
       backgroundColor = "lightblue";
     } else if (
-      note === sessionDoc?.answer &&
-      sessionDoc.answerStatus === answerStatus.INCORRECT
+      sessionDoc?.answerStatus !== "" &&
+      (note[0] === "B" || note[0] === "E") &&
+      nextNote[0] + "b" + nextNote[1] === sessionDoc?.selectedNote
+    ) {
+      backgroundColor = "lightblue";
+    } else if (
+      sessionDoc?.answerStatus !== "" &&
+      (note[0] === "C" || note[0] === "F") &&
+      prevNote[0] + "s" + prevNote[1] === sessionDoc?.selectedNote
+    ) {
+      backgroundColor = "lightblue";
+    } else if (
+      sessionDoc?.answerStatus !== "" &&
+      note === sessionDoc?.selectedNote
+    ) {
+      backgroundColor = "lightblue";
+    } else if (
+      thisWhiteKeyIsSelected(note, ind) &&
+      sessionDoc?.answerStatus === answerStatus.INCORRECT
     ) {
       backgroundColor = "red";
     }
-    return backgroundColor;
-  };
+  } else if (note === sessionDoc?.answer && thisWhiteKeyIsSelected(note, ind)) {
+    backgroundColor = "green";
+  } else if (thisWhiteKeyIsSelected(note, ind)) {
+    backgroundColor = "lightblue";
+  } else if (
+    note === sessionDoc?.answer &&
+    sessionDoc?.answerStatus === answerStatus.INCORRECT
+  ) {
+    backgroundColor = "red";
+  }
 
   return (
     <>
       <WhiteKey
         onClick={() => setSelectedNote(note)}
         style={{
-          backgroundColor: determineBackgroundColor(),
+          backgroundColor: backgroundColor,
         }}
       >
         {children}
         <Flex flex="1" direction="column" justify="flex-end">
-          <Heading as="h1" textAlign="center">
-            {displayingNotes ? note[0] : ""}
+          <Heading as="h1" textAlign="center" marginBottom=".5rem">
+            {sessionDoc?.displayingNotes ? note[0] : ""}
           </Heading>
         </Flex>
       </WhiteKey>

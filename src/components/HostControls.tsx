@@ -21,29 +21,21 @@ const StyledButtonSmall = styled(Button)`
   cursor: pointer;
 `;
 
-interface teacherControlsProps {
+interface hostControlsProps {
   setSelectedNote: (note: string) => void;
   setSelectedClef: (clef: string) => void;
-  selectedClef: string;
-  selectedNote: string;
-  setDisplayingNotes: React.Dispatch<React.SetStateAction<boolean>>;
   sessionId: string;
 }
 
-const TeacherControls: React.FC<teacherControlsProps> = ({
+const HostControls: React.FC<hostControlsProps> = ({
   setSelectedClef,
-  selectedClef,
-  selectedNote,
-  setDisplayingNotes,
   sessionId,
 }) => {
-  console.log(selectedNote);
-
   const {sessionRef, sessionDoc} = useSession(sessionId);
 
-  const handleCheck = (e: React.SyntheticEvent) => {
-    setDisplayingNotes((prevState) => !prevState);
-  };
+  // const handleCheck = (e: React.SyntheticEvent) => {
+  //   setDisplayingNotes((prevState) => !prevState);
+  // };
 
   const handleLineMnemonic = () => {
     sessionRef.update({
@@ -70,6 +62,10 @@ const TeacherControls: React.FC<teacherControlsProps> = ({
     });
   };
 
+  const handleDisplayNotes = () => [
+    sessionRef.update({displayingNotes: !sessionDoc?.displayingNotes}),
+  ];
+
   return (
     <>
       <GuestScore sessionId={sessionId} />
@@ -77,7 +73,7 @@ const TeacherControls: React.FC<teacherControlsProps> = ({
         <StyledButtonLarge
           onClick={() => setSelectedClef(clefs.TREBLE)}
           backgroundColor={
-            selectedClef === clefs.TREBLE ? "lightblue" : undefined
+            sessionDoc?.selectedClef === clefs.TREBLE ? "lightblue" : undefined
           }
         >
           Treble Clef
@@ -85,14 +81,18 @@ const TeacherControls: React.FC<teacherControlsProps> = ({
         <StyledButtonLarge
           onClick={() => setSelectedClef(clefs.BASS)}
           backgroundColor={
-            selectedClef === clefs.BASS ? "lightblue" : undefined
+            sessionDoc?.selectedClef === clefs.BASS ? "lightblue" : undefined
           }
         >
           Bass Clef
         </StyledButtonLarge>
       </Flex>
       <Flex justify="flex-end" align="center" w="28%">
-        <StyledButtonSmall alignSelf="center" onClick={handleCheck}>
+        <StyledButtonSmall
+          alignSelf="center"
+          onClick={handleDisplayNotes}
+          bg={sessionDoc?.displayingNotes ? "lightblue" : ""}
+        >
           Note Names
         </StyledButtonSmall>
         <StyledButtonSmall
@@ -113,4 +113,4 @@ const TeacherControls: React.FC<teacherControlsProps> = ({
   );
 };
 
-export default TeacherControls;
+export default HostControls;

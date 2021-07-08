@@ -36,6 +36,7 @@ const WhiteKeyOverlay: React.FC<WhiteKeyOverlayProps> = ({
             align="center"
             overflow="hidden"
             borderRadius="0 0 5px 5px"
+            className="accidentals"
           >
             {ind === 0 && isCOrF ? null : (
               <Box
