@@ -9,6 +9,7 @@ import Sharp from "./Sharp";
 import BlackKeyOverlay from "./BlackKeyOverlay";
 import WhiteKeyOverlay from "./WhiteKeyOverlay";
 import {useSession} from "../hooks";
+import LowestBlackKeyOverlay from "./LowestBlackKeyOverlay";
 
 interface IKeyboardProps {
   notes: string[];
@@ -27,7 +28,6 @@ const Keyboard: React.FC<IKeyboardProps> = ({
   const {sessionDoc} = useSession(sessionId);
 
   const handleFlat = (ind: number) => {
-    console.log("made it here");
     if (notes.length - 1 <= ind) {
       return;
     } else setSelectedNote(notes[ind + 1][0] + "b" + notes[ind + 1][1]);
@@ -173,7 +173,19 @@ const Keyboard: React.FC<IKeyboardProps> = ({
                 setSelectedNote={setSelectedNote}
                 selectedNote={sessionDoc?.selectedNote}
                 thisBlackKeyIsSelected={thisBlackKeyIsSelected}
-              />
+                sessionId={sessionId}
+                isGuestKeyboard={isGuestKeyboard}
+              >
+                {!isGuestKeyboard ? (
+                  <LowestBlackKeyOverlay
+                    ind={ind}
+                    note={note}
+                    selectedNote={sessionDoc?.selectedNote}
+                    thisBlackKeyIsSelected={thisBlackKeyIsSelected}
+                    setSelectedNote={setSelectedNote}
+                  />
+                ) : null}
+              </LowestBlackKey>
             ) : null}
           </Box>
         );

@@ -105,8 +105,6 @@ for (let key in trebleNotes) {
   }
 }
 
-console.log(accidentals2);
-
 export const accidentals3 = accidentals2;
 
 export enum accidentals {

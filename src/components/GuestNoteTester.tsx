@@ -53,6 +53,7 @@ function GuestNoteTester() {
   };
 
   const handleSelectNote = (note: string) => {
+    console.log(note);
     if (sessionDoc.answer !== "" || sessionDoc.selectedNote === "") {
       return;
     }

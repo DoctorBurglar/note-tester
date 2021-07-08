@@ -23,7 +23,12 @@ const BlackKeyOverlay: React.FC<BlackKeyOverlayProps> = ({
   handleFlat,
 }) => {
   return (
-    <>
+    <Flex
+      className="black-accidentals"
+      direction="column"
+      justify="flex-start"
+      height="100%"
+    >
       <Flex
         position="absolute"
         h="100%"
@@ -88,7 +93,7 @@ const BlackKeyOverlay: React.FC<BlackKeyOverlayProps> = ({
           />
         </Heading>
       </Flex>
-    </>
+    </Flex>
   );
 };
 

@@ -29,11 +29,11 @@ export const BlackKey = styled(Box)`
   top: 0;
   z-index: 5;
 
-  & > * {
+  & > .black-accidentals {
     display: none !important;
   }
 
-  &:hover > * {
+  &:hover > .black-accidentals {
     display: flex !important;
   }
 `;

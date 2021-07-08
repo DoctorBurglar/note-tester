@@ -1,8 +1,9 @@
 import * as React from "react";
-import {Flex, Heading} from "@chakra-ui/react";
-import {blackKeyWidth} from "../constants";
+import {background, Flex, Heading} from "@chakra-ui/react";
+import {blackKeyWidth, answerStatus} from "../constants";
 import {BlackKey} from "../styles";
 import Flat from "./Flat";
+import {useSession} from "../hooks";
 
 type LowestBlackKeyProps = {
   selectedNote: string;
@@ -10,53 +11,66 @@ type LowestBlackKeyProps = {
   setSelectedNote: (note: string) => void;
   thisBlackKeyIsSelected: (note: string, ind: number) => boolean;
   note: string;
+  sessionId: string;
+  isGuestKeyboard: boolean;
 };
 
 const LowestBlackKey: React.FC<LowestBlackKeyProps> = ({
-  selectedNote,
   ind,
   setSelectedNote,
   note,
+  sessionId,
+  children,
+  isGuestKeyboard,
   thisBlackKeyIsSelected,
 }) => {
+  const {sessionDoc} = useSession(sessionId);
+
+  const determineBackgroundColor = () => {
+    console.log(
+      thisBlackKeyIsSelected(note, ind),
+      sessionDoc?.answerStatus,
+      sessionDoc?.answer
+    );
+    let backgroundColor = "";
+    if (isGuestKeyboard) {
+      if (
+        thisBlackKeyIsSelected(note, ind) &&
+        sessionDoc?.answerStatus === answerStatus.CORRECT
+      ) {
+        backgroundColor = "lightblue";
+      } else if (thisBlackKeyIsSelected(note, ind)) {
+        backgroundColor = "red";
+      }
+    } else {
+      if (
+        thisBlackKeyIsSelected(note, ind) &&
+        sessionDoc?.answerStatus === answerStatus.CORRECT
+      ) {
+        backgroundColor = "green";
+      } else if (thisBlackKeyIsSelected(note, ind)) {
+        backgroundColor = "lightblue";
+      } else if (
+        note[0] + "b" + note[1] === sessionDoc?.answer &&
+        sessionDoc?.answerStatus === answerStatus.INCORRECT
+      ) {
+        backgroundColor = "red";
+      }
+    }
+
+    return backgroundColor;
+  };
+
   return (
-    <BlackKey left={`calc((-${blackKeyWidth} / 2))`}>
-      <Flex
-        position="relative"
-        h="100%"
-        zIndex="10"
-        justify="center"
-        align="center"
-        onClick={() => setSelectedNote(note[0] + "b" + note[1])}
-        overflow="hidden"
-        borderRadius="0 0 5px 5px"
-        style={
-          thisBlackKeyIsSelected(note, ind)
-            ? {
-                backgroundColor: "lightblue",
-                color: "black",
-              }
-            : {}
-        }
-      >
-        <Heading
-          color={thisBlackKeyIsSelected(note, ind) ? "black" : "white"}
-          as="h1"
-          textAlign="center"
-          borderBottom={
-            thisBlackKeyIsSelected(note, ind) &&
-            selectedNote[1] === "b" &&
-            note[0] === selectedNote[0]
-              ? "2px solid black"
-              : "none"
-          }
-        >
-          <Flat
-            width={13}
-            fill={thisBlackKeyIsSelected(note, ind) ? "black" : "white"}
-          />
-        </Heading>
-      </Flex>
+    <BlackKey
+      left={`calc((-${blackKeyWidth} / 2))`}
+      style={{
+        backgroundColor: determineBackgroundColor(),
+        color: thisBlackKeyIsSelected(note, ind) ? "black" : "",
+      }}
+      onClick={() => setSelectedNote(note[0] + "b" + note[1])}
+    >
+      {children}
     </BlackKey>
   );
 };
