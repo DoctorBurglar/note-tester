@@ -97,13 +97,13 @@ const TeacherControls: React.FC<teacherControlsProps> = ({
         </StyledButtonSmall>
         <StyledButtonSmall
           onClick={handleLineMnemonic}
-          bg={sessionDoc.mnemonics.showLinesOnStaff ? "lightblue" : ""}
+          bg={sessionDoc?.mnemonics.showLinesOnStaff ? "lightblue" : ""}
         >
           Lines
         </StyledButtonSmall>
         <StyledButtonSmall
           onClick={handleSpaceMnemonic}
-          bg={sessionDoc.mnemonics.showSpacesOnStaff ? "lightblue" : ""}
+          bg={sessionDoc?.mnemonics.showSpacesOnStaff ? "lightblue" : ""}
         >
           Spaces
         </StyledButtonSmall>

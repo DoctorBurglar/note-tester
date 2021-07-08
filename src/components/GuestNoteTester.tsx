@@ -8,6 +8,7 @@ import {useUser} from "reactfire";
 import {useParams} from "react-router-dom";
 import {useHistory} from "react-router-dom";
 import {useSession} from "../hooks";
+import GuestScore from "./GuestScore";
 
 interface IParams {
   sessionId: string;
@@ -101,23 +102,7 @@ function GuestNoteTester() {
           sessionId={sessionId}
         />
         <Flex justifyContent="space-between">
-          <Flex justifyContent="space-between" w="15%">
-            <Heading
-              as="h2"
-              minWidth="5rem"
-            >{`${sessionDoc?.identifiedNotes} / ${sessionDoc?.totalNotes}`}</Heading>
-            <Heading as="h2" justifyContent="space-between">
-              {`${
-                sessionDoc?.identifiedNotes === 0 &&
-                sessionDoc?.totalNotes === 0
-                  ? 100
-                  : Math.round(
-                      (sessionDoc?.identifiedNotes / sessionDoc?.totalNotes) *
-                        100
-                    )
-              }%`}
-            </Heading>
-          </Flex>
+          <GuestScore sessionId={sessionId} />
 
           <Heading as="h2" marginLeft="2rem">
             {sessionDoc?.answerStatus}
