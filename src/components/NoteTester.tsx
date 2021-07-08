@@ -42,13 +42,15 @@ function NoteTester() {
 
   return (
     <div className="App">
-      <SignOut />
       <Flex
         justifyContent="space-around"
         w="85rem"
         margin="0 auto"
         direction="column"
       >
+        <Flex>
+          <SignOut />
+        </Flex>
         {/* <Button onClick={handleSignIn}>Sign In</Button> */}
         <Staff
           selectedNote={sessionDoc?.selectedNote}
@@ -56,14 +58,17 @@ function NoteTester() {
           sessionId={sessionId}
         />
 
-        <TeacherControls
-          setSelectedNote={handleSelectNote}
-          setSelectedClef={handleSelectClef}
-          selectedClef={sessionDoc?.selectedClef}
-          selectedNote={sessionDoc?.selectedNote}
-          setDisplayingNotes={setDisplayingNotes}
-          sessionId={sessionId}
-        />
+        <Flex justifyContent="space-between" w="100%">
+          <TeacherControls
+            setSelectedNote={handleSelectNote}
+            setSelectedClef={handleSelectClef}
+            selectedClef={sessionDoc?.selectedClef}
+            selectedNote={sessionDoc?.selectedNote}
+            setDisplayingNotes={setDisplayingNotes}
+            sessionId={sessionId}
+          />
+        </Flex>
+
         <SelectedKeyboard
           notes={
             sessionDoc?.selectedClef === clefs.TREBLE

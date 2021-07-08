@@ -1,7 +1,7 @@
 import React from "react";
 import Staff from "./Staff";
 import {trebleNotes, bassNotes, clefs, answerStatus} from "../constants";
-import {Flex, Heading, Button} from "@chakra-ui/react";
+import {Flex, Heading} from "@chakra-ui/react";
 import SelectedKeyboard from "./SelectedKeyboard";
 import {SignOut} from "./SignOut";
 import {useUser} from "reactfire";
@@ -85,10 +85,6 @@ function GuestNoteTester() {
     handleAnswer(note, answerStatus.INCORRECT);
   };
 
-  const handleResetScore = () => {
-    sessionRef.update({totalNotes: 0, identifiedNotes: 0});
-  };
-
   return (
     <div className="App">
       <SignOut />
@@ -105,7 +101,7 @@ function GuestNoteTester() {
           sessionId={sessionId}
         />
         <Flex justifyContent="space-between">
-          <Flex justifyContent="space-between" w="30%">
+          <Flex justifyContent="space-between" w="15%">
             <Heading
               as="h2"
               minWidth="5rem"
@@ -121,7 +117,6 @@ function GuestNoteTester() {
                     )
               }%`}
             </Heading>
-            <Button onClick={handleResetScore}>Reset Score</Button>
           </Flex>
 
           <Heading as="h2" marginLeft="2rem">

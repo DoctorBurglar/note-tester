@@ -42,7 +42,7 @@ const WhiteKeyComp: React.FC<WhiteKeyCompProps> = ({
     if (isStudentKeyboard) {
       if (
         thisWhiteKeyIsSelected(note, ind) &&
-        sessionDoc.answerStatus === answerStatus.CORRECT
+        sessionDoc?.answerStatus === answerStatus.CORRECT
       ) {
         backgroundColor = "lightblue";
       } else if (
@@ -60,7 +60,7 @@ const WhiteKeyComp: React.FC<WhiteKeyCompProps> = ({
         backgroundColor = "lightblue";
       } else if (
         sessionDoc?.answerStatus !== "" &&
-        note === sessionDoc.selectedNote
+        note === sessionDoc?.selectedNote
       ) {
         backgroundColor = "lightblue";
       } else if (
