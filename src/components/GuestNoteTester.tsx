@@ -27,7 +27,8 @@ function GuestNoteTester() {
       : Object.keys(bassNotes);
 
   React.useEffect(() => {
-    if (sessionDoc?.guestId !== data.uid) {
+    if (sessionDoc?.guestId && sessionDoc?.guestId !== data.uid) {
+      console.log("redirecting");
       history.push("/");
     }
   }, [sessionDoc, data, history]);
@@ -81,6 +82,18 @@ function GuestNoteTester() {
     handleAnswer(note, answerStatus.INCORRECT);
   };
 
+  // const correctArray = [
+  //   "Way to B#!",
+  //   "You are NOTE bad at this!",
+  //   "Are you C4? Because that answer was explosive!",
+  //   "A law FERMATA hire you, because you're smart!",
+  // ];
+
+  // const incorrectArray = [
+  //   "That one caused you some TREBLE",
+  //   "finding that note was not your FORTE",
+  // ];
+
   return (
     <div className="App">
       <SignOut />
@@ -100,6 +113,13 @@ function GuestNoteTester() {
           <GuestScore sessionId={sessionId} />
 
           <Heading as="h2" marginLeft="2rem">
+            {/* {sessionDoc?.answerStatus === answerStatus.CORRECT
+              ? correctArray[Math.floor(Math.random() * correctArray.length)]
+              : sessionDoc?.answerStatus === answerStatus.INCORRECT
+              ? incorrectArray[
+                  Math.floor(Math.random() * incorrectArray.length)
+                ]
+              : ""} */}
             {sessionDoc?.answerStatus}
           </Heading>
         </Flex>
