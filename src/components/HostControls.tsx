@@ -49,7 +49,7 @@ const HostControls: React.FC<hostControlsProps> = ({
   ];
 
   return (
-    <>
+    <Flex w="90%" margin="0 auto" justify="center">
       <GuestScore sessionId={sessionId} isHost />
       <Flex justifyContent="center" marginBottom="1rem" w="40%">
         <StyledButtonLarge
@@ -90,7 +90,7 @@ const HostControls: React.FC<hostControlsProps> = ({
           Spaces
         </StyledButtonSmall>
       </Flex>
-    </>
+    </Flex>
   );
 };
 

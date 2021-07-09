@@ -99,97 +99,99 @@ const Keyboard: React.FC<IKeyboardProps> = ({
   };
 
   return (
-    <Flex
-      w={keyboardWidth}
-      h="13rem"
-      alignItems="stretch"
-      position="relative"
-      cursor="pointer"
-    >
-      {notes.map((note, ind) => {
-        return (
-          <Box position="relative" key={note}>
-            <WhiteKeyComp
-              note={note}
-              ind={ind}
-              thisWhiteKeyIsSelected={thisWhiteKeyIsSelected}
-              setSelectedNote={setSelectedNote}
-              notes={notes}
-              isGuestKeyboard={isGuestKeyboard}
-              sessionId={sessionId}
-            >
-              {!isGuestKeyboard ? (
-                <WhiteKeyOverlay
-                  handleWhiteAccidental={
-                    note[0] === "B" || note[0] === "E"
-                      ? handleWhiteFlat
-                      : handleWhiteSharp
-                  }
-                  displayingNotes={sessionDoc?.displayingNotes}
+    <Flex w="100%" justify="center">
+      <Flex
+        w="90%"
+        h="13rem"
+        alignItems="stretch"
+        position="relative"
+        cursor="pointer"
+      >
+        {notes.map((note, ind) => {
+          return (
+            <Box position="relative" key={note}>
+              <WhiteKeyComp
+                note={note}
+                ind={ind}
+                thisWhiteKeyIsSelected={thisWhiteKeyIsSelected}
+                setSelectedNote={setSelectedNote}
+                notes={notes}
+                isGuestKeyboard={isGuestKeyboard}
+                sessionId={sessionId}
+              >
+                {!isGuestKeyboard ? (
+                  <WhiteKeyOverlay
+                    handleWhiteAccidental={
+                      note[0] === "B" || note[0] === "E"
+                        ? handleWhiteFlat
+                        : handleWhiteSharp
+                    }
+                    displayingNotes={sessionDoc?.displayingNotes}
+                    ind={ind}
+                    note={note}
+                    selectedNote={sessionDoc?.selectedNote}
+                    thisWhiteKeyIsSelected={thisWhiteKeyIsSelected}
+                  >
+                    {" "}
+                    {note[0] === "B" || note[0] === "E" ? (
+                      <Flat width={13} fill="black" />
+                    ) : (
+                      <Sharp fill="black" width={17} height={30} />
+                    )}
+                  </WhiteKeyOverlay>
+                ) : null}
+              </WhiteKeyComp>
+
+              {note[0] !== "B" && note[0] !== "E" ? (
+                <BlackKeyComp
+                  thisBlackKeyIsSelected={thisBlackKeyIsSelected}
+                  note={note}
+                  ind={ind}
+                  setSelectedNote={setSelectedNote}
+                  isGuestKeyboard={isGuestKeyboard}
+                  sessionId={sessionId}
+                  notes={notes}
+                >
+                  {!isGuestKeyboard ? (
+                    <BlackKeyOverlay
+                      handleFlat={handleFlat}
+                      ind={ind}
+                      note={note}
+                      thisBlackKeyIsSelected={thisBlackKeyIsSelected}
+                      notes={notes}
+                      selectedNote={sessionDoc?.selectedNote}
+                      setSelectedNote={setSelectedNote}
+                    />
+                  ) : null}
+                </BlackKeyComp>
+              ) : null}
+
+              {/*Special case lowest black key */}
+              {note[0] !== "C" && note[0] !== "F" && ind === 0 ? (
+                <LowestBlackKey
                   ind={ind}
                   note={note}
+                  setSelectedNote={setSelectedNote}
                   selectedNote={sessionDoc?.selectedNote}
-                  thisWhiteKeyIsSelected={thisWhiteKeyIsSelected}
+                  thisBlackKeyIsSelected={thisBlackKeyIsSelected}
+                  sessionId={sessionId}
+                  isGuestKeyboard={isGuestKeyboard}
                 >
-                  {" "}
-                  {note[0] === "B" || note[0] === "E" ? (
-                    <Flat width={13} fill="black" />
-                  ) : (
-                    <Sharp fill="black" width={17} height={30} />
-                  )}
-                </WhiteKeyOverlay>
+                  {!isGuestKeyboard ? (
+                    <LowestBlackKeyOverlay
+                      ind={ind}
+                      note={note}
+                      selectedNote={sessionDoc?.selectedNote}
+                      thisBlackKeyIsSelected={thisBlackKeyIsSelected}
+                      setSelectedNote={setSelectedNote}
+                    />
+                  ) : null}
+                </LowestBlackKey>
               ) : null}
-            </WhiteKeyComp>
-
-            {note[0] !== "B" && note[0] !== "E" ? (
-              <BlackKeyComp
-                thisBlackKeyIsSelected={thisBlackKeyIsSelected}
-                note={note}
-                ind={ind}
-                setSelectedNote={setSelectedNote}
-                isGuestKeyboard={isGuestKeyboard}
-                sessionId={sessionId}
-                notes={notes}
-              >
-                {!isGuestKeyboard ? (
-                  <BlackKeyOverlay
-                    handleFlat={handleFlat}
-                    ind={ind}
-                    note={note}
-                    thisBlackKeyIsSelected={thisBlackKeyIsSelected}
-                    notes={notes}
-                    selectedNote={sessionDoc?.selectedNote}
-                    setSelectedNote={setSelectedNote}
-                  />
-                ) : null}
-              </BlackKeyComp>
-            ) : null}
-
-            {/*Special case lowest black key */}
-            {note[0] !== "C" && note[0] !== "F" && ind === 0 ? (
-              <LowestBlackKey
-                ind={ind}
-                note={note}
-                setSelectedNote={setSelectedNote}
-                selectedNote={sessionDoc?.selectedNote}
-                thisBlackKeyIsSelected={thisBlackKeyIsSelected}
-                sessionId={sessionId}
-                isGuestKeyboard={isGuestKeyboard}
-              >
-                {!isGuestKeyboard ? (
-                  <LowestBlackKeyOverlay
-                    ind={ind}
-                    note={note}
-                    selectedNote={sessionDoc?.selectedNote}
-                    thisBlackKeyIsSelected={thisBlackKeyIsSelected}
-                    setSelectedNote={setSelectedNote}
-                  />
-                ) : null}
-              </LowestBlackKey>
-            ) : null}
-          </Box>
-        );
-      })}
+            </Box>
+          );
+        })}
+      </Flex>
     </Flex>
   );
 };
