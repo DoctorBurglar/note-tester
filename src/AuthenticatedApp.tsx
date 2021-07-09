@@ -1,4 +1,3 @@
-import React from "react";
 import "./App.css";
 import {CreateSession} from "./components/CreateSession";
 import HostNoteTester from "./components/HostNoteTester";
