@@ -9,6 +9,7 @@ import {useParams} from "react-router-dom";
 import {useHistory} from "react-router-dom";
 import {useSession} from "../hooks";
 import GuestScore from "./GuestScore";
+import Header from "./Header";
 
 interface IParams {
   sessionId: string;
@@ -31,7 +32,7 @@ function GuestNoteTester() {
       console.log("redirecting");
       history.push("/");
     }
-  }, [sessionDoc, data, history]);
+  }, [sessionDoc?.guestId, data, history]);
 
   const handleAnswer = (
     note: string,
@@ -95,43 +96,49 @@ function GuestNoteTester() {
   // ];
 
   return (
-    <div className="App">
-      <SignOut />
-      <Flex
-        justifyContent="space-around"
-        w="85rem"
-        margin="0 auto"
-        direction="column"
-      >
-        {/* <Button onClick={handleSignIn}>Sign In</Button> */}
-        <Staff
-          selectedNote={sessionDoc?.selectedNote}
-          selectedClef={sessionDoc?.selectedClef}
-          sessionId={sessionId}
-        />
-        <Flex justifyContent="space-between">
-          <GuestScore sessionId={sessionId} />
+    <>
+      {sessionDoc?.guestId && sessionDoc?.guestId === data.uid ? (
+        <div className="App">
+          <Header />
+          <Flex
+            justifyContent="space-around"
+            w="85rem"
+            margin="0 auto"
+            direction="column"
+          >
+            {/* <Button onClick={handleSignIn}>Sign In</Button> */}
+            <Staff
+              selectedNote={sessionDoc?.selectedNote}
+              selectedClef={sessionDoc?.selectedClef}
+              sessionId={sessionId}
+            />
+            <Flex justifyContent="space-between">
+              <GuestScore sessionId={sessionId} />
 
-          <Heading as="h2" marginLeft="2rem">
-            {/* {sessionDoc?.answerStatus === answerStatus.CORRECT
+              <Heading as="h2" marginLeft="2rem">
+                {/* {sessionDoc?.answerStatus === answerStatus.CORRECT
               ? correctArray[Math.floor(Math.random() * correctArray.length)]
               : sessionDoc?.answerStatus === answerStatus.INCORRECT
               ? incorrectArray[
                   Math.floor(Math.random() * incorrectArray.length)
                 ]
               : ""} */}
-            {sessionDoc?.answerStatus}
-          </Heading>
-        </Flex>
-        <Keyboard
-          notes={notes}
-          selectedClef={sessionDoc?.selectedClef}
-          setSelectedNote={handleSelectNote}
-          isGuestKeyboard={true}
-          sessionId={sessionId}
-        />
-      </Flex>
-    </div>
+                {sessionDoc?.answerStatus}
+              </Heading>
+            </Flex>
+            <Keyboard
+              notes={notes}
+              selectedClef={sessionDoc?.selectedClef}
+              setSelectedNote={handleSelectNote}
+              isGuestKeyboard={true}
+              sessionId={sessionId}
+            />
+          </Flex>
+        </div>
+      ) : (
+        <p>page not found, head back to sessions</p>
+      )}
+    </>
   );
 }
 

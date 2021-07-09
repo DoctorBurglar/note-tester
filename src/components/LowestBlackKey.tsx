@@ -39,7 +39,7 @@ const LowestBlackKey: React.FC<LowestBlackKeyProps> = ({
         sessionDoc?.answerStatus === answerStatus.CORRECT
       ) {
         backgroundColor = "lightblue";
-      } else if (note[0] + "b" + note[1] === sessionDoc.selectedNote) {
+      } else if (note[0] + "b" + note[1] === sessionDoc?.selectedNote) {
         backgroundColor = "lightblue";
       } else if (
         thisBlackKeyIsSelected(note, ind) &&

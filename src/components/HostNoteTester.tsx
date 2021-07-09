@@ -2,12 +2,12 @@ import React from "react";
 import Staff from "./Staff";
 import HostControls from "./HostControls";
 import {trebleNotes, bassNotes, clefs} from "../constants";
-import {Flex} from "@chakra-ui/react";
+import {Flex, Heading} from "@chakra-ui/react";
 import Keyboard from "./Keyboard";
-import {SignOut} from "./SignOut";
 import {useUser} from "reactfire";
 import {useHistory, useParams} from "react-router-dom";
 import {useSession} from "../hooks";
+import Header from "./Header";
 
 interface IParams {
   sessionId: string;
@@ -34,17 +34,35 @@ function HostNoteTester() {
     sessionRef.update({selectedClef: clef, selectedNote: "", answer: ""});
   };
 
+  const handleCopy = () => {
+    window.prompt("Copy to clipboard: Ctrl+C, Enter", sessionDoc?.sessionCode);
+  };
+
   return (
     <div className="App">
+      <Header />
+      <Flex w="100%" h="0" justify="flex-end">
+        <Heading as="h3" marginRight="2rem">
+          {`SessionCode: `}
+          <span
+            style={{
+              marginLeft: ".7rem",
+              fontSize: "1.5rem",
+              color: "var(--main-color-dark)",
+              cursor: "pointer",
+            }}
+            onClick={handleCopy}
+          >
+            {sessionDoc?.sessionCode}
+          </span>
+        </Heading>
+      </Flex>
       <Flex
         justifyContent="space-around"
         w="85rem"
         margin="0 auto"
         direction="column"
       >
-        <Flex>
-          <SignOut />
-        </Flex>
         {/* <Button onClick={handleSignIn}>Sign In</Button> */}
         <Staff
           selectedNote={sessionDoc?.selectedNote}

@@ -1,6 +1,14 @@
+:root {
+  --main-color: #add8e6;
+  --main-color-dark: #478aa0;
+  --grey-dark: #434343;
+  --white: #f8f8f8;
+}
+
 html {
   font-size: 15px;
   box-sizing: border-box;
+  color: var(--grey-dark);
 }
 
 *,

@@ -1,9 +1,19 @@
 import * as React from "react";
-import {Button, Flex, Input} from "@chakra-ui/react";
+import {Button, Flex, Input, Heading} from "@chakra-ui/react";
 import {useHistory} from "react-router-dom";
 import {useFirestore, useUser, useFirestoreDocData} from "reactfire";
-import {SignOut} from "./SignOut";
+import Header from "./Header";
 
+import styled from "@emotion/styled";
+
+const SessionButton = styled(Button)`
+  margin-top: 1rem;
+  background-color: var(--main-color);
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 1.3rem 5rem;
+  font-size: 1.5rem;
+`;
 interface IUser {
   uid: string;
   email: string;
@@ -66,7 +76,7 @@ const CreateSession: React.FC = () => {
         selectedClef: "TREBLE",
         mnemonics: {
           showLinesOnStaff: false,
-          showSpacesOnStaff: true,
+          showSpacesOnStaff: false,
         },
       });
 
@@ -103,34 +113,60 @@ const CreateSession: React.FC = () => {
   };
 
   return (
-    <Flex width="100%" justify="center">
-      <SignOut />
-      <Button
-        border="1px solid black"
-        borderRadius="5px"
-        margin="3rem"
-        padding="2rem 3rem"
-        fontSize="2rem"
-        onClick={handleCreateSession}
-      >
-        Host Session
-      </Button>
-      <Flex direction="column" justify="center">
-        <Input
-          value={sessionCodeInput}
-          placeholder="Session Code"
-          marginBottom="1rem"
-          onChange={handleSessionCodeInput}
-        />
-        <Button
-          border="1px solid black"
-          borderRadius="5px"
-          padding="2rem 3rem"
-          fontSize="2rem"
-          onClick={handleJoinSession}
-        >
-          Join Session
-        </Button>
+    <Flex width="100%" direction="column" align="center">
+      <Header />
+      <Flex w="50%" justify="space-between" marginTop="5rem">
+        <Flex direction="column" w="40%" justify="space-between">
+          <Heading as="h1" fontSize="3rem" fontWeight="500">
+            <span style={{color: "var(--main-color-dark)"}}>Create</span> a new
+            session
+          </Heading>
+          <Flex direction="column" fontSize="1.5rem">
+            <p>
+              You’ll get a session code you can send to a student. The app will
+              keep score as they identify notes on the staff. Or just screen
+              share over Zoom and have them say the notes out loud!
+            </p>
+            <p>
+              You can display helpful mnemonics on the treble staff and bass
+              staff, and show the note names on the keyboard.
+            </p>
+          </Flex>
+
+          <SessionButton onClick={handleCreateSession}>
+            Host Session
+          </SessionButton>
+        </Flex>
+
+        <Flex direction="column" w="40%" justify="space-between">
+          <Flex direction="column" h="40%">
+            <Heading as="h1" fontSize="3rem" fontWeight="500">
+              {" "}
+              <span style={{color: "var(--main-color-dark)"}}>Join</span> a
+              session
+            </Heading>
+            <Flex direction="column" fontSize="1.5rem">
+              <p>
+                Did your music teacher say something about entering a code
+                somewhere? Enter it below and join their session to learn how to
+                read notes!
+              </p>
+              <p>You’ll be amazing in no time!</p>
+            </Flex>
+          </Flex>
+
+          <Flex direction="column">
+            <Input
+              value={sessionCodeInput}
+              marginBottom="1rem"
+              placeholder="Session Code"
+              onChange={handleSessionCodeInput}
+            />
+            <SessionButton onClick={handleJoinSession}>
+              Join Session
+            </SessionButton>
+          </Flex>
+        </Flex>
       </Flex>
     </Flex>
   );

@@ -97,12 +97,12 @@ const Staff: React.FC<{
       />
 
       <StyledLine position="relative">
-        {sessionDoc?.mnemonics.showLinesOnStaff ? (
+        {sessionDoc?.mnemonics?.showLinesOnStaff ? (
           <StaffLineMnemonic as="h2" left="26%">
             {selectedClef === "TREBLE" ? "Fine" : "Always"}
           </StaffLineMnemonic>
         ) : null}
-        {sessionDoc?.mnemonics.showSpacesOnStaff ? (
+        {sessionDoc?.mnemonics?.showSpacesOnStaff ? (
           <StaffSpaceMnemonic as="h2" left="77%">
             {selectedClef === "TREBLE" ? "E" : "Grass"}
           </StaffSpaceMnemonic>
@@ -110,12 +110,12 @@ const Staff: React.FC<{
       </StyledLine>
 
       <StyledLine position="relative">
-        {sessionDoc?.mnemonics.showLinesOnStaff ? (
+        {sessionDoc?.mnemonics?.showLinesOnStaff ? (
           <StaffLineMnemonic as="h2" left="22%">
             {selectedClef === "TREBLE" ? "Does" : "Fine"}
           </StaffLineMnemonic>
         ) : null}
-        {sessionDoc?.mnemonics.showSpacesOnStaff ? (
+        {sessionDoc?.mnemonics?.showSpacesOnStaff ? (
           <StaffSpaceMnemonic as="h2" left="73%">
             {selectedClef === "TREBLE" ? "C" : "Eat"}
           </StaffSpaceMnemonic>
@@ -123,12 +123,12 @@ const Staff: React.FC<{
       </StyledLine>
 
       <StyledLine position="relative">
-        {sessionDoc?.mnemonics.showLinesOnStaff ? (
+        {sessionDoc?.mnemonics?.showLinesOnStaff ? (
           <StaffLineMnemonic as="h2" left="18%">
             {selectedClef === "TREBLE" ? "Boy" : "Do"}
           </StaffLineMnemonic>
         ) : null}
-        {sessionDoc?.mnemonics.showSpacesOnStaff ? (
+        {sessionDoc?.mnemonics?.showSpacesOnStaff ? (
           <StaffSpaceMnemonic as="h2" left="69%">
             {selectedClef === "TREBLE" ? "A" : "Cows"}
           </StaffSpaceMnemonic>
@@ -136,12 +136,12 @@ const Staff: React.FC<{
       </StyledLine>
 
       <StyledLine position="relative">
-        {sessionDoc?.mnemonics.showLinesOnStaff ? (
+        {sessionDoc?.mnemonics?.showLinesOnStaff ? (
           <StaffLineMnemonic as="h2" left="14%">
             {selectedClef === "TREBLE" ? "Good" : "Boys"}
           </StaffLineMnemonic>
         ) : null}
-        {sessionDoc?.mnemonics.showSpacesOnStaff ? (
+        {sessionDoc?.mnemonics?.showSpacesOnStaff ? (
           <StaffSpaceMnemonic as="h2" left="65%">
             {selectedClef === "TREBLE" ? "F" : "All"}
           </StaffSpaceMnemonic>
@@ -149,7 +149,7 @@ const Staff: React.FC<{
       </StyledLine>
 
       <StyledLine position="relative">
-        {sessionDoc?.mnemonics.showLinesOnStaff ? (
+        {sessionDoc?.mnemonics?.showLinesOnStaff ? (
           <StaffLineMnemonic as="h2" left="10%">
             {selectedClef === "TREBLE" ? "Every" : "Good"}
           </StaffLineMnemonic>
