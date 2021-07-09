@@ -28,14 +28,14 @@ const StyledLine = styled(Box)`
 
 const StaffLineMnemonic = styled(Heading)`
   position: absolute;
-  font-size: 3rem;
-  top: -2.4rem;
+  font-size: ${lineHeightInt * 1.32 + "rem"};
+  top: ${lineHeightInt * -1.05 + "rem"};
 `;
 
 const StaffSpaceMnemonic = styled(Heading)`
   position: absolute;
-  font-size: 3rem;
-  top: -1rem;
+  font-size: ${lineHeightInt * 1.32 + "rem"};
+  top: ${lineHeightInt * -0.45 + "rem"};
 `;
 
 const Staff: React.FC<{
@@ -56,9 +56,9 @@ const Staff: React.FC<{
     <Flex
       direction="column"
       align="center"
-      w="100%"
+      w="90%"
       position="relative"
-      marginTop="2.5rem"
+      margin="2.5rem auto 0 auto"
     >
       <StyledLedger
         style={{

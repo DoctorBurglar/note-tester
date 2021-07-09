@@ -1,8 +1,6 @@
 import * as React from "react";
-import {background, Flex, Heading} from "@chakra-ui/react";
 import {blackKeyWidth, answerStatus} from "../constants";
 import {BlackKey} from "../styles";
-import Flat from "./Flat";
 import {useSession} from "../hooks";
 
 type LowestBlackKeyProps = {

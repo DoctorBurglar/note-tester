@@ -3,7 +3,6 @@ import Staff from "./Staff";
 import {trebleNotes, bassNotes, clefs, answerStatus} from "../constants";
 import {Flex, Heading} from "@chakra-ui/react";
 import Keyboard from "./Keyboard";
-import {SignOut} from "./SignOut";
 import {useUser} from "reactfire";
 import {useParams} from "react-router-dom";
 import {useHistory} from "react-router-dom";

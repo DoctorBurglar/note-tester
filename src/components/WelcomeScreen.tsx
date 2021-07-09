@@ -1,12 +1,5 @@
 import * as React from "react";
-import {
-  Flex,
-  Image,
-  Heading,
-  UnorderedList,
-  ListItem,
-  List,
-} from "@chakra-ui/react";
+import {Flex, Image, Heading, UnorderedList, ListItem} from "@chakra-ui/react";
 import {Login} from "./Login";
 import Header from "./Header";
 
@@ -15,7 +8,7 @@ const WelcomeScreen = () => {
     "Hand pick the notes for your student to identify",
     "Display mnemonics on the staff to help beginners get started",
     "Optionally show the names of the notes on the keyboard",
-    "Practice reading up to 4 ledger lines above or below staff",
+    "Practice reading up to 4 ledger lines above or below the staff",
     "Absolutely free, no credit card required",
   ];
 

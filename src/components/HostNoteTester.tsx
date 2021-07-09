@@ -8,6 +8,22 @@ import {useUser} from "reactfire";
 import {useHistory, useParams} from "react-router-dom";
 import {useSession} from "../hooks";
 import Header from "./Header";
+import styled from "@emotion/styled";
+
+const Content = styled(Flex)`
+  justify-content: space-around;
+  margin: 0 auto;
+  direction: column;
+  // @media (min-width: 1100px) {
+  //   width: 70rem;
+  // }
+  // @media (min-width: 1315px) {
+  //   width: 85rem;
+  // }
+  // @media (min-width: 1818px) {
+  //   width: 120rem;
+  // }
+`;
 
 interface IParams {
   sessionId: string;
@@ -57,13 +73,7 @@ function HostNoteTester() {
           </span>
         </Heading>
       </Flex>
-      <Flex
-        justifyContent="space-around"
-        w="85rem"
-        margin="0 auto"
-        direction="column"
-      >
-        {/* <Button onClick={handleSignIn}>Sign In</Button> */}
+      <Content justifyContent="space-around" margin="0 auto" direction="column">
         <Staff
           selectedNote={sessionDoc?.selectedNote}
           selectedClef={sessionDoc?.selectedClef}
@@ -89,7 +99,7 @@ function HostNoteTester() {
           isGuestKeyboard={false}
           sessionId={sessionId}
         />
-      </Flex>
+      </Content>
     </div>
   );
 }
