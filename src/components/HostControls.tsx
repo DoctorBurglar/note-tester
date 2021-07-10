@@ -58,7 +58,7 @@ const HostControls: React.FC<hostControlsProps> = ({
             sessionDoc?.selectedClef === clefs.TREBLE ? "lightblue" : undefined
           }
         >
-          Treble Clef
+          Treble
         </StyledButtonLarge>
         <StyledButtonLarge
           onClick={() => setSelectedClef(clefs.BASS)}
@@ -66,7 +66,7 @@ const HostControls: React.FC<hostControlsProps> = ({
             sessionDoc?.selectedClef === clefs.BASS ? "lightblue" : undefined
           }
         >
-          Bass Clef
+          Bass
         </StyledButtonLarge>
       </Flex>
       <Flex justify="flex-end" align="center" w="28%">

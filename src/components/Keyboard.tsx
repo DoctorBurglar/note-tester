@@ -101,7 +101,7 @@ const Keyboard: React.FC<IKeyboardProps> = ({
   return (
     <Flex w="100%" justify="center">
       <Flex
-        w="90%"
+        width={["95%", null, null, "90%"]}
         h="13rem"
         alignItems="stretch"
         position="relative"
@@ -109,7 +109,7 @@ const Keyboard: React.FC<IKeyboardProps> = ({
       >
         {notes.map((note, ind) => {
           return (
-            <Box position="relative" key={note}>
+            <Box position="relative" key={note} w="100%">
               <WhiteKeyComp
                 note={note}
                 ind={ind}

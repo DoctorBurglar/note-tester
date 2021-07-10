@@ -15,6 +15,7 @@ const Header: React.FC<HeaderProps> = ({children, isNotAuthenticated}) => {
       bg="var(--grey-dark)"
       align="center"
       justify="space-between"
+      //       direction={{base: "column", md: "row"}}
     >
       <Heading
         as="h2"

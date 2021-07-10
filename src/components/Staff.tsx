@@ -18,6 +18,7 @@ const StyledLedger = styled(Box)`
   min-height: ${lineHeight};
   border-bottom: 5px solid black;
   width: 7.5rem;
+  transform: translateX(3rem);
 `;
 
 const StyledLine = styled(Box)`
@@ -29,13 +30,13 @@ const StyledLine = styled(Box)`
 const StaffLineMnemonic = styled(Heading)`
   position: absolute;
   font-size: ${lineHeightInt * 1.32 + "rem"};
-  top: ${lineHeightInt * -1.05 + "rem"};
+  top: ${lineHeightInt * 0.05 + "rem"};
 `;
 
 const StaffSpaceMnemonic = styled(Heading)`
   position: absolute;
-  font-size: ${lineHeightInt * 1.32 + "rem"};
-  top: ${lineHeightInt * -0.45 + "rem"};
+  // font-size: ${lineHeightInt * 1.32 + "rem"};
+  top: ${lineHeightInt * 0.63 + "rem"};
 `;
 
 const Staff: React.FC<{
@@ -51,6 +52,11 @@ const Staff: React.FC<{
   const ledgerValue = Number.parseFloat(notePosition);
 
   const {sessionDoc} = useSession(sessionId);
+
+  const mnemonicStyle = {
+    fontSize: lineHeightInt * 1.25 + "rem",
+    lineHeight: "1.25",
+  };
 
   return (
     <Flex
@@ -98,12 +104,17 @@ const Staff: React.FC<{
 
       <StyledLine position="relative">
         {sessionDoc?.mnemonics?.showLinesOnStaff ? (
-          <StaffLineMnemonic as="h2" left="26%">
+          <StaffLineMnemonic as="h2" left="30%" style={mnemonicStyle}>
             {selectedClef === "TREBLE" ? "Fine" : "Always"}
           </StaffLineMnemonic>
         ) : null}
         {sessionDoc?.mnemonics?.showSpacesOnStaff ? (
-          <StaffSpaceMnemonic as="h2" left="77%">
+          <StaffSpaceMnemonic
+            as="h2"
+            left="76%"
+            fontSize={lineHeightInt * 1.25 + "rem"}
+            style={mnemonicStyle}
+          >
             {selectedClef === "TREBLE" ? "E" : "Grass"}
           </StaffSpaceMnemonic>
         ) : null}
@@ -111,12 +122,22 @@ const Staff: React.FC<{
 
       <StyledLine position="relative">
         {sessionDoc?.mnemonics?.showLinesOnStaff ? (
-          <StaffLineMnemonic as="h2" left="22%">
+          <StaffLineMnemonic
+            as="h2"
+            left="28%"
+            fontSize={lineHeightInt * 1.25 + "rem"}
+            style={mnemonicStyle}
+          >
             {selectedClef === "TREBLE" ? "Does" : "Fine"}
           </StaffLineMnemonic>
         ) : null}
         {sessionDoc?.mnemonics?.showSpacesOnStaff ? (
-          <StaffSpaceMnemonic as="h2" left="73%">
+          <StaffSpaceMnemonic
+            as="h2"
+            left="74%"
+            fontSize={lineHeightInt * 1.25 + "rem"}
+            style={mnemonicStyle}
+          >
             {selectedClef === "TREBLE" ? "C" : "Eat"}
           </StaffSpaceMnemonic>
         ) : null}
@@ -124,12 +145,22 @@ const Staff: React.FC<{
 
       <StyledLine position="relative">
         {sessionDoc?.mnemonics?.showLinesOnStaff ? (
-          <StaffLineMnemonic as="h2" left="18%">
+          <StaffLineMnemonic
+            as="h2"
+            left="26%"
+            fontSize={lineHeightInt * 1.25 + "rem"}
+            style={mnemonicStyle}
+          >
             {selectedClef === "TREBLE" ? "Boy" : "Do"}
           </StaffLineMnemonic>
         ) : null}
         {sessionDoc?.mnemonics?.showSpacesOnStaff ? (
-          <StaffSpaceMnemonic as="h2" left="69%">
+          <StaffSpaceMnemonic
+            as="h2"
+            left="72%"
+            fontSize={lineHeightInt * 1.25 + "rem"}
+            style={mnemonicStyle}
+          >
             {selectedClef === "TREBLE" ? "A" : "Cows"}
           </StaffSpaceMnemonic>
         ) : null}
@@ -137,12 +168,22 @@ const Staff: React.FC<{
 
       <StyledLine position="relative">
         {sessionDoc?.mnemonics?.showLinesOnStaff ? (
-          <StaffLineMnemonic as="h2" left="14%">
+          <StaffLineMnemonic
+            as="h2"
+            left="24%"
+            fontSize={lineHeightInt * 1.25 + "rem"}
+            style={mnemonicStyle}
+          >
             {selectedClef === "TREBLE" ? "Good" : "Boys"}
           </StaffLineMnemonic>
         ) : null}
         {sessionDoc?.mnemonics?.showSpacesOnStaff ? (
-          <StaffSpaceMnemonic as="h2" left="65%">
+          <StaffSpaceMnemonic
+            as="h2"
+            left="70%"
+            fontSize={lineHeightInt * 1.25 + "rem"}
+            style={mnemonicStyle}
+          >
             {selectedClef === "TREBLE" ? "F" : "All"}
           </StaffSpaceMnemonic>
         ) : null}
@@ -150,7 +191,12 @@ const Staff: React.FC<{
 
       <StyledLine position="relative">
         {sessionDoc?.mnemonics?.showLinesOnStaff ? (
-          <StaffLineMnemonic as="h2" left="10%">
+          <StaffLineMnemonic
+            as="h2"
+            left="22%"
+            fontSize={lineHeightInt * 1.25 + "rem"}
+            style={mnemonicStyle}
+          >
             {selectedClef === "TREBLE" ? "Every" : "Good"}
           </StaffLineMnemonic>
         ) : null}
@@ -193,7 +239,10 @@ const Staff: React.FC<{
       />
 
       {/* This is the note*/}
-      <Flex transform={`translateY(${notePosition}) `} position="relative">
+      <Flex
+        transform={`translateY(${notePosition}) translateX(3rem)`}
+        position="relative"
+      >
         <Box
           maxWidth="5rem"
           objectFit="contain"

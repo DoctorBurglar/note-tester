@@ -76,7 +76,7 @@ const BlackKeyComp: React.FC<BlackKeyCompProps> = ({
       style={{
         backgroundColor: determineBackgroundColor(),
       }}
-      left={`calc(${whiteKeyWidth} - (${blackKeyWidth} / 2))`}
+      left={`calc(100% - (${blackKeyWidth}) / 2) `}
       onClick={isGuestKeyboard ? handleClick : () => {}}
     >
       {children}
