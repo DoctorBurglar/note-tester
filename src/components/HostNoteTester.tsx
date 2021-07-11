@@ -9,6 +9,7 @@ import {useHistory, useParams} from "react-router-dom";
 import {useSession} from "../hooks";
 import Header from "./Header";
 import styled from "@emotion/styled";
+import GuestScore from "./GuestScore";
 
 const Content = styled(Flex)`
   justify-content: space-around;
@@ -48,12 +49,23 @@ function HostNoteTester() {
   return (
     <div style={{width: "100vw"}}>
       <Header />
-      <Flex w="100%" h="0" justify="flex-end">
-        <Heading as="h3" marginRight="2rem" fontSize="2rem">
-          {`SessionCode: `}
-          <span
+      <Flex w="100%" h="0" justify="space-between" align="flex-start">
+        <GuestScore sessionId={sessionId} isHost />
+        <Flex
+          direction={{base: "column", md: "row"}}
+          marginRight="2rem"
+          marginTop="1rem"
+        >
+          <Heading
+            as="h3"
+            margin={{base: "0 2rem 0 0", md: "0 2rem 0 0"}}
+            fontSize="1.5rem"
+          >
+            {`Code: `}
+          </Heading>
+          <Heading
+            as="h3"
             style={{
-              marginLeft: ".7rem",
               fontSize: "1.5rem",
               color: "var(--main-color-dark)",
               cursor: "pointer",
@@ -61,8 +73,8 @@ function HostNoteTester() {
             onClick={handleCopy}
           >
             {sessionDoc?.sessionCode}
-          </span>
-        </Heading>
+          </Heading>
+        </Flex>
       </Flex>
       <Content>
         <Staff

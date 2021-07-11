@@ -63,6 +63,7 @@ const Staff: React.FC<{
       direction="column"
       align="center"
       w="90%"
+      maxWidth="var(--max-width)"
       position="relative"
       margin="2.5rem auto 0 auto"
     >
@@ -247,24 +248,24 @@ const Staff: React.FC<{
           maxWidth="5rem"
           objectFit="contain"
           position="absolute"
-          top={-0.9 * lineHeightInt + "rem"}
-          left={-0.9 * lineHeightInt + "rem"}
+          top={-1.2 * lineHeightInt + "rem"}
+          left={-1.1 * lineHeightInt + "rem"}
           display={selectedNote && selectedNote[1] === "b" ? "block" : "none"}
         >
           {/* <img src={flat} alt="flat sign" /> */}
-          <Flat width={11 * lineHeightInt} fill="black" />
+          <Flat width={0.9 * lineHeightInt} fill="black" />
         </Box>
         <Box
           position="absolute"
-          top={-0.65 * lineHeightInt + "rem"}
-          left={-1.26 * lineHeightInt + "rem"}
+          top={-0.77 * lineHeightInt + "rem"}
+          left={-1.9 * lineHeightInt + "rem"}
           display={selectedNote && selectedNote[1] === "s" ? "block" : "none"}
         >
           {/* <img src={sharp} alt="sharp sign" /> */}
           <Sharp
-            width={18 * lineHeightInt}
+            width={2.4 * lineHeightInt}
             fill="black"
-            height={37 * lineHeightInt}
+            height={2.6 * lineHeightInt}
           />{" "}
           ;
         </Box>

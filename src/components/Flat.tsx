@@ -5,10 +5,10 @@ type FlatProps = {
   width: number;
 };
 
-const Flat: React.FC<FlatProps> = ({ fill, width }) => {
+const Flat: React.FC<FlatProps> = ({fill, width}) => {
   return (
     <svg
-      width={width}
+      width={width + "rem"}
       viewBox="0 0 59 158"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

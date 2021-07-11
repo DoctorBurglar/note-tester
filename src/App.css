@@ -3,6 +3,7 @@
   --main-color-dark: #478aa0;
   --grey-dark: #434343;
   --white: #f8f8f8;
+  --max-width: 120rem;
 }
 
 html {
@@ -10,6 +11,41 @@ html {
   box-sizing: border-box;
   color: var(--grey-dark);
 }
+
+@media (min-width: 1px) {
+  html {
+    font-size: 9px;
+  }
+}
+
+@media (min-width: 30em) {
+  html {
+    font-size: 10px;
+  }
+}
+
+@media (min-width: 48em) {
+  html {
+    font-size: 12px;
+  }
+}
+@media (min-width: 62em) {
+  html {
+    font-size: 15px;
+  }
+}
+
+/* @media (min-width: 80em) {
+  html {
+    font-size: 17px;
+  }
+}
+
+@media (min-width: 96em) {
+  html {
+    font-size: 19px;
+  }
+} */
 
 *,
 *::before,

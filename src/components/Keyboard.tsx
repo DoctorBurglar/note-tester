@@ -1,5 +1,5 @@
 import * as React from "react";
-import {Flex, Box} from "@chakra-ui/react";
+import {Flex, Box, Button} from "@chakra-ui/react";
 import {keyboardWidth} from "../constants";
 import WhiteKeyComp from "./WhiteKeyComp";
 import BlackKeyComp from "./BlackKeyComp";
@@ -98,11 +98,26 @@ const Keyboard: React.FC<IKeyboardProps> = ({
     }
   };
 
+  const divRef = React.useRef(null);
+  if (divRef !== null) {
+    console.log(divRef.current);
+    console.log(window.screenY);
+  }
+
   return (
-    <Flex w="100%" justify="center">
+    <Flex
+      ref={divRef}
+      w="100vw"
+      justify="flex-start"
+      direction="column"
+      align="center"
+      h="17rem"
+      overflowX="scroll"
+    >
       <Flex
-        width={["95%", null, null, "90%"]}
-        h="13rem"
+        width={["98%", null, null, null, "90%"]}
+        maxWidth="var(--max-width)"
+        minHeight="13rem"
         alignItems="stretch"
         position="relative"
         cursor="pointer"
@@ -134,9 +149,9 @@ const Keyboard: React.FC<IKeyboardProps> = ({
                   >
                     {" "}
                     {note[0] === "B" || note[0] === "E" ? (
-                      <Flat width={13} fill="black" />
+                      <Flat width={1} fill="black" />
                     ) : (
-                      <Sharp fill="black" width={17} height={30} />
+                      <Sharp fill="black" width={2} height={2.8} />
                     )}
                   </WhiteKeyOverlay>
                 ) : null}

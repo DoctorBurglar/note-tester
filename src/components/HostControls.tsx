@@ -5,6 +5,8 @@ import styled from "@emotion/styled";
 import {useSession} from "../hooks";
 import GuestScore from "./GuestScore";
 import {StyledButtonSmall} from "../styles";
+import TrebleButton from "./TrebleButton";
+import BassButton from "./BassButton";
 
 const StyledButtonLarge = styled(Button)`
   font-size: 2rem;
@@ -48,11 +50,55 @@ const HostControls: React.FC<hostControlsProps> = ({
     sessionRef.update({displayingNotes: !sessionDoc?.displayingNotes}),
   ];
 
+  const handleSelectClef = (clef: string) => {
+    sessionRef.update({selectedClef: clef, selectedNote: "", answer: ""});
+  };
+
   return (
-    <Flex w="90%" margin="0 auto" justify="center">
-      <GuestScore sessionId={sessionId} isHost />
-      <Flex justifyContent="center" marginBottom="1rem" w="40%">
-        <StyledButtonLarge
+    <Flex
+      width={["98%", null, null, null, "90%"]}
+      margin="0 auto"
+      justify="space-between"
+      maxWidth="var(--max-width)"
+    >
+      {/* <GuestScore sessionId={sessionId} isHost /> */}
+
+      <Flex justify="flex-start" align="center" w="28%">
+        <StyledButtonSmall
+          alignSelf="center"
+          onClick={handleDisplayNotes}
+          bg={sessionDoc?.displayingNotes ? "lightblue" : ""}
+        >
+          Keys
+        </StyledButtonSmall>
+        <StyledButtonSmall
+          onClick={handleLineMnemonic}
+          bg={sessionDoc?.mnemonics.showLinesOnStaff ? "lightblue" : ""}
+        >
+          Lines
+        </StyledButtonSmall>
+        <StyledButtonSmall
+          onClick={handleSpaceMnemonic}
+          bg={sessionDoc?.mnemonics.showSpacesOnStaff ? "lightblue" : ""}
+        >
+          Spaces
+        </StyledButtonSmall>
+      </Flex>
+      <Flex
+        marginBottom="1rem"
+        w="40%"
+        justify="flex-end"
+        align={{base: "flex-end", md: "flex-start"}}
+      >
+        <TrebleButton
+          handleSelectedClef={handleSelectClef}
+          sessionId={sessionId}
+        />
+        <BassButton
+          handleSelectedClef={handleSelectClef}
+          sessionId={sessionId}
+        />
+        {/* <StyledButtonLarge
           onClick={() => setSelectedClef(clefs.TREBLE)}
           backgroundColor={
             sessionDoc?.selectedClef === clefs.TREBLE ? "lightblue" : undefined
@@ -67,28 +113,7 @@ const HostControls: React.FC<hostControlsProps> = ({
           }
         >
           Bass
-        </StyledButtonLarge>
-      </Flex>
-      <Flex justify="flex-end" align="center" w="28%">
-        <StyledButtonSmall
-          alignSelf="center"
-          onClick={handleDisplayNotes}
-          bg={sessionDoc?.displayingNotes ? "lightblue" : ""}
-        >
-          Note Names
-        </StyledButtonSmall>
-        <StyledButtonSmall
-          onClick={handleLineMnemonic}
-          bg={sessionDoc?.mnemonics.showLinesOnStaff ? "lightblue" : ""}
-        >
-          Lines
-        </StyledButtonSmall>
-        <StyledButtonSmall
-          onClick={handleSpaceMnemonic}
-          bg={sessionDoc?.mnemonics.showSpacesOnStaff ? "lightblue" : ""}
-        >
-          Spaces
-        </StyledButtonSmall>
+        </StyledButtonLarge> */}
       </Flex>
     </Flex>
   );

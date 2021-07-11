@@ -17,6 +17,14 @@ export const WhiteKey = styled(Flex)`
   &:hover > .accidentals {
     display: flex !important;
   }
+
+  @media (min-width: 15em) {
+    min-width: 3rem;
+  }
+
+  @media (min-width: 60rem) {
+    min-width: ${whiteKeyWidth};
+  }
 `;
 
 export const BlackKey = styled(Box)`
@@ -44,4 +52,5 @@ export const StyledButtonSmall = styled(Button)`
   border-radius: 5px;
   padding: 0.3rem 1rem;
   cursor: pointer;
+  min-width: 7rem;
 `;

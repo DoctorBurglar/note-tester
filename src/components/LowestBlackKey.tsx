@@ -24,6 +24,7 @@ const LowestBlackKey: React.FC<LowestBlackKeyProps> = ({
 }) => {
   const {sessionDoc} = useSession(sessionId);
 
+  // TODO: fix bug where Eb is highlighted when E# is selected!
   const determineBackgroundColor = () => {
     console.log(
       thisBlackKeyIsSelected(note, ind),

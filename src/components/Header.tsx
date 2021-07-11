@@ -15,11 +15,11 @@ const Header: React.FC<HeaderProps> = ({children, isNotAuthenticated}) => {
       bg="var(--grey-dark)"
       align="center"
       justify="space-between"
-      //       direction={{base: "column", md: "row"}}
+      //       direction={{base: "column", sm: "row"}}
     >
       <Heading
         as="h2"
-        marginLeft="2rem"
+        marginLeft={{base: "1rem", sm: "1.5rem", md: "2rem"}}
         color="var(--white)"
         fontWeight="300"
         fontSize="2rem"
@@ -32,7 +32,7 @@ const Header: React.FC<HeaderProps> = ({children, isNotAuthenticated}) => {
             as={NavLink}
             to="/"
             color="white"
-            marginRight="4rem"
+            marginRight={{base: "1rem", md: "4rem"}}
             fontSize="1.3rem"
           >
             Sessions
