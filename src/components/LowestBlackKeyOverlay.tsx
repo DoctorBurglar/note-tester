@@ -42,7 +42,7 @@ const LowestBlackKeyOverlay: React.FC<LowestBlackKeyOverlayProps> = ({
         }
       >
         <Flat
-          width={13}
+          width={1}
           fill={thisBlackKeyIsSelected(note, ind) ? "black" : "white"}
         />
       </Heading>

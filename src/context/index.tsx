@@ -1,6 +1,7 @@
 import React from "react";
 import {FirebaseAppProvider, SuspenseWithPerf} from "reactfire";
 import {BrowserRouter} from "react-router-dom";
+import {ChakraProvider} from "@chakra-ui/react";
 
 const firebaseConfig = {
   apiKey: "AIzaSyD7Zxjjzqnc7-BvZ7xLLjR2KqStBEmmDVg",
@@ -15,12 +16,14 @@ const firebaseConfig = {
 const AppProviders: React.FC = ({children}) => {
   return (
     <FirebaseAppProvider firebaseConfig={firebaseConfig}>
-      <SuspenseWithPerf
-        fallback={<div>loading...</div>}
-        traceId={"loading-app-status"}
-      >
-        <BrowserRouter>{children}</BrowserRouter>
-      </SuspenseWithPerf>
+      <ChakraProvider>
+        <SuspenseWithPerf
+          fallback={<div>loading...</div>}
+          traceId={"loading-app-status"}
+        >
+          <BrowserRouter>{children}</BrowserRouter>
+        </SuspenseWithPerf>
+      </ChakraProvider>
     </FirebaseAppProvider>
   );
 };

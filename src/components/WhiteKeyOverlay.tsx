@@ -30,7 +30,7 @@ const WhiteKeyOverlay: React.FC<WhiteKeyOverlayProps> = ({
       {isBOrE || isCOrF ? (
         <Flex
           position="relative"
-          h="60%"
+          height="60%"
           justify={isBOrE ? "flex-end" : "flex-start"}
           align="center"
           overflow="hidden"
@@ -39,8 +39,8 @@ const WhiteKeyOverlay: React.FC<WhiteKeyOverlayProps> = ({
         >
           {ind === 0 && isCOrF ? null : (
             <Box
-              marginRight={isBOrE ? `calc(0.11 * ${whiteKeyWidth})` : "none"}
-              marginLeft={isCOrF ? `calc(0.11 * ${whiteKeyWidth})` : "none"}
+              marginRight={isBOrE ? `calc(2.5 * ${whiteKeyWidth})` : "none"}
+              marginLeft={isCOrF ? `calc(2.5 * ${whiteKeyWidth})` : "none"}
               onClick={(event) => handleWhiteAccidental(event, ind)}
               borderBottom={
                 thisWhiteKeyIsSelected(note, ind) &&

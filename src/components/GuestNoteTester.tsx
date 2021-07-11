@@ -1,7 +1,7 @@
 import React from "react";
 import Staff from "./Staff";
 import {trebleNotes, bassNotes, clefs, answerStatus} from "../constants";
-import {Flex, Heading} from "@chakra-ui/react";
+import {Flex, Heading, Box} from "@chakra-ui/react";
 import Keyboard from "./Keyboard";
 import {useUser} from "reactfire";
 import {useParams} from "react-router-dom";
@@ -82,46 +82,27 @@ function GuestNoteTester() {
     handleAnswer(note, answerStatus.INCORRECT);
   };
 
-  // const correctArray = [
-  //   "Way to B#!",
-  //   "You are NOTE bad at this!",
-  //   "Are you C4? Because that answer was explosive!",
-  //   "A law FERMATA hire you, because you're smart!",
-  // ];
-
-  // const incorrectArray = [
-  //   "That one caused you some TREBLE",
-  //   "finding that note was not your FORTE",
-  // ];
-
   return (
     <>
       {sessionDoc?.guestId && sessionDoc?.guestId === data.uid ? (
-        <div className="App">
+        <Box w="100vw">
           <Header />
           <Flex
             justifyContent="space-around"
-            w="85rem"
+            w="100%"
             margin="0 auto"
             direction="column"
+            align="center"
           >
-            {/* <Button onClick={handleSignIn}>Sign In</Button> */}
             <Staff
               selectedNote={sessionDoc?.selectedNote}
               selectedClef={sessionDoc?.selectedClef}
               sessionId={sessionId}
             />
-            <Flex justifyContent="space-between">
+            <Flex justifyContent="space-between" w="90%">
               <GuestScore sessionId={sessionId} />
 
               <Heading as="h2" marginLeft="2rem">
-                {/* {sessionDoc?.answerStatus === answerStatus.CORRECT
-              ? correctArray[Math.floor(Math.random() * correctArray.length)]
-              : sessionDoc?.answerStatus === answerStatus.INCORRECT
-              ? incorrectArray[
-                  Math.floor(Math.random() * incorrectArray.length)
-                ]
-              : ""} */}
                 {sessionDoc?.answerStatus}
               </Heading>
             </Flex>
@@ -133,7 +114,7 @@ function GuestNoteTester() {
               sessionId={sessionId}
             />
           </Flex>
-        </div>
+        </Box>
       ) : (
         <p>page not found, head back to sessions</p>
       )}

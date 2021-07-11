@@ -19,16 +19,33 @@ const GuestScore: React.FC<{sessionId: string; isHost?: boolean}> = ({
   };
 
   return (
-    <Flex w="28%" justify="space-between" align="center">
-      <Heading as="h2">Score:</Heading>
-      <Heading as="h2">{`${sessionDoc?.identifiedNotes} / ${sessionDoc?.totalNotes}`}</Heading>
-      <Heading as="h2">
+    <Flex
+      w="10%"
+      minWidth="8rem"
+      align={{base: "flex-start", md: "center"}}
+      margin="1rem 0 0 2rem"
+      direction={{base: "column", md: "row"}}
+    >
+      <Flex
+        align="center"
+        minWidth="10rem"
+        marginBottom={{base: "1rem", md: "0"}}
+      >
+        <Heading as="h2" fontSize="1.5rem" marginRight="1rem">
+          Score:
+        </Heading>
+        <Heading
+          as="h2"
+          fontSize="1.5rem"
+        >{`${sessionDoc?.identifiedNotes} / ${sessionDoc?.totalNotes}`}</Heading>
+      </Flex>
+      {/* <Heading as="h2">
         {sessionDoc?.totalNotes === 0
           ? ""
           : `${Math.round(
               (sessionDoc?.identifiedNotes / sessionDoc?.totalNotes) * 100
             )}%`}
-      </Heading>
+      </Heading> */}
       {isHost ? (
         <StyledButtonSmall onClick={handleResetScore}>Reset</StyledButtonSmall>
       ) : null}

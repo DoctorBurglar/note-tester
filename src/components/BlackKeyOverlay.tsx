@@ -63,8 +63,8 @@ const BlackKeyOverlay: React.FC<BlackKeyOverlayProps> = ({
         >
           <Sharp
             fill={thisBlackKeyIsSelected(note, ind) ? "black" : "white"}
-            width={17}
-            height={30}
+            width={1.5}
+            height={2.4}
           />
         </Box>
       </Flex>
@@ -88,7 +88,7 @@ const BlackKeyOverlay: React.FC<BlackKeyOverlayProps> = ({
           }
         >
           <Flat
-            width={13}
+            width={1}
             fill={thisBlackKeyIsSelected(note, ind) ? "black" : "white"}
           />
         </Heading>

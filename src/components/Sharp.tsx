@@ -6,11 +6,11 @@ type SharpProps = {
   height: number;
 };
 
-const Sharp: React.FC<SharpProps> = ({ fill, width, height }) => {
+const Sharp: React.FC<SharpProps> = ({fill, width, height}) => {
   return (
     <svg
-      width={width}
-      height={height}
+      width={width + "rem"}
+      height={height + "rem"}
       viewBox="0 0 87 171"
       fill={fill}
       xmlns="http://www.w3.org/2000/svg"

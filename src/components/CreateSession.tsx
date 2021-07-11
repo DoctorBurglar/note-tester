@@ -53,8 +53,8 @@ const CreateSession: React.FC = () => {
 
   const handleCreateSession = async () => {
     let oldSessionId;
-    if (userDoc.hostSessionId !== "") {
-      oldSessionId = userDoc.hostSessionId;
+    if (userDoc?.hostSessionId !== "") {
+      oldSessionId = userDoc?.hostSessionId;
     }
 
     const newSessionCode = createSessionCode(6);

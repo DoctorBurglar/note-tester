@@ -106,11 +106,13 @@ const WhiteKeyComp: React.FC<WhiteKeyCompProps> = ({
           </Heading>
         </Flex>
       </WhiteKey>
-      {note === "C4" ? (
-        <Heading as="h1" textAlign="center" marginTop=".5rem">
-          M
-        </Heading>
-      ) : null}
+      <Flex w="100%" justify="center">
+        {note === "C4" ? (
+          <Heading as="h1" textAlign="center" marginTop=".5rem">
+            M
+          </Heading>
+        ) : null}
+      </Flex>
     </>
   );
 };

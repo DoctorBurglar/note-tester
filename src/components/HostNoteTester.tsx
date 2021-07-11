@@ -2,27 +2,19 @@ import React from "react";
 import Staff from "./Staff";
 import HostControls from "./HostControls";
 import {trebleNotes, bassNotes, clefs} from "../constants";
-import {Flex, Heading} from "@chakra-ui/react";
+import {Flex, Heading, Box} from "@chakra-ui/react";
 import Keyboard from "./Keyboard";
 import {useUser} from "reactfire";
 import {useHistory, useParams} from "react-router-dom";
 import {useSession} from "../hooks";
 import Header from "./Header";
 import styled from "@emotion/styled";
+import GuestScore from "./GuestScore";
 
 const Content = styled(Flex)`
   justify-content: space-around;
   margin: 0 auto;
-  direction: column;
-  // @media (min-width: 1100px) {
-  //   width: 70rem;
-  // }
-  // @media (min-width: 1315px) {
-  //   width: 85rem;
-  // }
-  // @media (min-width: 1818px) {
-  //   width: 120rem;
-  // }
+  flex-direction: column;
 `;
 
 interface IParams {
@@ -55,14 +47,25 @@ function HostNoteTester() {
   };
 
   return (
-    <div className="App">
+    <div style={{width: "100vw"}}>
       <Header />
-      <Flex w="100%" h="0" justify="flex-end">
-        <Heading as="h3" marginRight="2rem">
-          {`SessionCode: `}
-          <span
+      <Flex w="100%" h="0" justify="space-between" align="flex-start">
+        <GuestScore sessionId={sessionId} isHost />
+        <Flex
+          direction={{base: "column", md: "row"}}
+          marginRight="2rem"
+          marginTop="1rem"
+        >
+          <Heading
+            as="h3"
+            margin={{base: "0 2rem 0 0", md: "0 2rem 0 0"}}
+            fontSize="1.5rem"
+          >
+            {`Code: `}
+          </Heading>
+          <Heading
+            as="h3"
             style={{
-              marginLeft: ".7rem",
               fontSize: "1.5rem",
               color: "var(--main-color-dark)",
               cursor: "pointer",
@@ -70,10 +73,10 @@ function HostNoteTester() {
             onClick={handleCopy}
           >
             {sessionDoc?.sessionCode}
-          </span>
-        </Heading>
+          </Heading>
+        </Flex>
       </Flex>
-      <Content justifyContent="space-around" margin="0 auto" direction="column">
+      <Content>
         <Staff
           selectedNote={sessionDoc?.selectedNote}
           selectedClef={sessionDoc?.selectedClef}
