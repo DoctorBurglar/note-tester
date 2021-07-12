@@ -19,7 +19,7 @@ export const WhiteKey = styled(Flex)`
   }
 
   @media (min-width: 15em) {
-    min-width: 3rem;
+    min-width: 4.5rem;
   }
 
   @media (min-width: 60rem) {
@@ -48,7 +48,7 @@ export const BlackKey = styled(Box)`
 
 export const StyledButtonSmall = styled(Button)`
   font-size: 1rem;
-  margin: 0 0.3rem;
+  margin: 0 0.5rem 0.3rem 0.5rem;
   border-radius: 5px;
   padding: 0.3rem 1rem;
   cursor: pointer;
