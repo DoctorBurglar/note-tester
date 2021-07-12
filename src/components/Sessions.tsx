@@ -13,6 +13,15 @@ const SessionButton = styled(Button)`
   border-radius: 5px;
   padding: 1.3rem 5rem;
   font-size: 1.5rem;
+  height: 3rem;
+`;
+
+const SessionBox = styled(Flex)`
+  flex-direction: column;
+  width: 30%;
+  min-width: 22rem;
+  justify-content: space-between;
+  margin: 0 4rem 5rem 4rem;
 `;
 interface IUser {
   uid: string;
@@ -22,7 +31,7 @@ interface IUser {
   photoURL: string;
 }
 
-const CreateSession: React.FC = () => {
+const Sessions: React.FC = () => {
   const [sessionCodeInput, setSessionCodeInput] = React.useState("");
 
   const {data} = useUser();
@@ -115,38 +124,69 @@ const CreateSession: React.FC = () => {
   return (
     <Flex width="100%" direction="column" align="center">
       <Header />
-      <Flex w="50%" justify="space-between" marginTop="5rem">
-        <Flex direction="column" w="40%" justify="space-between">
-          <Heading as="h1" fontSize="3rem" fontWeight="500">
-            <span style={{color: "var(--main-color-dark)"}}>Create</span> a new
-            session
-          </Heading>
-          <Flex direction="column" fontSize="1.5rem">
-            <p>
-              You’ll get a session code you can send to a student. The app will
-              keep score as they identify notes on the staff. Or just screen
-              share over Zoom and have them say the notes out loud!
-            </p>
-            <p>
-              You can display helpful mnemonics on the treble staff and bass
-              staff, and show the note names on the keyboard.
-            </p>
+      <Flex
+        w="95%"
+        justify="center"
+        marginTop="3rem"
+        flexWrap="wrap"
+        maxWidth="120rem"
+      >
+        <SessionBox>
+          <Flex direction="column">
+            <Heading
+              as="h1"
+              fontSize="2.3rem"
+              fontWeight="500"
+              marginBottom="2rem"
+            >
+              <span style={{color: "var(--main-color-dark)"}}>Create</span> a
+              new session
+            </Heading>
+            <Flex
+              display={{base: "none", sm: "flex"}}
+              direction="column"
+              fontSize="1.5rem"
+              justify="space-between"
+              marginBottom="2rem"
+            >
+              <p style={{marginBottom: "2rem"}}>
+                You’ll get a session code you can send to a student. The app
+                will keep score as they identify notes on the staff.
+              </p>
+              <p>
+                You can display helpful mnemonics on the treble staff and bass
+                staff, and show the note names on the keyboard.
+              </p>
+            </Flex>
           </Flex>
 
-          <SessionButton onClick={handleCreateSession}>
-            Host Session
-          </SessionButton>
-        </Flex>
+          <Flex direction="column" justifyContent="flex-end">
+            <SessionButton onClick={handleCreateSession} bg="purple">
+              Host Session
+            </SessionButton>
+          </Flex>
+        </SessionBox>
 
-        <Flex direction="column" w="40%" justify="space-between">
-          <Flex direction="column" h="40%">
-            <Heading as="h1" fontSize="3rem" fontWeight="500">
+        <SessionBox>
+          <Flex direction="column">
+            <Heading
+              as="h1"
+              fontSize="2.3rem"
+              fontWeight="500"
+              marginBottom="2rem"
+            >
               {" "}
               <span style={{color: "var(--main-color-dark)"}}>Join</span> a
               session
             </Heading>
-            <Flex direction="column" fontSize="1.5rem">
-              <p>
+            <Flex
+              display={{base: "none", sm: "flex"}}
+              direction="column"
+              fontSize="1.5rem"
+              justify="space-between"
+              marginBottom="2rem"
+            >
+              <p style={{marginBottom: "2rem"}}>
                 Did your music teacher say something about entering a code
                 somewhere? Enter it below and join their session to learn how to
                 read notes!
@@ -155,10 +195,10 @@ const CreateSession: React.FC = () => {
             </Flex>
           </Flex>
 
-          <Flex direction="column">
+          <Flex direction="column" justify="flex-end">
             <Input
               value={sessionCodeInput}
-              marginBottom="1rem"
+              // marginBottom="1rem"
               placeholder="Session Code"
               onChange={handleSessionCodeInput}
             />
@@ -166,10 +206,10 @@ const CreateSession: React.FC = () => {
               Join Session
             </SessionButton>
           </Flex>
-        </Flex>
+        </SessionBox>
       </Flex>
     </Flex>
   );
 };
 
-export {CreateSession};
+export {Sessions};

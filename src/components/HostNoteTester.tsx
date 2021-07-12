@@ -2,7 +2,7 @@ import React from "react";
 import Staff from "./Staff";
 import HostControls from "./HostControls";
 import {trebleNotes, bassNotes, clefs} from "../constants";
-import {Flex, Heading, Box} from "@chakra-ui/react";
+import {Flex, Heading} from "@chakra-ui/react";
 import Keyboard from "./Keyboard";
 import {useUser} from "reactfire";
 import {useHistory, useParams} from "react-router-dom";
