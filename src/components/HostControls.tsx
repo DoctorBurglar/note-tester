@@ -52,7 +52,7 @@ const HostControls: React.FC<hostControlsProps> = ({
     >
       {/* <GuestScore sessionId={sessionId} isHost /> */}
 
-      <Flex justify="flex-start" align="center" w="28%">
+      <Flex justify="flex-start" align="center" w="50%" flexWrap="wrap">
         <StyledButtonSmall
           alignSelf="center"
           onClick={handleDisplayNotes}

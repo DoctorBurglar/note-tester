@@ -10,23 +10,23 @@ type HeaderProps = {
 const Header: React.FC<HeaderProps> = ({children, isNotAuthenticated}) => {
   return (
     <Flex
-      h="4rem"
       w="100%"
       bg="var(--grey-dark)"
       align="center"
       justify="space-between"
-      //       direction={{base: "column", sm: "row"}}
+      padding="1rem"
+      direction={{base: "column", sm: "row"}}
     >
       <Heading
         as="h2"
-        marginLeft={{base: "1rem", sm: "1.5rem", md: "2rem"}}
+        marginLeft={{base: "none", sm: "1.5rem", md: "2rem"}}
         color="var(--white)"
         fontWeight="300"
-        fontSize="2rem"
+        fontSize="2.5rem"
       >
         TeachMeNotes.com
       </Heading>
-      <Flex align="center">
+      <Flex align="center" marginTop={{base: "1rem", sm: "none"}}>
         {isNotAuthenticated ? null : (
           <Link
             as={NavLink}

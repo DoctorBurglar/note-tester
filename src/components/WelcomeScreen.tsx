@@ -17,19 +17,38 @@ const WelcomeScreen = () => {
       <Header isNotAuthenticated>
         <Login />
       </Header>
-      <Flex w="90rem" direction="column" margin="1rem auto">
-        <Flex justifyContent="center">
-          <Flex w="45%" direction="column" margin="2rem">
-            <Heading as="h2" fontSize="3rem" margin="1rem 0 1rem 0">
-              A free teaching tool for{" "}
-              <span style={{color: "var(--main-color-dark)"}}>
-                note reading
-              </span>
-            </Heading>
+      <Flex
+        w="90%"
+        maxWidth="80rem"
+        margin="1rem auto"
+        direction="column"
+        align="center"
+      >
+        <Heading
+          as="h2"
+          fontSize="3rem"
+          margin="1rem 0 1rem 0"
+          textAlign="center"
+        >
+          A free teaching tool for{" "}
+          <span style={{color: "var(--main-color-dark)"}}>note reading</span>
+        </Heading>
+        <Flex
+          justifyContent="center"
+          align={{base: "center", md: "flex-start"}}
+          direction={{base: "column-reverse", md: "row"}}
+        >
+          <Flex
+            w={{base: "100", md: "40%"}}
+            direction="column"
+            margin="2rem"
+            marginLeft={{base: "3rem"}}
+          >
             <UnorderedList
-              margin="-1rem 2rem 0 0"
-              padding="2rem"
+              margin="0 2rem 0 0"
+              padding="1rem 0"
               fontWeight="bold"
+              transform="translateX(1rem)"
             >
               {featureArray.map((feature) => {
                 return (
@@ -40,13 +59,24 @@ const WelcomeScreen = () => {
               })}
             </UnorderedList>
           </Flex>
-          <Flex justify="flex-start" direction="column" align="center">
+          <Flex
+            justify="flex-start"
+            direction="column"
+            align="center"
+            w={{base: "90", md: "50%"}}
+          >
             <Image
-              h="25rem"
-              marginTop="2.2rem"
+              w="100%"
+              marginTop={{base: "", md: "3rem", lg: "2rem", xl: "1rem"}}
               src="https://storage.googleapis.com/teach-me-notes/NoteTester.png"
             ></Image>
-            <Heading as="h2" color="var(--main-color-dark)" fontSize="2rem">
+            <Heading
+              as="h2"
+              color="var(--main-color-dark)"
+              fontSize="2rem"
+              textAlign="center"
+              marginTop="2rem"
+            >
               Click "Sign in with Google" to get started
             </Heading>
           </Flex>
