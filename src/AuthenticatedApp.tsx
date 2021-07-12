@@ -1,5 +1,5 @@
 import "./App.css";
-import {CreateSession} from "./components/CreateSession";
+import {Sessions} from "./components/Sessions";
 import HostNoteTester from "./components/HostNoteTester";
 import GuestNoteTester from "./components/GuestNoteTester";
 import {Switch, Route} from "react-router-dom";
@@ -10,7 +10,7 @@ function AuthenticatedApp() {
       <Switch>
         <Route path="/hosted-session/:sessionId" component={HostNoteTester} />
         <Route path="/guest-session/:sessionId" component={GuestNoteTester} />
-        <Route path="/" component={CreateSession} />
+        <Route path="/" component={Sessions} />
       </Switch>
     </div>
   );

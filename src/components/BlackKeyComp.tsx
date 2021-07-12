@@ -1,6 +1,6 @@
 import * as React from "react";
 import {BlackKey} from "../styles";
-import {whiteKeyWidth, blackKeyWidth, answerStatus} from "../constants";
+import {blackKeyWidth, answerStatus} from "../constants";
 import {useSession} from "../hooks";
 import {Heading, Flex} from "@chakra-ui/react";
 

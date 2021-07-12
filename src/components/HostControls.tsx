@@ -1,20 +1,9 @@
 import * as React from "react";
-import {Flex, Button} from "@chakra-ui/react";
-import {clefs} from "../constants";
-import styled from "@emotion/styled";
+import {Flex} from "@chakra-ui/react";
 import {useSession} from "../hooks";
-import GuestScore from "./GuestScore";
 import {StyledButtonSmall} from "../styles";
 import TrebleButton from "./TrebleButton";
 import BassButton from "./BassButton";
-
-const StyledButtonLarge = styled(Button)`
-  font-size: 2rem;
-  margin: 0 1rem;
-  border-radius: 5px;
-  padding: 0.5rem 1.5rem;
-  cursor: pointer;
-`;
 
 interface hostControlsProps {
   setSelectedNote: (note: string) => void;

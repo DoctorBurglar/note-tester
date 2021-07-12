@@ -1,6 +1,5 @@
 import * as React from "react";
-import {Flex, Box, Button} from "@chakra-ui/react";
-import {keyboardWidth} from "../constants";
+import {Flex, Box} from "@chakra-ui/react";
 import WhiteKeyComp from "./WhiteKeyComp";
 import BlackKeyComp from "./BlackKeyComp";
 import LowestBlackKey from "./LowestBlackKey";
@@ -151,7 +150,7 @@ const Keyboard: React.FC<IKeyboardProps> = ({
                     {note[0] === "B" || note[0] === "E" ? (
                       <Flat width={1} fill="black" />
                     ) : (
-                      <Sharp fill="black" width={2} height={2.8} />
+                      <Sharp fill="black" width={1.3} height={2.8} />
                     )}
                   </WhiteKeyOverlay>
                 ) : null}
