@@ -13,7 +13,7 @@ export const lineHeight = "2.3rem";
 
 export const lineHeightInt = Number.parseFloat(lineHeight);
 
-export const positionAdjustment = 0.2;
+export const positionAdjustment = 0.1;
 
 export enum bassNotes {
   E1 = "E1",
