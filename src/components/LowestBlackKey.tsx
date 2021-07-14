@@ -2,6 +2,7 @@ import * as React from "react";
 import {blackKeyWidth, answerStatus} from "../constants";
 import {BlackKey} from "../styles";
 import {useSession} from "../hooks";
+import CheckMark from "./CheckMark";
 
 type LowestBlackKeyProps = {
   selectedNote: string;
@@ -32,9 +33,12 @@ const LowestBlackKey: React.FC<LowestBlackKeyProps> = ({
         thisBlackKeyIsSelected(note, ind) &&
         sessionDoc?.answerStatus === answerStatus.CORRECT
       ) {
-        backgroundColor = "lightblue";
-      } else if (note[0] + "b" + note[1] === sessionDoc?.selectedNote) {
-        backgroundColor = "lightblue";
+        backgroundColor = "var(--main-color)";
+      } else if (
+        thisBlackKeyIsSelected(note, ind) &&
+        note[0] + "b" + note[1] === sessionDoc?.selectedNote
+      ) {
+        backgroundColor = "var(--main-color)";
       } else if (
         thisBlackKeyIsSelected(note, ind) &&
         sessionDoc?.answerStatus === answerStatus.INCORRECT
@@ -46,9 +50,13 @@ const LowestBlackKey: React.FC<LowestBlackKeyProps> = ({
         thisBlackKeyIsSelected(note, ind) &&
         sessionDoc?.answerStatus === answerStatus.CORRECT
       ) {
-        backgroundColor = "green";
-      } else if (thisBlackKeyIsSelected(note, ind)) {
-        backgroundColor = "lightblue";
+        backgroundColor = "var(--main-color)";
+      } else if (
+        thisBlackKeyIsSelected(note, ind) &&
+        sessionDoc?.selectedNote[1] === "b"
+      ) {
+        console.log(note);
+        backgroundColor = "var(--main-color)";
       } else if (
         note[0] + "b" + note[1] === sessionDoc?.answer &&
         sessionDoc?.answerStatus === answerStatus.INCORRECT
@@ -70,6 +78,11 @@ const LowestBlackKey: React.FC<LowestBlackKeyProps> = ({
       onClick={() => setSelectedNote(note[0] + "b" + note[1])}
     >
       {children}
+      {!isGuestKeyboard &&
+      thisBlackKeyIsSelected(note, ind) &&
+      sessionDoc?.answerStatus === answerStatus.CORRECT ? (
+        <CheckMark />
+      ) : null}
     </BlackKey>
   );
 };

@@ -2,19 +2,17 @@ import * as React from "react";
 import {Flex} from "@chakra-ui/react";
 import {useSession} from "../hooks";
 import {StyledButtonSmall} from "../styles";
-import TrebleButton from "./TrebleButton";
-import BassButton from "./BassButton";
+import ClefButton from "./ClefButton";
+import {clefs} from "../constants";
+import BassClef from "./BassClef";
+import TrebleClef from "./TrebleClef";
 
 interface hostControlsProps {
   setSelectedNote: (note: string) => void;
-  setSelectedClef: (clef: string) => void;
   sessionId: string;
 }
 
-const HostControls: React.FC<hostControlsProps> = ({
-  setSelectedClef,
-  sessionId,
-}) => {
+const HostControls: React.FC<hostControlsProps> = ({sessionId}) => {
   const {sessionRef, sessionDoc} = useSession(sessionId);
 
   const handleLineMnemonic = () => {
@@ -50,14 +48,12 @@ const HostControls: React.FC<hostControlsProps> = ({
       justify="space-between"
       maxWidth="var(--max-width)"
     >
-      {/* <GuestScore sessionId={sessionId} isHost /> */}
-
       <Flex justify="flex-start" align="center" w="50%" flexWrap="wrap">
         <StyledButtonSmall
           onClick={handleLineMnemonic}
           bg={
             sessionDoc && sessionDoc?.mnemonics?.showLinesOnStaff
-              ? "lightblue"
+              ? "var(--main-color)"
               : ""
           }
         >
@@ -67,7 +63,7 @@ const HostControls: React.FC<hostControlsProps> = ({
           onClick={handleSpaceMnemonic}
           bg={
             sessionDoc && sessionDoc?.mnemonics?.showSpacesOnStaff
-              ? "lightblue"
+              ? "var(--main-color)"
               : ""
           }
         >
@@ -76,7 +72,7 @@ const HostControls: React.FC<hostControlsProps> = ({
         <StyledButtonSmall
           alignSelf="center"
           onClick={handleDisplayNotes}
-          bg={sessionDoc?.displayingNotes ? "lightblue" : ""}
+          bg={sessionDoc?.displayingNotes ? "var(--main-color)" : ""}
         >
           Keys
         </StyledButtonSmall>
@@ -87,30 +83,20 @@ const HostControls: React.FC<hostControlsProps> = ({
         justify="flex-end"
         align={{base: "flex-end", md: "flex-start"}}
       >
-        <TrebleButton
+        <ClefButton
           handleSelectedClef={handleSelectClef}
           sessionId={sessionId}
-        />
-        <BassButton
+          clefType={clefs.TREBLE}
+        >
+          <TrebleClef width="3rem" fill="var(--main-color-dark)" />
+        </ClefButton>
+        <ClefButton
           handleSelectedClef={handleSelectClef}
           sessionId={sessionId}
-        />
-        {/* <StyledButtonLarge
-          onClick={() => setSelectedClef(clefs.TREBLE)}
-          backgroundColor={
-            sessionDoc?.selectedClef === clefs.TREBLE ? "lightblue" : undefined
-          }
+          clefType={clefs.BASS}
         >
-          Treble
-        </StyledButtonLarge>
-        <StyledButtonLarge
-          onClick={() => setSelectedClef(clefs.BASS)}
-          backgroundColor={
-            sessionDoc?.selectedClef === clefs.BASS ? "lightblue" : undefined
-          }
-        >
-          Bass
-        </StyledButtonLarge> */}
+          <BassClef width="3rem" fill="var(--main-color-dark)" />
+        </ClefButton>
       </Flex>
     </Flex>
   );

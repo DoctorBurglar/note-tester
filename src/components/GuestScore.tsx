@@ -52,13 +52,7 @@ const GuestScore: React.FC<{sessionId: string; isHost?: boolean}> = ({
               fontSize="1.5rem"
             >{`${sessionDoc?.identifiedNotes} / ${sessionDoc?.totalNotes}`}</Heading>
           </Flex>
-          {/* <Heading as="h2">
-        {sessionDoc?.totalNotes === 0
-          ? ""
-          : `${Math.round(
-              (sessionDoc?.identifiedNotes / sessionDoc?.totalNotes) * 100
-            )}%`}
-      </Heading> */}
+
           {isHost ? (
             <StyledButtonSmall onClick={handleResetScore}>
               Reset

@@ -198,7 +198,6 @@ const Sessions: React.FC = () => {
           <Flex direction="column" justify="flex-end">
             <Input
               value={sessionCodeInput}
-              // marginBottom="1rem"
               placeholder="Session Code"
               onChange={handleSessionCodeInput}
             />

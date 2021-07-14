@@ -3,6 +3,7 @@ import {WhiteKey} from "../styles";
 import {Flex, Heading} from "@chakra-ui/react";
 import {useSession} from "../hooks";
 import {answerStatus} from "../constants";
+import CheckMark from "./CheckMark";
 
 type WhiteKeyCompProps = {
   note: string;
@@ -42,42 +43,42 @@ const WhiteKeyComp: React.FC<WhiteKeyCompProps> = ({
         thisWhiteKeyIsSelected(note, ind) &&
         sessionDoc?.answerStatus === answerStatus.CORRECT
       ) {
-        backgroundColor = "lightblue";
+        backgroundColor = "var(--main-color)";
       } else if (
         sessionDoc?.answerStatus !== "" &&
         (note[0] === "B" || note[0] === "E") &&
         nextNote[0] + "b" + nextNote[1] === sessionDoc?.selectedNote
       ) {
-        backgroundColor = "lightblue";
+        backgroundColor = "var(--main-color)";
       } else if (
         sessionDoc?.answerStatus !== "" &&
         (note[0] === "C" || note[0] === "F") &&
         prevNote[0] + "s" + prevNote[1] === sessionDoc?.selectedNote
       ) {
-        backgroundColor = "lightblue";
+        backgroundColor = "var(--main-color)";
       } else if (
         sessionDoc?.answerStatus !== "" &&
         note === sessionDoc?.selectedNote
       ) {
-        backgroundColor = "lightblue";
+        backgroundColor = "var(--main-color)";
       } else if (
         thisWhiteKeyIsSelected(note, ind) &&
         sessionDoc?.answerStatus === answerStatus.INCORRECT
       ) {
-        backgroundColor = "red";
+        backgroundColor = "var(--wrong-note-color)";
       }
     } else if (
       note === sessionDoc?.answer &&
       thisWhiteKeyIsSelected(note, ind)
     ) {
-      backgroundColor = "lightblue";
+      backgroundColor = "var(--main-color)";
     } else if (thisWhiteKeyIsSelected(note, ind)) {
-      backgroundColor = "lightblue";
+      backgroundColor = "var(--main-color)";
     } else if (
       note === sessionDoc?.answer &&
       sessionDoc?.answerStatus === answerStatus.INCORRECT
     ) {
-      backgroundColor = "red";
+      backgroundColor = "var(--wrong-note-color)";
     }
     return backgroundColor;
   };
@@ -94,11 +95,7 @@ const WhiteKeyComp: React.FC<WhiteKeyCompProps> = ({
         {!isGuestKeyboard &&
         thisWhiteKeyIsSelected(note, ind) &&
         sessionDoc?.answerStatus === answerStatus.CORRECT ? (
-          <Flex height="100%" align="flex-end" justify="center">
-            <Heading as="h2" transform="translateY(.8rem)" fontSize="3rem">
-              &#10003;
-            </Heading>
-          </Flex>
+          <CheckMark />
         ) : null}
         <Flex flex="1" direction="column" justify="flex-end">
           <Heading as="h1" textAlign="center" marginBottom=".5rem">

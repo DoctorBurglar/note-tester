@@ -25,6 +25,7 @@ const StyledLine = styled(Box)`
   min-height: ${lineHeight};
   border-bottom: 0.3rem solid black;
   width: 100%;
+  position: relative;
 `;
 
 const StaffLineMnemonic = styled(Heading)`
@@ -68,11 +69,6 @@ const Staff: React.FC<{
   const ledgerValue = Number.parseFloat(notePosition);
 
   const {sessionDoc} = useSession(sessionId);
-
-  const mnemonicStyle = {
-    // fontSize: lineHeightInt * 1.25 + "rem",
-    lineHeight: "1.25",
-  };
 
   const determineBorderBottom = (
     offset: number,
@@ -122,12 +118,12 @@ const Staff: React.FC<{
         }}
       />
 
-      <StyledLine position="relative">
+      <StyledLine>
         {sessionDoc?.mnemonics?.showLinesOnStaff ? (
           <StaffLineMnemonic
             as="h2"
             left={{base: "24%", sm: "22%", md: "28%"}}
-            style={mnemonicStyle}
+            lineHeight="1.25"
           >
             {selectedClef === "TREBLE" ? "Fine" : "Always"}
           </StaffLineMnemonic>
@@ -136,19 +132,19 @@ const Staff: React.FC<{
           <StaffSpaceMnemonic
             as="h2"
             left={{base: "74%", md: "76%"}}
-            style={mnemonicStyle}
+            lineHeight="1.25"
           >
             {selectedClef === "TREBLE" ? "E" : "Grass"}
           </StaffSpaceMnemonic>
         ) : null}
       </StyledLine>
 
-      <StyledLine position="relative">
+      <StyledLine>
         {sessionDoc?.mnemonics?.showLinesOnStaff ? (
           <StaffLineMnemonic
             as="h2"
             left={{base: "24%", sm: "22%", md: "26%"}}
-            style={mnemonicStyle}
+            lineHeight="1.25"
           >
             {selectedClef === "TREBLE" ? "Does" : "Fine"}
           </StaffLineMnemonic>
@@ -157,19 +153,19 @@ const Staff: React.FC<{
           <StaffSpaceMnemonic
             as="h2"
             left={{base: "74%", md: "74%"}}
-            style={mnemonicStyle}
+            lineHeight="1.25"
           >
             {selectedClef === "TREBLE" ? "C" : "Eat"}
           </StaffSpaceMnemonic>
         ) : null}
       </StyledLine>
 
-      <StyledLine position="relative">
+      <StyledLine>
         {sessionDoc?.mnemonics?.showLinesOnStaff ? (
           <StaffLineMnemonic
             as="h2"
             left={{base: "24%", sm: "22%", md: "24%"}}
-            style={mnemonicStyle}
+            lineHeight="1.25"
           >
             {selectedClef === "TREBLE" ? "Boy" : "Do"}
           </StaffLineMnemonic>
@@ -178,19 +174,19 @@ const Staff: React.FC<{
           <StaffSpaceMnemonic
             as="h2"
             left={{base: "74%", md: "72%"}}
-            style={mnemonicStyle}
+            lineHeight="1.25"
           >
             {selectedClef === "TREBLE" ? "A" : "Cows"}
           </StaffSpaceMnemonic>
         ) : null}
       </StyledLine>
 
-      <StyledLine position="relative">
+      <StyledLine>
         {sessionDoc?.mnemonics?.showLinesOnStaff ? (
           <StaffLineMnemonic
             as="h2"
             left={{base: "24%", sm: "22%", md: "22%"}}
-            style={mnemonicStyle}
+            lineHeight="1.25"
           >
             {selectedClef === "TREBLE" ? "Good" : "Boys"}
           </StaffLineMnemonic>
@@ -199,19 +195,19 @@ const Staff: React.FC<{
           <StaffSpaceMnemonic
             as="h2"
             left={{base: "74%", md: "70%"}}
-            style={mnemonicStyle}
+            lineHeight="1.25"
           >
             {selectedClef === "TREBLE" ? "F" : "All"}
           </StaffSpaceMnemonic>
         ) : null}
       </StyledLine>
 
-      <StyledLine position="relative">
+      <StyledLine>
         {sessionDoc?.mnemonics?.showLinesOnStaff ? (
           <StaffLineMnemonic
             as="h2"
             left={{base: "24%", sm: "22%", md: "20%"}}
-            style={mnemonicStyle}
+            lineHeight="1.25"
           >
             {selectedClef === "TREBLE" ? "Every" : "Good"}
           </StaffLineMnemonic>

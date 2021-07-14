@@ -2,7 +2,7 @@ import * as React from "react";
 import {BlackKey} from "../styles";
 import {blackKeyWidth, answerStatus} from "../constants";
 import {useSession} from "../hooks";
-import {Heading, Flex} from "@chakra-ui/react";
+import CheckMark from "./CheckMark";
 
 type BlackKeyCompProps = {
   note: string;
@@ -38,31 +38,31 @@ const BlackKeyComp: React.FC<BlackKeyCompProps> = ({
         thisBlackKeyIsSelected(note, ind) &&
         sessionDoc?.answerStatus === answerStatus.CORRECT
       ) {
-        backgroundColor = "lightblue";
+        backgroundColor = "var(--main-color)";
       } else if (
         sessionDoc?.answerStatus !== "" &&
         (note[0] + "s" + note[1] === sessionDoc?.selectedNote ||
           nextNote[0] + "b" + nextNote[1] === sessionDoc?.selectedNote)
       ) {
-        backgroundColor = "lightblue";
+        backgroundColor = "var(--main-color)";
       } else if (
         thisBlackKeyIsSelected(note, ind) &&
         sessionDoc?.answerStatus === answerStatus.INCORRECT
       ) {
-        backgroundColor = "red";
+        backgroundColor = "var(--wrong-note-color)";
       }
     } else if (
       note[0] + "s" + note[1] === sessionDoc?.answer &&
       thisBlackKeyIsSelected(note, ind)
     ) {
-      backgroundColor = "lightblue";
+      backgroundColor = "var(--main-color)";
     } else if (thisBlackKeyIsSelected(note, ind)) {
-      backgroundColor = "lightblue";
+      backgroundColor = "var(--main-color)";
     } else if (
       note[0] + "s" + note[1] === sessionDoc?.answer &&
       sessionDoc?.answerStatus === answerStatus.INCORRECT
     ) {
-      backgroundColor = "red";
+      backgroundColor = "var(--wrong-note-color)";
     }
     return backgroundColor;
   };
@@ -83,11 +83,7 @@ const BlackKeyComp: React.FC<BlackKeyCompProps> = ({
       {!isGuestKeyboard &&
       thisBlackKeyIsSelected(note, ind) &&
       sessionDoc?.answerStatus === answerStatus.CORRECT ? (
-        <Flex height="100%" align="flex-end" justify="center">
-          <Heading as="h2" fontSize="2.5rem">
-            &#10003;
-          </Heading>
-        </Flex>
+        <CheckMark />
       ) : null}
     </BlackKey>
   );

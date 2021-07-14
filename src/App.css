@@ -1,6 +1,7 @@
 :root {
   --main-color: #add8e6;
   --main-color-dark: #478aa0;
+  --wrong-note-color: red;
   --grey-dark: #434343;
   --white: #f8f8f8;
   --max-width: 120rem;
