@@ -48,7 +48,8 @@ const BlackKeyOverlay: React.FC<BlackKeyOverlayProps> = ({
         }
         zIndex="10"
         justify="center"
-        align="center"
+        align="flex-end"
+        paddingBottom=".5rem"
         onClick={() => setSelectedNote(note[0] + "s" + note[1])}
       >
         <Box
@@ -63,8 +64,8 @@ const BlackKeyOverlay: React.FC<BlackKeyOverlayProps> = ({
         >
           <Sharp
             fill={thisBlackKeyIsSelected(note, ind) ? "black" : "white"}
-            width={1.5}
-            height={2.4}
+            width={1.2}
+            height={2}
           />
         </Box>
       </Flex>
@@ -73,7 +74,8 @@ const BlackKeyOverlay: React.FC<BlackKeyOverlayProps> = ({
         h={ind === notes.length - 1 ? "0" : "50%"}
         zIndex="10"
         justify="center"
-        align="center"
+        align="flex-start"
+        paddingTop=".3rem"
         overflow="hidden"
         onClick={() => handleFlat(ind)}
       >
@@ -88,7 +90,7 @@ const BlackKeyOverlay: React.FC<BlackKeyOverlayProps> = ({
           }
         >
           <Flat
-            width={1}
+            width={0.8}
             fill={thisBlackKeyIsSelected(note, ind) ? "black" : "white"}
           />
         </Heading>

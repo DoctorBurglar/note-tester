@@ -15,7 +15,9 @@ const TrebleButton: React.FC<{
       h="5rem"
       onClick={() => handleSelectedClef(clefs.TREBLE)}
       backgroundColor={
-        sessionDoc?.selectedClef === clefs.TREBLE ? "lightblue" : undefined
+        sessionDoc?.selectedClef === clefs.TREBLE
+          ? "var(--main-color)"
+          : undefined
       }
     >
       <TrebleClef width="3rem" fill="var(--main-color-dark)" />

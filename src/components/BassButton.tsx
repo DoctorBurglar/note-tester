@@ -16,7 +16,9 @@ const BassButton: React.FC<{
       margin="0 1rem"
       onClick={() => handleSelectedClef(clefs.BASS)}
       backgroundColor={
-        sessionDoc?.selectedClef === clefs.BASS ? "lightblue" : undefined
+        sessionDoc?.selectedClef === clefs.BASS
+          ? "var(--main-color)"
+          : undefined
       }
     >
       <BassClef width="3rem" fill="var(--main-color-dark)" />
