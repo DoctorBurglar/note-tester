@@ -84,7 +84,7 @@ const BlackKeyComp: React.FC<BlackKeyCompProps> = ({
       thisBlackKeyIsSelected(note, ind) &&
       sessionDoc?.answerStatus === answerStatus.CORRECT ? (
         <Flex height="100%" align="flex-end" justify="center">
-          <Heading as="h2" fontSize="2.5rem" transform="translateY(1.5rem)">
+          <Heading as="h2" fontSize="2.5rem">
             &#10003;
           </Heading>
         </Flex>

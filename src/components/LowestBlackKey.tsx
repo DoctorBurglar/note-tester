@@ -26,11 +26,6 @@ const LowestBlackKey: React.FC<LowestBlackKeyProps> = ({
 
   // TODO: fix bug where Eb is highlighted when E# is selected!
   const determineBackgroundColor = () => {
-    console.log(
-      thisBlackKeyIsSelected(note, ind),
-      sessionDoc?.answerStatus,
-      sessionDoc?.answer
-    );
     let backgroundColor = "";
     if (isGuestKeyboard) {
       if (

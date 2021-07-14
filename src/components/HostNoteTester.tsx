@@ -2,7 +2,7 @@ import React from "react";
 import Staff from "./Staff";
 import HostControls from "./HostControls";
 import {trebleNotes, bassNotes, clefs} from "../constants";
-import {Flex, Heading} from "@chakra-ui/react";
+import {Flex, Heading, Spinner} from "@chakra-ui/react";
 import Keyboard from "./Keyboard";
 import {useUser} from "reactfire";
 import {useHistory, useParams} from "react-router-dom";
@@ -22,11 +22,18 @@ interface IParams {
 }
 
 function HostNoteTester() {
+  const [isLoading, setIsloading] = React.useState(true);
   const {sessionId} = useParams<IParams>();
   const history = useHistory();
 
   const {data} = useUser();
   const {sessionRef, sessionDoc} = useSession(sessionId);
+
+  React.useEffect(() => {
+    if (sessionDoc) {
+      setIsloading(false);
+    }
+  }, [sessionDoc]);
 
   React.useEffect(() => {
     if (sessionDoc && sessionDoc.hostId !== data.uid) {
@@ -51,30 +58,36 @@ function HostNoteTester() {
       <Header />
       <Flex w="100%" h="0" justify="space-between" align="flex-start">
         <GuestScore sessionId={sessionId} isHost />
-        <Flex
-          direction={{base: "column", md: "row"}}
-          marginRight="2rem"
-          marginTop="1rem"
-        >
-          <Heading
-            as="h3"
-            margin={{base: "0 2rem 0 0", md: "0 2rem 0 0"}}
-            fontSize="1.5rem"
+        {isLoading ? (
+          <Spinner size="md" margin="1rem 2rem" />
+        ) : (
+          <Flex
+            direction={{base: "column", md: "row"}}
+            marginRight="2.5rem"
+            marginTop="1rem"
+            position="relative"
+            zIndex="5"
           >
-            {`Code: `}
-          </Heading>
-          <Heading
-            as="h3"
-            style={{
-              fontSize: "1.5rem",
-              color: "var(--main-color-dark)",
-              cursor: "pointer",
-            }}
-            onClick={handleCopy}
-          >
-            {sessionDoc?.sessionCode}
-          </Heading>
-        </Flex>
+            <Heading
+              as="h3"
+              margin={{base: "0 2rem 0 0", md: "0 2rem 0 0"}}
+              fontSize="1.5rem"
+            >
+              {`Code: `}
+            </Heading>
+            <Heading
+              as="h3"
+              style={{
+                fontSize: "1.5rem",
+                color: "var(--main-color-dark)",
+                cursor: "pointer",
+              }}
+              onClick={handleCopy}
+            >
+              {sessionDoc?.sessionCode}
+            </Heading>
+          </Flex>
+        )}
       </Flex>
       <Content>
         <Staff

@@ -99,10 +99,15 @@ function GuestNoteTester() {
               selectedClef={sessionDoc?.selectedClef}
               sessionId={sessionId}
             />
-            <Flex justifyContent="space-between" w="90%">
+            <Flex
+              justifyContent="space-between"
+              w="90%"
+              align="flex-end"
+              maxWidth="var(--max-width)"
+            >
               <GuestScore sessionId={sessionId} />
 
-              <Heading as="h2" marginLeft="2rem">
+              <Heading as="h2" marginLeft="2rem" marginBottom=".5rem">
                 {sessionDoc?.answerStatus}
               </Heading>
             </Flex>

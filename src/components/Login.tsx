@@ -8,10 +8,12 @@ const Login: React.FC = () => {
   const uiConfig = {
     signInFlow: "popup",
     signInOptions: [auth.GoogleAuthProvider.PROVIDER_ID],
-    callbacks: {
-      // Avoid redirects after sign-in.
-      signInSuccessWithAuthResult: () => false,
-    },
+    // added this property to refresh page to avoid reactfire login bug
+    signInSuccessUrl: "/",
+    // callbacks: {
+    //   // Avoid redirects after sign-in.  Originally used this before encountering reactfire login bug
+    //   signInSuccessWithAuthResult: () => false,
+    // },
   };
 
   return <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={auth()} />;
