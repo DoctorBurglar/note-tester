@@ -48,7 +48,7 @@ const BlackKeyOverlay: React.FC<BlackKeyOverlayProps> = ({
         }
         zIndex="10"
         justify="center"
-        align="flex-end"
+        align={ind !== notes.length - 1 ? "flex-end" : "center"}
         paddingBottom=".5rem"
         onClick={() => setSelectedNote(note[0] + "s" + note[1])}
       >
