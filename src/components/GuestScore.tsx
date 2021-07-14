@@ -41,7 +41,7 @@ const GuestScore: React.FC<{sessionId: string; isHost?: boolean}> = ({
         >
           <Flex
             align="center"
-            minWidth="10rem"
+            minWidth="12rem"
             marginBottom={{base: "1rem", md: "0"}}
           >
             <Heading as="h2" fontSize="1.5rem" marginRight="1rem">
