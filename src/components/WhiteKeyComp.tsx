@@ -95,7 +95,7 @@ const WhiteKeyComp: React.FC<WhiteKeyCompProps> = ({
         thisWhiteKeyIsSelected(note, ind) &&
         sessionDoc?.answerStatus === answerStatus.CORRECT ? (
           <Flex height="100%" align="flex-end" justify="center">
-            <Heading as="h2" transform="translateY(4.5rem)" fontSize="3rem">
+            <Heading as="h2" transform="translateY(.8rem)" fontSize="3rem">
               &#10003;
             </Heading>
           </Flex>

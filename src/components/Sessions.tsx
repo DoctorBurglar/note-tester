@@ -99,7 +99,7 @@ const Sessions: React.FC = () => {
   const handleJoinSession = async () => {
     try {
       const sessionToJoin = await sessionsRef
-        .where("sessionCode", "==", sessionCodeInput)
+        .where("sessionCode", "==", sessionCodeInput.toUpperCase())
         .get();
 
       if (sessionToJoin.docs.length > 0) {

@@ -126,7 +126,7 @@ const Staff: React.FC<{
         {sessionDoc?.mnemonics?.showLinesOnStaff ? (
           <StaffLineMnemonic
             as="h2"
-            left={{base: "24%", sm: "22%", md: "26%"}}
+            left={{base: "24%", sm: "22%", md: "28%"}}
             style={mnemonicStyle}
           >
             {selectedClef === "TREBLE" ? "Fine" : "Always"}
@@ -135,7 +135,7 @@ const Staff: React.FC<{
         {sessionDoc?.mnemonics?.showSpacesOnStaff ? (
           <StaffSpaceMnemonic
             as="h2"
-            left={{base: "70%", md: "76%"}}
+            left={{base: "74%", md: "76%"}}
             style={mnemonicStyle}
           >
             {selectedClef === "TREBLE" ? "E" : "Grass"}
@@ -147,7 +147,7 @@ const Staff: React.FC<{
         {sessionDoc?.mnemonics?.showLinesOnStaff ? (
           <StaffLineMnemonic
             as="h2"
-            left={{base: "24%", sm: "22%", md: "24%"}}
+            left={{base: "24%", sm: "22%", md: "26%"}}
             style={mnemonicStyle}
           >
             {selectedClef === "TREBLE" ? "Does" : "Fine"}
@@ -156,7 +156,7 @@ const Staff: React.FC<{
         {sessionDoc?.mnemonics?.showSpacesOnStaff ? (
           <StaffSpaceMnemonic
             as="h2"
-            left={{base: "70%", md: "74%"}}
+            left={{base: "74%", md: "74%"}}
             style={mnemonicStyle}
           >
             {selectedClef === "TREBLE" ? "C" : "Eat"}
@@ -168,7 +168,7 @@ const Staff: React.FC<{
         {sessionDoc?.mnemonics?.showLinesOnStaff ? (
           <StaffLineMnemonic
             as="h2"
-            left={{base: "24%", sm: "22%", md: "22%"}}
+            left={{base: "24%", sm: "22%", md: "24%"}}
             style={mnemonicStyle}
           >
             {selectedClef === "TREBLE" ? "Boy" : "Do"}
@@ -177,7 +177,7 @@ const Staff: React.FC<{
         {sessionDoc?.mnemonics?.showSpacesOnStaff ? (
           <StaffSpaceMnemonic
             as="h2"
-            left={{base: "70%", md: "72%"}}
+            left={{base: "74%", md: "72%"}}
             style={mnemonicStyle}
           >
             {selectedClef === "TREBLE" ? "A" : "Cows"}
@@ -189,14 +189,18 @@ const Staff: React.FC<{
         {sessionDoc?.mnemonics?.showLinesOnStaff ? (
           <StaffLineMnemonic
             as="h2"
-            left={{base: "24%", sm: "22%", md: "20%"}}
+            left={{base: "24%", sm: "22%", md: "22%"}}
             style={mnemonicStyle}
           >
             {selectedClef === "TREBLE" ? "Good" : "Boys"}
           </StaffLineMnemonic>
         ) : null}
         {sessionDoc?.mnemonics?.showSpacesOnStaff ? (
-          <StaffSpaceMnemonic as="h2" left="70%" style={mnemonicStyle}>
+          <StaffSpaceMnemonic
+            as="h2"
+            left={{base: "74%", md: "70%"}}
+            style={mnemonicStyle}
+          >
             {selectedClef === "TREBLE" ? "F" : "All"}
           </StaffSpaceMnemonic>
         ) : null}
@@ -206,7 +210,7 @@ const Staff: React.FC<{
         {sessionDoc?.mnemonics?.showLinesOnStaff ? (
           <StaffLineMnemonic
             as="h2"
-            left={{base: "24%", sm: "22%", md: "18%"}}
+            left={{base: "24%", sm: "22%", md: "20%"}}
             style={mnemonicStyle}
           >
             {selectedClef === "TREBLE" ? "Every" : "Good"}

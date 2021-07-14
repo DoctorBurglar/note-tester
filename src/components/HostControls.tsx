@@ -55,13 +55,21 @@ const HostControls: React.FC<hostControlsProps> = ({
       <Flex justify="flex-start" align="center" w="50%" flexWrap="wrap">
         <StyledButtonSmall
           onClick={handleLineMnemonic}
-          bg={sessionDoc?.mnemonics.showLinesOnStaff ? "lightblue" : ""}
+          bg={
+            sessionDoc && sessionDoc?.mnemonics?.showLinesOnStaff
+              ? "lightblue"
+              : ""
+          }
         >
           Lines
         </StyledButtonSmall>
         <StyledButtonSmall
           onClick={handleSpaceMnemonic}
-          bg={sessionDoc?.mnemonics.showSpacesOnStaff ? "lightblue" : ""}
+          bg={
+            sessionDoc && sessionDoc?.mnemonics?.showSpacesOnStaff
+              ? "lightblue"
+              : ""
+          }
         >
           Spaces
         </StyledButtonSmall>

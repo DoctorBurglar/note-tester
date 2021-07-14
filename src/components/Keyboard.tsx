@@ -114,7 +114,7 @@ const Keyboard: React.FC<IKeyboardProps> = ({
       overflowX="scroll"
     >
       <Flex
-        width={["98%", null, null, null, "90%"]}
+        width={["95%", null, null, null, "90%"]}
         maxWidth="var(--max-width)"
         minHeight="13rem"
         alignItems="stretch"
