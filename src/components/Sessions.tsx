@@ -3,7 +3,6 @@ import {Button, Flex, Input, Heading} from "@chakra-ui/react";
 import {useHistory} from "react-router-dom";
 import {useFirestore, useUser, useFirestoreDocData} from "reactfire";
 import Header from "./Header";
-
 import styled from "@emotion/styled";
 
 const SessionButton = styled(Button)`
@@ -60,41 +59,52 @@ const Sessions: React.FC = () => {
   const userRef = useFirestore().collection("users").doc(data.uid);
   const userDoc = useFirestoreDocData<IUser>(userRef).data;
 
-  const handleCreateSession = async () => {
+  const createBatch = useFirestore().batch();
+
+  const handleCreateSession = () => {
     let oldSessionId;
     if (userDoc?.hostSessionId !== "") {
       oldSessionId = userDoc?.hostSessionId;
     }
 
-    const newSessionCode = createSessionCode(6);
-    try {
-      if (oldSessionId) {
-        await sessionsRef.doc(oldSessionId).delete();
-      }
-
-      const newSession = await sessionsRef.add({
-        answer: "",
-        answerStatus: "",
-        displayingNotes: false,
-        sessionCode: newSessionCode,
-        hostId: data.uid,
-        guestId: "",
-        identifiedNotes: 0,
-        totalNotes: 0,
-        selectedNote: "",
-        selectedClef: "TREBLE",
-        mnemonics: {
-          showLinesOnStaff: false,
-          showSpacesOnStaff: false,
-        },
-      });
-
-      await userRef.update({hostSessionId: newSession.id});
-      history.push(`/hosted-session/${newSession.id}`);
-    } catch (err) {
-      console.log(err);
+    if (oldSessionId) {
+      createBatch.delete(sessionsRef.doc(oldSessionId));
     }
+
+    const newSessionCode = createSessionCode(6);
+
+    const newSessionRef = sessionsRef.doc();
+
+    createBatch.set(newSessionRef, {
+      answer: "",
+      answerStatus: "",
+      displayingNotes: false,
+      sessionCode: newSessionCode,
+      hostId: data.uid,
+      guestId: "",
+      identifiedNotes: 0,
+      totalNotes: 0,
+      selectedNote: "",
+      selectedClef: "TREBLE",
+      mnemonics: {
+        showLinesOnStaff: false,
+        showSpacesOnStaff: false,
+      },
+    });
+
+    createBatch.update(userRef, {hostSessionId: newSessionRef.id});
+
+    createBatch
+      .commit()
+      .then((result) => {
+        history.push(`/hosted-session/${newSessionRef.id}`);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
+
+  const joinBatch = useFirestore().batch();
 
   const handleJoinSession = async () => {
     try {
@@ -104,10 +114,11 @@ const Sessions: React.FC = () => {
 
       if (sessionToJoin.docs.length > 0) {
         const sessionToJoinId = sessionToJoin.docs[0].id;
-        await sessionsRef.doc(sessionToJoinId).update({guestId: data.uid});
-        await userRef.update({
-          guestSessionId: sessionToJoinId,
-        });
+
+        joinBatch.update(sessionsRef.doc(sessionToJoinId), {guestId: data.uid});
+        joinBatch.update(userRef, {guestSessionId: sessionToJoinId});
+        await joinBatch.commit();
+
         history.push(`/guest-session/${sessionToJoinId}`);
       } else {
         console.log("bad code");
