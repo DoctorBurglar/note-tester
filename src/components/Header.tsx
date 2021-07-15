@@ -39,7 +39,7 @@ const Header: React.FC<HeaderProps> = ({children, isNotAuthenticated}) => {
       </Flex>
 
       <Flex align="center" marginTop={{base: "1rem", sm: "none"}}>
-        {isHomePage ? null : (
+        {isHomePage || isNotAuthenticated ? null : (
           <Link
             as={NavLink}
             to="/"

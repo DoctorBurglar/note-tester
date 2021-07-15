@@ -5,7 +5,7 @@ import {Flex, Heading, Box} from "@chakra-ui/react";
 import Keyboard from "./Keyboard";
 import {useUser} from "reactfire";
 import {useParams} from "react-router-dom";
-import {useHistory} from "react-router-dom";
+import {useHistory, Redirect} from "react-router-dom";
 import {useSession} from "../hooks";
 import GuestScore from "./GuestScore";
 import Header from "./Header";
@@ -121,7 +121,7 @@ function GuestNoteTester() {
           </Flex>
         </Box>
       ) : (
-        <p>page not found, head back to sessions</p>
+        <Redirect to="/" />
       )}
     </>
   );
