@@ -1,13 +1,17 @@
 import * as React from "react";
 import {Flex, Heading, Link, Image} from "@chakra-ui/react";
 import {SignOut} from "./SignOut";
-import {NavLink} from "react-router-dom";
+import {NavLink, useHistory} from "react-router-dom";
 
 type HeaderProps = {
   isNotAuthenticated?: boolean;
 };
 
 const Header: React.FC<HeaderProps> = ({children, isNotAuthenticated}) => {
+  const history = useHistory();
+
+  const isHomePage = history.location.pathname === "/";
+
   return (
     <Flex
       w="100%"
@@ -35,7 +39,7 @@ const Header: React.FC<HeaderProps> = ({children, isNotAuthenticated}) => {
       </Flex>
 
       <Flex align="center" marginTop={{base: "1rem", sm: "none"}}>
-        {isNotAuthenticated ? null : (
+        {isHomePage ? null : (
           <Link
             as={NavLink}
             to="/"
