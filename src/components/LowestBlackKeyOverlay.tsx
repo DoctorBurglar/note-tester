@@ -7,7 +7,6 @@ type LowestBlackKeyOverlayProps = {
   note: string;
   ind: number;
   selectedNote: string;
-  setSelectedNote: (note: string) => void;
 };
 
 const LowestBlackKeyOverlay: React.FC<LowestBlackKeyOverlayProps> = ({
@@ -15,7 +14,6 @@ const LowestBlackKeyOverlay: React.FC<LowestBlackKeyOverlayProps> = ({
   note,
   ind,
   selectedNote,
-  setSelectedNote,
 }) => {
   return (
     <Flex

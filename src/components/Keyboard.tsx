@@ -197,7 +197,6 @@ const Keyboard: React.FC<IKeyboardProps> = ({
                       note={note}
                       selectedNote={sessionDoc?.selectedNote}
                       thisBlackKeyIsSelected={thisBlackKeyIsSelected}
-                      setSelectedNote={setSelectedNote}
                     />
                   ) : null}
                 </LowestBlackKey>
