@@ -1,5 +1,5 @@
 import * as React from "react";
-import {Flex, Heading, Link} from "@chakra-ui/react";
+import {Flex, Heading, Link, Image} from "@chakra-ui/react";
 import {SignOut} from "./SignOut";
 import {NavLink} from "react-router-dom";
 
@@ -17,15 +17,23 @@ const Header: React.FC<HeaderProps> = ({children, isNotAuthenticated}) => {
       padding="1rem"
       direction={{base: "column", sm: "row"}}
     >
-      <Heading
-        as="h2"
-        marginLeft={{base: "none", sm: "1.5rem", md: "2rem"}}
-        color="var(--white)"
-        fontWeight="300"
-        fontSize="2.5rem"
-      >
-        TeachMeNotes.com
-      </Heading>
+      <Flex align="center">
+        <Image
+          boxSize="3rem"
+          marginLeft={{base: "none", sm: "1.5rem", md: "2rem"}}
+          src="https://storage.googleapis.com/teach-me-notes/TeachMeNotesIcon.png"
+        ></Image>
+        <Heading
+          as="h2"
+          marginLeft="1rem"
+          color="var(--white)"
+          fontWeight="300"
+          fontSize="2.5rem"
+        >
+          TeachMeNotes.com
+        </Heading>
+      </Flex>
+
       <Flex align="center" marginTop={{base: "1rem", sm: "none"}}>
         {isNotAuthenticated ? null : (
           <Link
