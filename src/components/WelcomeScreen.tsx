@@ -27,7 +27,7 @@ const WelcomeScreen = () => {
         <Heading
           as="h2"
           fontSize="3rem"
-          margin="1rem 0 1rem 0"
+          margin={{base: "3rem 0 ", md: "1rem 0"}}
           textAlign="center"
         >
           A free teaching tool for{" "}
@@ -45,14 +45,19 @@ const WelcomeScreen = () => {
             marginLeft={{base: "3rem"}}
           >
             <UnorderedList
-              margin="0 2rem 0 0"
+              marginTop={{base: "2rem", md: "0"}}
+              marginRight="2rem"
               padding="1rem 0"
               fontWeight="bold"
               transform="translateX(1rem)"
             >
               {featureArray.map((feature) => {
                 return (
-                  <ListItem marginBottom="1rem" key={feature} fontSize="1.5rem">
+                  <ListItem
+                    marginBottom="1.5rem"
+                    key={feature}
+                    fontSize="1.5rem"
+                  >
                     {feature}
                   </ListItem>
                 );
@@ -67,7 +72,7 @@ const WelcomeScreen = () => {
           >
             <Image
               w="100%"
-              marginTop={{base: "", md: "3rem", lg: "2rem", xl: "1rem"}}
+              marginTop={{base: "", md: "2rem", lg: "2rem", xl: "2rem"}}
               src="https://storage.googleapis.com/teach-me-notes/NoteTester.png"
             ></Image>
             <Heading
@@ -75,7 +80,7 @@ const WelcomeScreen = () => {
               color="var(--main-color-dark)"
               fontSize="2rem"
               textAlign="center"
-              marginTop="2rem"
+              marginTop={{base: "4rem", md: "2rem"}}
             >
               Click "Sign in with Google" to get started
             </Heading>
