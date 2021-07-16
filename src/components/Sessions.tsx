@@ -4,6 +4,7 @@ import {useHistory} from "react-router-dom";
 import {useFirestore, useUser, useFirestoreDocData} from "reactfire";
 import Header from "./Header";
 import styled from "@emotion/styled";
+import {clefs} from "../constants";
 
 const SessionButton = styled(Button)`
   margin-top: 1rem;
@@ -33,11 +34,18 @@ interface IUser {
 const Sessions: React.FC = () => {
   const [sessionCodeInput, setSessionCodeInput] = React.useState("");
 
+  const [errorMessage, setErrorMessage] = React.useState("");
+
   const {data} = useUser();
 
   const history = useHistory();
 
-  const createSessionCode = (number: number) => {
+  const sessionsRef = useFirestore().collection("sessions");
+
+  const userRef = useFirestore().collection("users").doc(data.uid);
+  const userDoc = useFirestoreDocData<IUser>(userRef).data;
+
+  const createSessionCode = async (number: number) => {
     const charArray = [];
     const newSessionIdArray = [];
     for (let i = 48; i <= 57; i++) {
@@ -51,17 +59,23 @@ const Sessions: React.FC = () => {
         charArray[Math.floor(Math.random() * charArray.length)]
       );
     }
-    return newSessionIdArray.join("");
+    const newCode = newSessionIdArray.join("");
+    try {
+      const sessionsQuery = sessionsRef.where("sessionCode", "==", newCode);
+      const sessionsWithThatCode = await sessionsQuery.get();
+      if (sessionsWithThatCode.docs.length === 0) {
+        return newCode;
+      }
+      return;
+    } catch (err) {
+      console.log(err);
+    }
   };
-
-  const sessionsRef = useFirestore().collection("sessions");
-
-  const userRef = useFirestore().collection("users").doc(data.uid);
-  const userDoc = useFirestoreDocData<IUser>(userRef).data;
 
   const createBatch = useFirestore().batch();
 
-  const handleCreateSession = () => {
+  const handleCreateSession = async () => {
+    setErrorMessage("");
     let oldSessionId;
     if (userDoc?.hostSessionId !== "") {
       oldSessionId = userDoc?.hostSessionId;
@@ -71,42 +85,47 @@ const Sessions: React.FC = () => {
       createBatch.delete(sessionsRef.doc(oldSessionId));
     }
 
-    const newSessionCode = createSessionCode(6);
+    try {
+      const newSessionCode = await createSessionCode(6);
 
-    const newSessionRef = sessionsRef.doc();
+      if (!newSessionCode) {
+        setErrorMessage("please try again, something went wrong");
+        return;
+      }
 
-    createBatch.set(newSessionRef, {
-      answer: "",
-      answerStatus: "",
-      displayingNotes: false,
-      sessionCode: newSessionCode,
-      hostId: data.uid,
-      guestId: "",
-      identifiedNotes: 0,
-      totalNotes: 0,
-      selectedNote: "",
-      selectedClef: "TREBLE",
-      mnemonics: {
-        showLinesOnStaff: false,
-        showSpacesOnStaff: false,
-      },
-    });
+      const newSessionRef = sessionsRef.doc();
 
-    createBatch.update(userRef, {hostSessionId: newSessionRef.id});
-
-    createBatch
-      .commit()
-      .then((result) => {
-        history.push(`/hosted-session/${newSessionRef.id}`);
-      })
-      .catch((err) => {
-        console.log(err);
+      createBatch.set(newSessionRef, {
+        answer: "",
+        answerStatus: "",
+        displayingNotes: false,
+        sessionCode: newSessionCode,
+        hostId: data.uid,
+        guestId: "",
+        identifiedNotes: 0,
+        totalNotes: 0,
+        selectedNote: "",
+        selectedClef: clefs.TREBLE,
+        mnemonics: {
+          showLinesOnStaff: false,
+          showSpacesOnStaff: false,
+        },
       });
+
+      createBatch.update(userRef, {hostSessionId: newSessionRef.id});
+
+      await createBatch.commit();
+
+      history.push(`/hosted-session/${newSessionRef.id}`);
+    } catch (err) {
+      setErrorMessage(err.message);
+    }
   };
 
   const joinBatch = useFirestore().batch();
 
   const handleJoinSession = async () => {
+    setErrorMessage("");
     try {
       const sessionToJoin = await sessionsRef
         .where("sessionCode", "==", sessionCodeInput.toUpperCase())
@@ -121,10 +140,10 @@ const Sessions: React.FC = () => {
 
         history.push(`/guest-session/${sessionToJoinId}`);
       } else {
-        console.log("bad code");
+        setErrorMessage("Please enter a valid code.");
       }
     } catch (err) {
-      console.log(err);
+      setErrorMessage(err.message);
     }
   };
 
@@ -133,15 +152,12 @@ const Sessions: React.FC = () => {
   };
 
   return (
-    <Flex width="100%" direction="column" align="center">
+    <Flex width="100%" direction="column" align="center" position="relative">
       <Header />
-      <Flex
-        w="95%"
-        justify="center"
-        marginTop="3rem"
-        flexWrap="wrap"
-        maxWidth="120rem"
-      >
+      <Heading as="h6" color="red" size="md" padding="1rem">
+        {errorMessage}
+      </Heading>
+      <Flex w="95%" justify="center" flexWrap="wrap" maxWidth="120rem">
         <SessionBox>
           <Flex direction="column">
             <Heading
