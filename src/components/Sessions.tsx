@@ -137,7 +137,6 @@ const Sessions: React.FC = () => {
         joinBatch.update(sessionsRef.doc(sessionToJoinId), {guestId: data.uid});
         joinBatch.update(userRef, {guestSessionId: sessionToJoinId});
         await joinBatch.commit();
-
         history.push(`/guest-session/${sessionToJoinId}`);
       } else {
         setErrorMessage("Please enter a valid code.");

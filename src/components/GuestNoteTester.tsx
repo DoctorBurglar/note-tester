@@ -84,7 +84,8 @@ function GuestNoteTester() {
 
   return (
     <>
-      {sessionDoc?.guestId && sessionDoc?.guestId === data.uid ? (
+      {!sessionDoc ||
+      (sessionDoc?.guestId && sessionDoc?.guestId === data.uid) ? (
         <Box w="100vw">
           <Header />
           <Flex
