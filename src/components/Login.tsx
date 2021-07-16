@@ -12,7 +12,7 @@ const Login: React.FC = () => {
     signInSuccessUrl: "/",
     // callbacks: {
     //   // Avoid redirects after sign-in.  Originally used this before encountering reactfire login bug
-    //   signInSuccessWithAuthResult: () => false,
+    // signInSuccessWithAuthResult: () => false,
     // },
   };
 

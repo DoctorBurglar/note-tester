@@ -125,25 +125,19 @@ const Sessions: React.FC = () => {
   const joinBatch = useFirestore().batch();
 
   const handleJoinSession = async () => {
-    console.log("running...");
     setErrorMessage("");
-    console.log("running2...");
     try {
-      console.log("running3...");
       const sessionToJoin = await sessionsRef
         .where("sessionCode", "==", sessionCodeInput.toUpperCase())
         .get();
 
-      console.log("running4...");
       if (sessionToJoin.docs.length > 0) {
         const sessionToJoinId = sessionToJoin.docs[0].id;
-        console.log("running5...");
+
         joinBatch.update(sessionsRef.doc(sessionToJoinId), {guestId: data.uid});
         joinBatch.update(userRef, {guestSessionId: sessionToJoinId});
         await joinBatch.commit();
-        console.log(sessionToJoinId);
         history.push(`/guest-session/${sessionToJoinId}`);
-        console.log("made it here too!");
       } else {
         setErrorMessage("Please enter a valid code.");
       }
