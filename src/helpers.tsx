@@ -298,3 +298,71 @@ export const determineNotePosition = (
 
   return notePosition;
 };
+
+export const getRandomNote = (
+  includeFlats: boolean,
+  includeSharps: boolean,
+  includeTreble: boolean,
+  includeBass: boolean,
+  lowTrebleNote?: string,
+  highTrebleNote?: string,
+  lowBassNote?: string,
+  highBassNote?: string
+) => {
+  const clefsArray = [];
+  console.log(includeBass, includeTreble);
+  if (!includeBass && !includeTreble) {
+    const error = new Error();
+    throw error;
+  }
+  if (includeBass) {
+    clefsArray.push(clefs.BASS);
+  }
+  if (includeTreble) {
+    clefsArray.push(clefs.TREBLE);
+  }
+  const randomClef = clefsArray[Math.floor(Math.random() * clefsArray.length)];
+
+  let notes: string[] = [];
+  if (randomClef === clefs.TREBLE) {
+    notes = Object.keys(trebleNotes);
+  }
+  if (randomClef === clefs.BASS) {
+    notes = Object.keys(bassNotes);
+  }
+
+  let notesRange;
+
+  if (randomClef === clefs.TREBLE && lowTrebleNote && highTrebleNote) {
+    console.log(notes);
+    notesRange = notes.slice(
+      notes.indexOf(lowTrebleNote),
+      notes.indexOf(highTrebleNote) + 1
+    );
+  }
+
+  if (randomClef === clefs.BASS && lowBassNote && highBassNote) {
+    notesRange = notes.slice(
+      notes.indexOf(lowBassNote),
+      notes.indexOf(highBassNote) + 1
+    );
+  }
+
+  const accidentalsArray = [""];
+  if (includeFlats) {
+    accidentalsArray.push("b");
+  }
+  if (includeSharps) {
+    accidentalsArray.push("s");
+  }
+  if (notesRange) {
+    console.log(randomClef, notesRange, lowTrebleNote, highTrebleNote);
+    const randonmNaturalNote =
+      notesRange[Math.floor(Math.random() * notesRange.length)];
+    const randomNote =
+      randonmNaturalNote[0] +
+      accidentalsArray[Math.floor(Math.random() * accidentalsArray.length)] +
+      randonmNaturalNote[1];
+    return {randomNote, randomClef};
+  }
+};

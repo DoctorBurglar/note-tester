@@ -9,6 +9,7 @@ import {useHistory, Redirect} from "react-router-dom";
 import {useSession} from "../hooks";
 import GuestScore from "./GuestScore";
 import Header from "./Header";
+import {getRandomNote} from "../helpers";
 
 interface IParams {
   sessionId: string;
@@ -54,9 +55,38 @@ function GuestNoteTester() {
   };
 
   const handleSelectNote = (note: string) => {
-    console.log(note);
     if (sessionDoc.answer !== "" || sessionDoc.selectedNote === "") {
       return;
+    }
+    if (sessionDoc.autoQuiz.on) {
+      console.log(sessionDoc);
+      const result = getRandomNote(
+        sessionDoc.autoQuiz.includeFlats,
+        sessionDoc.autoQuiz.includeSharps,
+        sessionDoc.autoQuiz.includeTreble,
+        sessionDoc.autoQuiz.includeBass,
+        sessionDoc.autoQuiz.lowTrebleNote,
+        sessionDoc.autoQuiz.highTrebleNote,
+        sessionDoc.autoQuiz.lowBassNote,
+        sessionDoc.autoQuiz.highBassNote
+      );
+      let randomNote: string, randomClef: string;
+      console.log(result);
+      if (result) {
+        randomNote = result.randomNote;
+        randomClef = result.randomClef;
+        console.log(randomNote, randomClef);
+      }
+      setTimeout(
+        () =>
+          sessionRef.update({
+            selectedNote: randomNote,
+            selectedClef: randomClef,
+            answer: "",
+            answerStatus: "",
+          }),
+        1500
+      );
     }
     const noteWithoutSharp = note[1] === "s" ? note[0] + note[2] : note;
     const nextNote = notes[notes.indexOf(noteWithoutSharp) + 1];

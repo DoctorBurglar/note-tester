@@ -110,6 +110,17 @@ const Sessions: React.FC = () => {
           showLinesOnStaff: false,
           showSpacesOnStaff: false,
         },
+        autoQuiz: {
+          on: false,
+          lowTrebleNote: "",
+          highTrebleNote: "",
+          lowBassNote: "",
+          highBassNote: "",
+          includeSharps: false,
+          includeFlats: false,
+          includeTreble: false,
+          includeBass: false,
+        },
       });
 
       createBatch.update(userRef, {hostSessionId: newSessionRef.id});
