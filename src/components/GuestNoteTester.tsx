@@ -60,16 +60,7 @@ function GuestNoteTester() {
     }
     if (sessionDoc.autoQuiz.on) {
       console.log(sessionDoc);
-      const result = getRandomNote(
-        sessionDoc.autoQuiz.includeFlats,
-        sessionDoc.autoQuiz.includeSharps,
-        sessionDoc.autoQuiz.includeTreble,
-        sessionDoc.autoQuiz.includeBass,
-        sessionDoc.autoQuiz.lowTrebleNote,
-        sessionDoc.autoQuiz.highTrebleNote,
-        sessionDoc.autoQuiz.lowBassNote,
-        sessionDoc.autoQuiz.highBassNote
-      );
+      const result = getRandomNote(sessionDoc.autoQuiz);
       let randomNote: string, randomClef: string;
       console.log(result);
       if (result) {

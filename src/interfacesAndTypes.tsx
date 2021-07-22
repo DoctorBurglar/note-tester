@@ -26,7 +26,7 @@ interface IMnemonics {
   showSpacesOnStaff: boolean;
 }
 
-interface IAutoQuiz {
+export interface IAutoQuiz {
   on: boolean;
   includeSharps: boolean;
   includeFlats: boolean;

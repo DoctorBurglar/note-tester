@@ -196,3 +196,13 @@ const numberOfWhiteKeys = Object.keys(bassNotes).length;
 export const whiteKeyWidth = 100 / numberOfWhiteKeys + "%";
 
 export const blackKeyWidth = "70%";
+
+export enum presets {
+  CUSTOM = "Custom",
+  CPOSITION = "C position",
+  MIDDLECPOSITION = "Middle C position",
+  GPOSITION = "G position",
+  NOTESONSTAFF = "Notes on staff",
+  NOTERSBELOWSTAFF = "Notes below staff",
+  NOTESABOVESTAFF = "Notes above staff",
+}

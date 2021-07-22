@@ -14,34 +14,124 @@ import {
   FormControl,
   FormLabel,
   Flex,
+  Heading,
 } from "@chakra-ui/react";
 import {useSession} from "../hooks";
 import {trebleNotes, bassNotes} from "../constants";
 import {getRandomNote} from "../helpers";
+import {presets} from "../constants";
 
 const AutoQuiz: React.FC<{sessionId: string}> = ({sessionId}) => {
-  const [lowTrebleNoteOfRange, setLowTrebleNoteOfRange] = React.useState("");
-  const [highTrebleNoteOfRange, setHighTrebleNoteOfRange] = React.useState("");
-  const [lowBassNoteOfRange, setLowBassNoteOfRange] = React.useState("");
-  const [highBassNoteOfRange, setHighBassNoteOfRange] = React.useState("");
-  const [includeSharps, setIncludeSharps] = React.useState(false);
-  const [includeFlats, setIncludeFlats] = React.useState(false);
-  const [includeTreble, setIncludeTreble] = React.useState(false);
-  const [includeBass, setIncludeBass] = React.useState(false);
+  const [lowTrebleNoteOfRange, setLowTrebleNoteOfRange] = React.useState<
+    trebleNotes | string
+  >(trebleNotes.C3);
+  const [highTrebleNoteOfRange, setHighTrebleNoteOfRange] = React.useState<
+    trebleNotes | string
+  >(trebleNotes.A6);
+  const [lowBassNoteOfRange, setLowBassNoteOfRange] = React.useState<
+    bassNotes | string
+  >(bassNotes.E1);
+  const [highBassNoteOfRange, setHighBassNoteOfRange] = React.useState<
+    bassNotes | string
+  >(bassNotes.C5);
+  const [includeSharps, setIncludeSharps] = React.useState(true);
+  const [includeFlats, setIncludeFlats] = React.useState(true);
+  const [includeTreble, setIncludeTreble] = React.useState(true);
+  const [includeBass, setIncludeBass] = React.useState(true);
+  const [treblePreset, setTreblePreset] = React.useState<presets | string>(
+    presets.CUSTOM
+  );
+  const [bassPreset, setBassPreset] = React.useState<presets | string>(
+    presets.CUSTOM
+  );
 
   const {sessionDoc, sessionRef} = useSession(sessionId);
 
   const {isOpen, onOpen, onClose} = useDisclosure();
 
+  React.useEffect(() => {
+    switch (treblePreset) {
+      case presets.CUSTOM:
+        setLowTrebleNoteOfRange(trebleNotes.C3);
+        setHighTrebleNoteOfRange(trebleNotes.A6);
+        break;
+      case presets.CPOSITION:
+        setLowTrebleNoteOfRange(trebleNotes.C4);
+        setHighTrebleNoteOfRange(trebleNotes.G4);
+        break;
+      case presets.MIDDLECPOSITION:
+        setLowTrebleNoteOfRange(trebleNotes.C4);
+        setHighTrebleNoteOfRange(trebleNotes.G4);
+        break;
+      case presets.GPOSITION:
+        setLowTrebleNoteOfRange(trebleNotes.G4);
+        setHighTrebleNoteOfRange(trebleNotes.D5);
+        break;
+      case presets.NOTESONSTAFF:
+        setLowTrebleNoteOfRange(trebleNotes.E4);
+        setHighTrebleNoteOfRange(trebleNotes.F5);
+        break;
+      case presets.NOTERSBELOWSTAFF:
+        setLowTrebleNoteOfRange(trebleNotes.C3);
+        setHighTrebleNoteOfRange(trebleNotes.D4);
+        break;
+      case presets.NOTESABOVESTAFF:
+        setLowTrebleNoteOfRange(trebleNotes.G5);
+        setHighTrebleNoteOfRange(trebleNotes.A6);
+        break;
+      default:
+        setLowTrebleNoteOfRange(trebleNotes.C3);
+        setHighTrebleNoteOfRange(trebleNotes.A6);
+    }
+  }, [treblePreset]);
+
+  React.useEffect(() => {
+    switch (bassPreset) {
+      case "Custom":
+        setLowBassNoteOfRange(bassNotes.E1);
+        setHighBassNoteOfRange(bassNotes.C5);
+        break;
+      case "C position":
+        setLowBassNoteOfRange(bassNotes.C3);
+        setHighBassNoteOfRange(bassNotes.G3);
+        break;
+      case "Middle C position":
+        setLowBassNoteOfRange(bassNotes.C4);
+        setHighBassNoteOfRange(bassNotes.G4);
+        break;
+      case "G position":
+        setLowBassNoteOfRange(bassNotes.G2);
+        setHighBassNoteOfRange(bassNotes.D3);
+        break;
+      case "Notes on staff":
+        setLowBassNoteOfRange(bassNotes.G2);
+        setHighBassNoteOfRange(bassNotes.A3);
+        break;
+      case "Notes above staff":
+        setLowBassNoteOfRange(bassNotes.B3);
+        setHighBassNoteOfRange(bassNotes.C5);
+        break;
+      case "Notes below staff":
+        setLowBassNoteOfRange(bassNotes.E1);
+        setHighBassNoteOfRange(bassNotes.G2);
+        break;
+      default:
+        setLowBassNoteOfRange(bassNotes.E1);
+        setHighBassNoteOfRange(bassNotes.C2);
+    }
+  }, [bassPreset]);
+
   const resetAutoQuizFields = () => {
-    setLowTrebleNoteOfRange("");
-    setHighTrebleNoteOfRange("");
-    setLowBassNoteOfRange("");
-    setHighBassNoteOfRange("");
-    setIncludeTreble(false);
-    setIncludeBass(false);
-    setIncludeSharps(false);
-    setIncludeFlats(false);
+    setLowTrebleNoteOfRange(trebleNotes.C3);
+    setHighTrebleNoteOfRange(trebleNotes.A6);
+    setLowBassNoteOfRange(bassNotes.E1);
+    setHighBassNoteOfRange(bassNotes.C5);
+    setIncludeTreble(true);
+    setIncludeBass(true);
+    setIncludeSharps(true);
+    setIncludeFlats(true);
+    setBassPreset(presets.CUSTOM);
+    setTreblePreset(presets.CUSTOM);
   };
 
   const handleModalClose = () => {
@@ -65,19 +155,23 @@ const AutoQuiz: React.FC<{sessionId: string}> = ({sessionId}) => {
   };
 
   const handleQuiz = async () => {
-    const result = getRandomNote(
+    if (!includeBass && !includeTreble) {
+      return;
+    }
+    const result = getRandomNote({
+      on: true,
       includeFlats,
       includeSharps,
       includeTreble,
       includeBass,
-      lowTrebleNoteOfRange,
-      highTrebleNoteOfRange,
-      lowBassNoteOfRange,
-      highBassNoteOfRange
-    );
+      lowTrebleNote: lowTrebleNoteOfRange,
+      highTrebleNote: highTrebleNoteOfRange,
+      lowBassNote: lowBassNoteOfRange,
+      highBassNote: highBassNoteOfRange,
+    });
     const randomNote = result?.randomNote;
     const randomClef = result?.randomClef;
-    console.log(sessionDoc?.autoQuiz?.on);
+    console.log(sessionDoc?.autoQuiz?.on, randomNote);
     try {
       await sessionRef.update({
         autoQuiz: {
@@ -115,122 +209,171 @@ const AutoQuiz: React.FC<{sessionId: string}> = ({sessionId}) => {
           <ModalCloseButton />
           <ModalBody>
             <form>
-              <Checkbox
-                marginRight="3rem"
-                marginBottom="1rem"
-                onChange={() => setIncludeTreble((prevBool) => !prevBool)}
-              >
-                Treble Clef
-              </Checkbox>
-              <Flex>
-                <FormControl marginBottom="2rem" isDisabled={!includeTreble}>
-                  <FormLabel htmlFor="lowNote">Low Note</FormLabel>
-                  <Select
-                    onChange={(e) => setLowTrebleNoteOfRange(e.target.value)}
-                    id="lowNote"
-                  >
-                    {trebleNotesArray.map((note) => {
-                      return (
-                        <option key={note} value={note}>
-                          {note}
-                        </option>
-                      );
-                    })}
-                  </Select>
-                </FormControl>
-                <FormControl
-                  marginBottom="2rem"
-                  isDisabled={lowTrebleNoteOfRange === "" || !includeTreble}
+              <Flex direction="column" padding="1rem">
+                <Checkbox
+                  marginRight="3rem"
+                  marginBottom="1rem"
+                  onChange={() => setIncludeTreble((prevBool) => !prevBool)}
+                  defaultChecked
                 >
-                  <FormLabel htmlFor="hignNote">High Note</FormLabel>
-                  <Select
-                    id="highNote"
-                    onChange={(e) => setHighTrebleNoteOfRange(e.target.value)}
+                  <Heading as="h3" fontSize="1.5rem" fontWeight="400">
+                    Treble Clef
+                  </Heading>
+                </Checkbox>
+                <FormControl
+                  isDisabled={!includeTreble}
+                  w="80%"
+                  alignSelf="center"
+                >
+                  <Flex align="center">
+                    <FormLabel htmlFor="presets">Presets:</FormLabel>
+                    <Select
+                      onChange={(e) => setTreblePreset(e.target.value)}
+                      id="presets"
+                      value={treblePreset}
+                    >
+                      {Object.values(presets).map((preset) => {
+                        return (
+                          <option key={preset} value={preset}>
+                            {preset}
+                          </option>
+                        );
+                      })}
+                    </Select>
+                  </Flex>
+                </FormControl>
+                <Flex justify="space-between" padding="0 1rem ">
+                  <FormControl
+                    isDisabled={!includeTreble || treblePreset !== "Custom"}
+                    w="45%"
                   >
-                    {trebleNotesArray
-                      .slice(trebleNotesArray.indexOf(lowTrebleNoteOfRange))
-                      .map((note) => {
+                    <FormLabel htmlFor="lowNote">Low Note</FormLabel>
+                    <Select
+                      onChange={(e) => setLowTrebleNoteOfRange(e.target.value)}
+                      id="lowNote"
+                      value={lowTrebleNoteOfRange}
+                    >
+                      {trebleNotesArray.map((note) => {
                         return (
                           <option key={note} value={note}>
                             {note}
                           </option>
                         );
                       })}
-                  </Select>
-                </FormControl>
+                    </Select>
+                  </FormControl>
+                  <FormControl
+                    isDisabled={!includeTreble || treblePreset !== "Custom"}
+                    w="45%"
+                  >
+                    <FormLabel htmlFor="highNote">High Note</FormLabel>
+                    <Select
+                      id="highNote"
+                      onChange={(e) => setHighTrebleNoteOfRange(e.target.value)}
+                      value={highTrebleNoteOfRange}
+                    >
+                      {trebleNotesArray
+                        .slice(trebleNotesArray.indexOf(lowTrebleNoteOfRange))
+                        .map((note) => {
+                          return (
+                            <option key={note} value={note}>
+                              {note}
+                            </option>
+                          );
+                        })}
+                    </Select>
+                  </FormControl>
+                </Flex>
               </Flex>
+              <Flex direction="column" padding="1rem">
+                <Checkbox
+                  marginBottom="1rem"
+                  onChange={() => setIncludeBass((prevBool) => !prevBool)}
+                  defaultChecked
+                >
+                  <Heading as="h3" fontSize="1.5rem" fontWeight="400">
+                    Bass Clef
+                  </Heading>
+                </Checkbox>
 
-              <Flex justify="center">
-                <Checkbox
-                  marginRight="3rem"
-                  onChange={() => setIncludeSharps((prevBool) => !prevBool)}
-                  isDisabled={!includeTreble}
-                >
-                  Sharps
-                </Checkbox>
-                <Checkbox
-                  onChange={() => setIncludeFlats((prevBool) => !prevBool)}
-                  isDisabled={!includeTreble}
-                >
-                  Flats
-                </Checkbox>
-              </Flex>
-              <Checkbox
-                marginRight="3rem"
-                marginBottom="1rem"
-                onChange={() => setIncludeBass((prevBool) => !prevBool)}
-              >
-                Bass Clef
-              </Checkbox>
-              <Flex>
-                <FormControl marginBottom="2rem" isDisabled={!includeBass}>
-                  <FormLabel htmlFor="lowNote">Low Note</FormLabel>
-                  <Select
-                    onChange={(e) => setLowBassNoteOfRange(e.target.value)}
-                    id="lowNote"
-                  >
-                    {bassNotesArray.map((note) => {
-                      return (
-                        <option key={note} value={note}>
-                          {note}
-                        </option>
-                      );
-                    })}
-                  </Select>
-                </FormControl>
                 <FormControl
-                  marginBottom="2rem"
-                  isDisabled={lowBassNoteOfRange === "" || !includeBass}
+                  isDisabled={!includeTreble}
+                  w="80%"
+                  alignSelf="center"
                 >
-                  <FormLabel htmlFor="hignNote">High Note</FormLabel>
-                  <Select
-                    id="highNote"
-                    onChange={(e) => setHighBassNoteOfRange(e.target.value)}
+                  <Flex align="center">
+                    <FormLabel htmlFor="presets">Presets:</FormLabel>
+                    <Select
+                      onChange={(e) => setBassPreset(e.target.value)}
+                      id="presets"
+                      value={bassPreset}
+                    >
+                      {Object.values(presets).map((preset) => {
+                        return (
+                          <option key={preset} value={preset}>
+                            {preset}
+                          </option>
+                        );
+                      })}
+                    </Select>
+                  </Flex>
+                </FormControl>
+
+                <Flex justify="space-between" padding="0 1rem">
+                  <FormControl
+                    isDisabled={!includeBass || bassPreset !== presets.CUSTOM}
+                    w="45%"
                   >
-                    {bassNotesArray
-                      .slice(bassNotesArray.indexOf(lowBassNoteOfRange))
-                      .map((note) => {
+                    <FormLabel htmlFor="lowNote">Low Note</FormLabel>
+                    <Select
+                      onChange={(e) => setLowBassNoteOfRange(e.target.value)}
+                      id="lowNote"
+                      value={lowBassNoteOfRange}
+                    >
+                      {bassNotesArray.map((note) => {
                         return (
                           <option key={note} value={note}>
                             {note}
                           </option>
                         );
                       })}
-                  </Select>
-                </FormControl>
+                    </Select>
+                  </FormControl>
+                  <FormControl
+                    isDisabled={!includeBass || bassPreset !== presets.CUSTOM}
+                    w="45%"
+                  >
+                    <FormLabel htmlFor="hignNote">High Note</FormLabel>
+                    <Select
+                      id="highNote"
+                      onChange={(e) => setHighBassNoteOfRange(e.target.value)}
+                      value={highBassNoteOfRange}
+                    >
+                      {bassNotesArray
+                        .slice(bassNotesArray.indexOf(lowBassNoteOfRange))
+                        .map((note) => {
+                          return (
+                            <option key={note} value={note}>
+                              {note}
+                            </option>
+                          );
+                        })}
+                    </Select>
+                  </FormControl>
+                </Flex>
               </Flex>
 
-              <Flex justify="center">
+              <Flex justify="center" marginTop="1.5rem">
                 <Checkbox
                   marginRight="3rem"
                   onChange={() => setIncludeSharps((prevBool) => !prevBool)}
-                  isDisabled={!includeBass}
+                  defaultChecked
                 >
                   Sharps
                 </Checkbox>
                 <Checkbox
                   onChange={() => setIncludeFlats((prevBool) => !prevBool)}
-                  isDisabled={!includeBass}
+                  defaultChecked
                 >
                   Flats
                 </Checkbox>
