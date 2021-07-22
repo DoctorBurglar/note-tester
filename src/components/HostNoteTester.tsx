@@ -11,6 +11,7 @@ import Header from "./Header";
 import styled from "@emotion/styled";
 import GuestScore from "./GuestScore";
 import SessionCode from "./SessionCode";
+import AutoQuiz from "./AutoQuiz";
 
 const Content = styled(Flex)`
   justify-content: space-around;
@@ -43,7 +44,11 @@ const HostNoteTester = () => {
     <div style={{width: "100vw"}}>
       <Header />
       <Flex w="100%" h="0" justify="space-between" align="flex-start">
-        <GuestScore sessionId={sessionId} isHost />
+        <Flex direction="column">
+          <GuestScore sessionId={sessionId} isHost />
+          <AutoQuiz sessionId={sessionId} />
+        </Flex>
+
         <SessionCode sessionDoc={sessionDoc} />
       </Flex>
       <Content>

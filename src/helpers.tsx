@@ -6,6 +6,7 @@ import {
   positionAdjustment,
   accidentals,
 } from "./constants";
+import {IAutoQuiz} from "./interfacesAndTypes";
 
 export const determineNotePosition = (
   selectedNote: string,
@@ -297,4 +298,92 @@ export const determineNotePosition = (
   }
 
   return notePosition;
+};
+
+export const getRandomNote = ({
+  includeBass,
+  includeFlats,
+  includeSharps,
+  includeTreble,
+  lowBassNote,
+  lowTrebleNote,
+  highBassNote,
+  highTrebleNote,
+  on,
+}: IAutoQuiz) => {
+  const clefsArray = [];
+  if (!includeBass && !includeTreble) {
+    const error = new Error();
+    throw error;
+  }
+  if (includeBass) {
+    clefsArray.push(clefs.BASS);
+  }
+  if (includeTreble) {
+    clefsArray.push(clefs.TREBLE);
+  }
+  const randomClef = clefsArray[Math.floor(Math.random() * clefsArray.length)];
+
+  let notes: string[] = [];
+  if (randomClef === clefs.TREBLE) {
+    notes = Object.keys(trebleNotes);
+  }
+  if (randomClef === clefs.BASS) {
+    notes = Object.keys(bassNotes);
+  }
+
+  let notesRange;
+  let lowNoteIndex;
+
+  if (randomClef === clefs.TREBLE && lowTrebleNote && highTrebleNote) {
+    console.log(notes);
+    lowNoteIndex = notes.indexOf(lowTrebleNote);
+    notesRange = notes.slice(
+      notes.indexOf(lowTrebleNote),
+      notes.indexOf(highTrebleNote) + 1
+    );
+  }
+
+  if (randomClef === clefs.BASS && lowBassNote && highBassNote) {
+    lowNoteIndex = notes.indexOf(lowBassNote);
+    notesRange = notes.slice(
+      notes.indexOf(lowBassNote),
+      notes.indexOf(highBassNote) + 1
+    );
+  }
+
+  const accidentalsArray = [""];
+  if (includeFlats) {
+    accidentalsArray.push("b");
+  }
+  if (includeSharps) {
+    accidentalsArray.push("s");
+  }
+  if (notesRange) {
+    console.log(randomClef, notesRange, lowTrebleNote, highTrebleNote);
+    const randomNaturalNote =
+      notesRange[Math.floor(Math.random() * notesRange.length)];
+    if (
+      lowNoteIndex === 0 &&
+      (randomNaturalNote === "C" || randomNaturalNote === "F")
+    ) {
+      const lowestCOrFAccidentalsArray = [""];
+      if (includeSharps) {
+        lowestCOrFAccidentalsArray.push("s");
+      }
+      const randomNote =
+        randomNaturalNote[0] +
+        lowestCOrFAccidentalsArray[
+          Math.floor(Math.random() * lowestCOrFAccidentalsArray.length)
+        ] +
+        randomNaturalNote[1];
+      return {randomNote, randomClef};
+    } else {
+      const randomNote =
+        randomNaturalNote[0] +
+        accidentalsArray[Math.floor(Math.random() * accidentalsArray.length)] +
+        randomNaturalNote[1];
+      return {randomNote, randomClef};
+    }
+  }
 };
