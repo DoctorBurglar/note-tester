@@ -60,7 +60,10 @@ function GuestNoteTester() {
     }
     if (sessionDoc.autoQuiz.on) {
       console.log(sessionDoc);
-      const result = getRandomNote(sessionDoc.autoQuiz);
+      const result = getRandomNote(
+        sessionDoc.autoQuiz,
+        sessionDoc.selectedNote
+      );
       let randomNote: string, randomClef: string;
       console.log(result);
       if (result) {
@@ -96,7 +99,7 @@ function GuestNoteTester() {
         return handleAnswer(note, answerStatus.CORRECT);
       }
     } else if (note[0] === "C" || note[0] === "F") {
-      if (prevNote[0] + "s" + prevNote[1] === selectedNote) {
+      if (prevNote && prevNote[0] + "s" + prevNote[1] === selectedNote) {
         return handleAnswer(note, answerStatus.CORRECT);
       }
     }

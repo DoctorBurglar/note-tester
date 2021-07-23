@@ -97,15 +97,8 @@ const Keyboard: React.FC<IKeyboardProps> = ({
     }
   };
 
-  const divRef = React.useRef(null);
-  if (divRef !== null) {
-    console.log(divRef.current);
-    console.log(window.screenY);
-  }
-
   return (
     <Flex
-      ref={divRef}
       w="100vw"
       justify="flex-start"
       direction="column"

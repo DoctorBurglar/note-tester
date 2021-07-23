@@ -5,6 +5,7 @@ import {
   lineHeightInt,
   positionAdjustment,
   accidentals,
+  presets,
 } from "./constants";
 import {IAutoQuiz} from "./interfacesAndTypes";
 
@@ -300,17 +301,20 @@ export const determineNotePosition = (
   return notePosition;
 };
 
-export const getRandomNote = ({
-  includeBass,
-  includeFlats,
-  includeSharps,
-  includeTreble,
-  lowBassNote,
-  lowTrebleNote,
-  highBassNote,
-  highTrebleNote,
-  on,
-}: IAutoQuiz) => {
+export const getRandomNote = (
+  {
+    includeBass,
+    includeFlats,
+    includeSharps,
+    includeTreble,
+    lowBassNote,
+    lowTrebleNote,
+    highBassNote,
+    highTrebleNote,
+    on,
+  }: IAutoQuiz,
+  selectedNote: string
+) => {
   const clefsArray = [];
   if (!includeBass && !includeTreble) {
     const error = new Error();
@@ -336,20 +340,19 @@ export const getRandomNote = ({
   let lowNoteIndex;
 
   if (randomClef === clefs.TREBLE && lowTrebleNote && highTrebleNote) {
-    console.log(notes);
     lowNoteIndex = notes.indexOf(lowTrebleNote);
-    notesRange = notes.slice(
-      notes.indexOf(lowTrebleNote),
-      notes.indexOf(highTrebleNote) + 1
-    );
+    notesRange = notes
+      .slice(notes.indexOf(lowTrebleNote), notes.indexOf(highTrebleNote) + 1)
+      // filter out currently selected note so we don't repeat
+      .filter((note) => note !== selectedNote);
   }
 
   if (randomClef === clefs.BASS && lowBassNote && highBassNote) {
     lowNoteIndex = notes.indexOf(lowBassNote);
-    notesRange = notes.slice(
-      notes.indexOf(lowBassNote),
-      notes.indexOf(highBassNote) + 1
-    );
+    notesRange = notes
+      .slice(notes.indexOf(lowBassNote), notes.indexOf(highBassNote) + 1)
+      // filter out currently selected note so we don't repeat
+      .filter((note) => note !== selectedNote);
   }
 
   const accidentalsArray = [""];
@@ -365,7 +368,7 @@ export const getRandomNote = ({
       notesRange[Math.floor(Math.random() * notesRange.length)];
     if (
       lowNoteIndex === 0 &&
-      (randomNaturalNote === "C" || randomNaturalNote === "F")
+      (randomNaturalNote[0] === "C" || randomNaturalNote[0] === "F")
     ) {
       const lowestCOrFAccidentalsArray = [""];
       if (includeSharps) {
@@ -386,4 +389,86 @@ export const getRandomNote = ({
       return {randomNote, randomClef};
     }
   }
+};
+
+export const getTrebleNoteRange = (treblePreset: string) => {
+  const trebleNoteRange = {
+    lowTrebleNote: trebleNotes.C3,
+    highTrebleNote: trebleNotes.A6,
+  };
+  switch (treblePreset) {
+    case presets.CUSTOM:
+      trebleNoteRange.lowTrebleNote = trebleNotes.C3;
+      trebleNoteRange.highTrebleNote = trebleNotes.A6;
+      break;
+    case presets.CPOSITION:
+      trebleNoteRange.lowTrebleNote = trebleNotes.C4;
+      trebleNoteRange.highTrebleNote = trebleNotes.G4;
+      break;
+    case presets.MIDDLECPOSITION:
+      trebleNoteRange.lowTrebleNote = trebleNotes.C4;
+      trebleNoteRange.highTrebleNote = trebleNotes.G4;
+      break;
+    case presets.GPOSITION:
+      trebleNoteRange.lowTrebleNote = trebleNotes.G4;
+      trebleNoteRange.highTrebleNote = trebleNotes.D5;
+      break;
+    case presets.NOTESONSTAFF:
+      trebleNoteRange.lowTrebleNote = trebleNotes.E4;
+      trebleNoteRange.highTrebleNote = trebleNotes.F5;
+      break;
+    case presets.NOTERSBELOWSTAFF:
+      trebleNoteRange.lowTrebleNote = trebleNotes.C3;
+      trebleNoteRange.highTrebleNote = trebleNotes.D4;
+      break;
+    case presets.NOTESABOVESTAFF:
+      trebleNoteRange.lowTrebleNote = trebleNotes.G5;
+      trebleNoteRange.highTrebleNote = trebleNotes.A6;
+      break;
+    default:
+      trebleNoteRange.lowTrebleNote = trebleNotes.C3;
+      trebleNoteRange.highTrebleNote = trebleNotes.A6;
+  }
+  return trebleNoteRange;
+};
+
+export const getBassNoteRange = (bassPreset: string) => {
+  const bassNoteRange = {
+    lowBassNote: bassNotes.E1,
+    highBassNote: bassNotes.C5,
+  };
+  switch (bassPreset) {
+    case presets.CUSTOM:
+      bassNoteRange.lowBassNote = bassNotes.E1;
+      bassNoteRange.highBassNote = bassNotes.C5;
+      break;
+    case presets.CPOSITION:
+      bassNoteRange.lowBassNote = bassNotes.C3;
+      bassNoteRange.highBassNote = bassNotes.G3;
+      break;
+    case presets.MIDDLECPOSITION:
+      bassNoteRange.lowBassNote = bassNotes.C3;
+      bassNoteRange.highBassNote = bassNotes.G3;
+      break;
+    case presets.GPOSITION:
+      bassNoteRange.lowBassNote = bassNotes.G2;
+      bassNoteRange.highBassNote = bassNotes.D3;
+      break;
+    case presets.NOTESONSTAFF:
+      bassNoteRange.lowBassNote = bassNotes.G2;
+      bassNoteRange.highBassNote = bassNotes.A3;
+      break;
+    case presets.NOTERSBELOWSTAFF:
+      bassNoteRange.lowBassNote = bassNotes.E1;
+      bassNoteRange.highBassNote = bassNotes.G2;
+      break;
+    case presets.NOTESABOVESTAFF:
+      bassNoteRange.lowBassNote = bassNotes.B3;
+      bassNoteRange.highBassNote = bassNotes.C5;
+      break;
+    default:
+      bassNoteRange.lowBassNote = bassNotes.E1;
+      bassNoteRange.highBassNote = bassNotes.C2;
+  }
+  return bassNoteRange;
 };
