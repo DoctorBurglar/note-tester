@@ -339,12 +339,17 @@ export const getRandomNote = (
   let notesRange;
   let lowNoteIndex;
 
+  let naturalSelectedNote = selectedNote;
+  if (selectedNote[1] === "s" || selectedNote[1] === "b") {
+    console.log("okie dokie");
+    naturalSelectedNote = selectedNote[0] + selectedNote[2];
+  }
   if (randomClef === clefs.TREBLE && lowTrebleNote && highTrebleNote) {
     lowNoteIndex = notes.indexOf(lowTrebleNote);
     notesRange = notes
       .slice(notes.indexOf(lowTrebleNote), notes.indexOf(highTrebleNote) + 1)
       // filter out currently selected note so we don't repeat
-      .filter((note) => note !== selectedNote);
+      .filter((note) => note !== naturalSelectedNote);
   }
 
   if (randomClef === clefs.BASS && lowBassNote && highBassNote) {
@@ -352,7 +357,7 @@ export const getRandomNote = (
     notesRange = notes
       .slice(notes.indexOf(lowBassNote), notes.indexOf(highBassNote) + 1)
       // filter out currently selected note so we don't repeat
-      .filter((note) => note !== selectedNote);
+      .filter((note) => note !== naturalSelectedNote);
   }
 
   const accidentalsArray = [""];

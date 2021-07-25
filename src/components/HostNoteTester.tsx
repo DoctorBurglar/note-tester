@@ -2,7 +2,7 @@ import React from "react";
 import Staff from "./Staff";
 import HostControls from "./HostControls";
 import {trebleNotes, bassNotes, clefs} from "../constants";
-import {Flex} from "@chakra-ui/react";
+import {Flex, Button, useDisclosure} from "@chakra-ui/react";
 import Keyboard from "./Keyboard";
 import {useUser} from "reactfire";
 import {useHistory, useParams} from "react-router-dom";
@@ -12,6 +12,7 @@ import styled from "@emotion/styled";
 import GuestScore from "./GuestScore";
 import SessionCode from "./SessionCode";
 import AutoQuiz from "./AutoQuiz";
+import {IAutoQuiz} from "../interfacesAndTypes";
 
 const Content = styled(Flex)`
   justify-content: space-around;
@@ -30,6 +31,8 @@ const HostNoteTester = () => {
   const {data} = useUser();
   const {sessionRef, sessionDoc} = useSession(sessionId);
 
+  const {isOpen, onOpen, onClose} = useDisclosure();
+
   React.useEffect(() => {
     if (sessionDoc && sessionDoc.hostId !== data.uid) {
       history.push("/");
@@ -40,13 +43,80 @@ const HostNoteTester = () => {
     sessionRef.update({selectedNote: note, answer: "", answerStatus: ""});
   };
 
+  const handleLineMnemonic = () => {
+    sessionRef.update({
+      mnemonics: {
+        ...sessionDoc.mnemonics,
+        showLinesOnStaff: !sessionDoc.mnemonics.showLinesOnStaff,
+      },
+    });
+  };
+
+  const handleSpaceMnemonic = () => {
+    sessionRef.update({
+      mnemonics: {
+        ...sessionDoc.mnemonics,
+        showSpacesOnStaff: !sessionDoc.mnemonics.showSpacesOnStaff,
+      },
+    });
+  };
+
+  const handleDisplayNotes = () => [
+    sessionRef.update({displayingNotes: !sessionDoc?.displayingNotes}),
+  ];
+
+  const handleSelectClef = (clef: clefs) => {
+    sessionRef.update({selectedClef: clef, selectedNote: "", answer: ""});
+  };
+
+  const onSubmit = async (
+    quizDoc: IAutoQuiz,
+    randomNote: string,
+    randomClef: string
+  ) => {
+    try {
+      await sessionRef.update({
+        autoQuiz: {
+          includeSharps: quizDoc.includeSharps,
+          includeFlats: quizDoc.includeFlats,
+          includeTreble: quizDoc.includeTreble,
+          includeBass: quizDoc.includeBass,
+          lowTrebleNote: quizDoc.lowTrebleNote,
+          highTrebleNote: quizDoc.highTrebleNote,
+          lowBassNote: quizDoc.lowBassNote,
+          highBassNote: quizDoc.highBassNote,
+          on: sessionDoc?.autoQuiz.on ? true : !sessionDoc?.autoQuiz.on,
+        },
+        selectedNote: randomNote,
+        selectedClef: randomClef,
+        answer: "",
+        answerStatus: "",
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <div style={{width: "100vw"}}>
       <Header />
       <Flex w="100%" h="0" justify="space-between" align="flex-start">
         <Flex direction="column">
           <GuestScore sessionId={sessionId} isHost />
-          <AutoQuiz sessionId={sessionId} />
+          <AutoQuiz
+            isOpen={isOpen}
+            onClose={onClose}
+            selectedNote={sessionDoc?.selectedNote}
+            onSubmit={onSubmit}
+          />
+          <Button
+            onClick={onOpen}
+            zIndex="5"
+            position="relative"
+            marginLeft="2rem"
+          >
+            {sessionDoc?.autoQuiz?.on ? "Stop auto quiz" : "Start auto quiz"}
+          </Button>
         </Flex>
 
         <SessionCode sessionDoc={sessionDoc} />
@@ -55,13 +125,21 @@ const HostNoteTester = () => {
         <Staff
           selectedNote={sessionDoc?.selectedNote}
           selectedClef={sessionDoc?.selectedClef}
-          sessionId={sessionId}
+          showLinesOnStaff={sessionDoc?.mnemonics.showLinesOnStaff}
+          showSpacesOnStaff={sessionDoc?.mnemonics.showSpacesOnStaff}
         />
 
         <Flex justifyContent="space-between" w="100%">
           <HostControls
             setSelectedNote={handleSelectNote}
-            sessionId={sessionId}
+            setShowLinesOnStaff={handleLineMnemonic}
+            setShowSpacesOnStaff={handleSpaceMnemonic}
+            setDisplayingNotes={handleDisplayNotes}
+            selectedClef={sessionDoc?.selectedClef}
+            setSelectedClef={handleSelectClef}
+            displayingNotes={sessionDoc?.displayingNotes}
+            showLinesOnStaff={sessionDoc?.mnemonics.showLinesOnStaff}
+            showSpacesOnStaff={sessionDoc?.mnemonics.showSpacesOnStaff}
           />
         </Flex>
 
@@ -74,7 +152,10 @@ const HostNoteTester = () => {
           selectedClef={sessionDoc?.selectedClef}
           setSelectedNote={handleSelectNote}
           isGuestKeyboard={false}
-          sessionId={sessionId}
+          selectedNote={sessionDoc?.selectedNote}
+          displayingNotes={sessionDoc?.displayingNotes}
+          answer={sessionDoc?.answer}
+          answerStatus={sessionDoc?.answerStatus}
         />
       </Content>
     </div>

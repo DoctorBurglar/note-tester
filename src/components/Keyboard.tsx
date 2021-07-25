@@ -7,25 +7,28 @@ import Flat from "./Flat";
 import Sharp from "./Sharp";
 import BlackKeyOverlay from "./BlackKeyOverlay";
 import WhiteKeyOverlay from "./WhiteKeyOverlay";
-import {useSession} from "../hooks";
 import LowestBlackKeyOverlay from "./LowestBlackKeyOverlay";
 
 interface IKeyboardProps {
   notes: string[];
   isGuestKeyboard: boolean;
-  sessionId: string;
   selectedClef: string;
   setSelectedNote: (note: string) => void;
+  selectedNote: string;
+  answer: string;
+  answerStatus: string;
+  displayingNotes: boolean;
 }
 
 const Keyboard: React.FC<IKeyboardProps> = ({
   notes,
   setSelectedNote,
   isGuestKeyboard,
-  sessionId,
+  selectedNote,
+  answer,
+  answerStatus,
+  displayingNotes,
 }) => {
-  const {sessionDoc} = useSession(sessionId);
-
   const handleFlat = (ind: number) => {
     if (notes.length - 1 <= ind) {
       return;
@@ -33,9 +36,9 @@ const Keyboard: React.FC<IKeyboardProps> = ({
   };
 
   const thisWhiteKeyIsSelected = (note: string, ind: number) => {
-    let compareNote = sessionDoc?.selectedNote;
+    let compareNote = selectedNote;
     if (isGuestKeyboard) {
-      compareNote = sessionDoc?.answer;
+      compareNote = answer;
     }
     let keyIsSelected = false;
     // if natural white key
@@ -61,9 +64,9 @@ const Keyboard: React.FC<IKeyboardProps> = ({
   };
 
   const thisBlackKeyIsSelected = (note: string, ind: number) => {
-    let compareNote = sessionDoc?.selectedNote;
+    let compareNote = selectedNote;
     if (isGuestKeyboard) {
-      compareNote = sessionDoc?.answer;
+      compareNote = answer;
     }
     let keyIsSelected = false;
     // if note is a selected sharp
@@ -124,7 +127,10 @@ const Keyboard: React.FC<IKeyboardProps> = ({
                 setSelectedNote={setSelectedNote}
                 notes={notes}
                 isGuestKeyboard={isGuestKeyboard}
-                sessionId={sessionId}
+                displayingNotes={displayingNotes}
+                answer={answer}
+                answerStatus={answerStatus}
+                selectedNote={selectedNote}
               >
                 {!isGuestKeyboard ? (
                   <WhiteKeyOverlay
@@ -133,10 +139,10 @@ const Keyboard: React.FC<IKeyboardProps> = ({
                         ? handleWhiteFlat
                         : handleWhiteSharp
                     }
-                    displayingNotes={sessionDoc?.displayingNotes}
+                    displayingNotes={displayingNotes}
                     ind={ind}
                     note={note}
-                    selectedNote={sessionDoc?.selectedNote}
+                    selectedNote={selectedNote}
                     thisWhiteKeyIsSelected={thisWhiteKeyIsSelected}
                   >
                     {" "}
@@ -156,8 +162,10 @@ const Keyboard: React.FC<IKeyboardProps> = ({
                   ind={ind}
                   setSelectedNote={setSelectedNote}
                   isGuestKeyboard={isGuestKeyboard}
-                  sessionId={sessionId}
                   notes={notes}
+                  answer={answer}
+                  answerStatus={answerStatus}
+                  selectedNote={selectedNote}
                 >
                   {!isGuestKeyboard ? (
                     <BlackKeyOverlay
@@ -166,7 +174,7 @@ const Keyboard: React.FC<IKeyboardProps> = ({
                       note={note}
                       thisBlackKeyIsSelected={thisBlackKeyIsSelected}
                       notes={notes}
-                      selectedNote={sessionDoc?.selectedNote}
+                      selectedNote={selectedNote}
                       setSelectedNote={setSelectedNote}
                     />
                   ) : null}
@@ -179,16 +187,17 @@ const Keyboard: React.FC<IKeyboardProps> = ({
                   ind={ind}
                   note={note}
                   setSelectedNote={setSelectedNote}
-                  selectedNote={sessionDoc?.selectedNote}
+                  selectedNote={selectedNote}
                   thisBlackKeyIsSelected={thisBlackKeyIsSelected}
-                  sessionId={sessionId}
                   isGuestKeyboard={isGuestKeyboard}
+                  answer={answer}
+                  answerStatus={answerStatus}
                 >
                   {!isGuestKeyboard ? (
                     <LowestBlackKeyOverlay
                       ind={ind}
                       note={note}
-                      selectedNote={sessionDoc?.selectedNote}
+                      selectedNote={selectedNote}
                       thisBlackKeyIsSelected={thisBlackKeyIsSelected}
                     />
                   ) : null}

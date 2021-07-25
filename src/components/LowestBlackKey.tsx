@@ -1,7 +1,6 @@
 import * as React from "react";
-import {blackKeyWidth, answerStatus} from "../constants";
+import {blackKeyWidth, answerStatusOptions} from "../constants";
 import {BlackKey} from "../styles";
-import {useSession} from "../hooks";
 import CheckMark from "./CheckMark";
 
 type LowestBlackKeyProps = {
@@ -10,56 +9,54 @@ type LowestBlackKeyProps = {
   setSelectedNote: (note: string) => void;
   thisBlackKeyIsSelected: (note: string, ind: number) => boolean;
   note: string;
-  sessionId: string;
   isGuestKeyboard: boolean;
+  answer: string;
+  answerStatus: string;
 };
 
 const LowestBlackKey: React.FC<LowestBlackKeyProps> = ({
   ind,
   setSelectedNote,
   note,
-  sessionId,
   children,
   isGuestKeyboard,
   thisBlackKeyIsSelected,
+  selectedNote,
+  answer,
+  answerStatus,
 }) => {
-  const {sessionDoc} = useSession(sessionId);
-
   // TODO: fix bug where Eb is highlighted when E# is selected!
   const determineBackgroundColor = () => {
     let backgroundColor = "";
     if (isGuestKeyboard) {
       if (
         thisBlackKeyIsSelected(note, ind) &&
-        sessionDoc?.answerStatus === answerStatus.CORRECT
+        answerStatus === answerStatusOptions.CORRECT
       ) {
         backgroundColor = "var(--main-color)";
       } else if (
         thisBlackKeyIsSelected(note, ind) &&
-        note[0] + "b" + note[1] === sessionDoc?.selectedNote
+        note[0] + "b" + note[1] === selectedNote
       ) {
         backgroundColor = "var(--main-color)";
       } else if (
         thisBlackKeyIsSelected(note, ind) &&
-        sessionDoc?.answerStatus === answerStatus.INCORRECT
+        answerStatus === answerStatusOptions.INCORRECT
       ) {
         backgroundColor = "red";
       }
     } else {
       if (
         thisBlackKeyIsSelected(note, ind) &&
-        sessionDoc?.answerStatus === answerStatus.CORRECT
+        answerStatus === answerStatusOptions.CORRECT
       ) {
         backgroundColor = "var(--main-color)";
-      } else if (
-        thisBlackKeyIsSelected(note, ind) &&
-        sessionDoc?.selectedNote[1] === "b"
-      ) {
+      } else if (thisBlackKeyIsSelected(note, ind) && selectedNote[1] === "b") {
         console.log(note);
         backgroundColor = "var(--main-color)";
       } else if (
-        note[0] + "b" + note[1] === sessionDoc?.answer &&
-        sessionDoc?.answerStatus === answerStatus.INCORRECT
+        note[0] + "b" + note[1] === answer &&
+        answerStatus === answerStatusOptions.INCORRECT
       ) {
         backgroundColor = "red";
       }
@@ -80,7 +77,7 @@ const LowestBlackKey: React.FC<LowestBlackKeyProps> = ({
       {children}
       {!isGuestKeyboard &&
       thisBlackKeyIsSelected(note, ind) &&
-      sessionDoc?.answerStatus === answerStatus.CORRECT ? (
+      answerStatus === answerStatusOptions.CORRECT ? (
         <CheckMark />
       ) : null}
     </BlackKey>

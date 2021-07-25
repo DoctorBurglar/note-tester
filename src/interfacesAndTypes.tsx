@@ -4,6 +4,7 @@ export interface IUser {
   hostSessionId: string;
   displayName: string;
   photoURL: string;
+  soloSettings: IAutoQuiz;
 }
 
 export interface ISession {

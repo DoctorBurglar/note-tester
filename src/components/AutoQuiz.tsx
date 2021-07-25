@@ -1,14 +1,22 @@
 import * as React from "react";
-import {Button, useDisclosure} from "@chakra-ui/react";
-import {useSession} from "../hooks";
 import {trebleNotes, bassNotes} from "../constants";
 import {getBassNoteRange, getRandomNote, getTrebleNoteRange} from "../helpers";
-import {presets} from "../constants";
+import {presets, clefs} from "../constants";
 import ClefCheckbox from "./ClefCheckbox";
 import AutoQuizModal from "./FormModal";
 import IncludeAccidentals from "./IncludeAccidentals";
+import {IAutoQuiz} from "../interfacesAndTypes";
 
-const AutoQuiz: React.FC<{sessionId: string}> = ({sessionId}) => {
+const AutoQuiz: React.FC<{
+  onClose: () => void;
+  isOpen: boolean;
+  selectedNote: string;
+  onSubmit: (
+    autoDoc: IAutoQuiz,
+    selectedNote: string,
+    selectedClef: clefs
+  ) => void;
+}> = ({onClose, isOpen, selectedNote, onSubmit}) => {
   const [lowTrebleNote, setLowTrebleNote] = React.useState<
     trebleNotes | string
   >(trebleNotes.C3);
@@ -32,9 +40,9 @@ const AutoQuiz: React.FC<{sessionId: string}> = ({sessionId}) => {
     presets.CUSTOM
   );
 
-  const {sessionDoc, sessionRef} = useSession(sessionId);
-
-  const {isOpen, onOpen, onClose} = useDisclosure();
+  React.useEffect(() => {
+    resetAutoQuizFields();
+  }, []);
 
   React.useEffect(() => {
     const {lowTrebleNote, highTrebleNote} = getTrebleNoteRange(treblePreset);
@@ -66,21 +74,6 @@ const AutoQuiz: React.FC<{sessionId: string}> = ({sessionId}) => {
     onClose();
   };
 
-  const handleModalOpen = async () => {
-    resetAutoQuizFields();
-    try {
-      if (sessionDoc?.autoQuiz.on) {
-        await sessionRef.update({
-          autoQuiz: {...sessionDoc.autoQuiz, on: false},
-        });
-        return;
-      }
-      onOpen();
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   const handleQuiz = async () => {
     if (!includeBass && !includeTreble) {
       return;
@@ -97,44 +90,37 @@ const AutoQuiz: React.FC<{sessionId: string}> = ({sessionId}) => {
         lowBassNote: lowBassNote,
         highBassNote: highBassNote,
       },
-      sessionDoc.selectedNote
+      selectedNote
     );
-    const randomNote = result?.randomNote;
-    const randomClef = result?.randomClef;
-    try {
-      await sessionRef.update({
-        autoQuiz: {
-          includeSharps,
-          includeFlats,
-          includeTreble,
-          includeBass,
-          lowTrebleNote: lowTrebleNote,
-          highTrebleNote: highTrebleNote,
-          lowBassNote: lowBassNote,
-          highBassNote: highBassNote,
-          on: sessionDoc?.autoQuiz.on ? true : !sessionDoc?.autoQuiz.on,
-        },
-        selectedNote: randomNote,
-        selectedClef: randomClef,
-        answer: "",
-        answerStatus: "",
-      });
-      onClose();
-    } catch (err) {
-      console.log(err);
+    if (!result) {
+      const err = new Error();
+      err.message = "Generating a random note failed";
+      throw err;
     }
+    const randomNote = result.randomNote;
+    const randomClef = result.randomClef;
+    // custom onSubmit function passed in from outside
+    onSubmit(
+      {
+        on: true,
+        includeFlats,
+        includeSharps,
+        includeTreble,
+        includeBass,
+        lowTrebleNote: lowTrebleNote,
+        highTrebleNote: highTrebleNote,
+        lowBassNote: lowBassNote,
+        highBassNote: highBassNote,
+      },
+      randomNote,
+      randomClef
+    );
+    onClose();
+    resetAutoQuizFields();
   };
 
   return (
     <>
-      <Button
-        onClick={handleModalOpen}
-        zIndex="5"
-        position="relative"
-        marginLeft="2rem"
-      >
-        {sessionDoc?.autoQuiz?.on ? "Stop auto quiz" : "Start auto quiz"}
-      </Button>
       <AutoQuizModal
         isOpen={isOpen}
         handleModalClose={handleModalClose}

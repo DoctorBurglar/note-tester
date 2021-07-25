@@ -1,7 +1,6 @@
 import * as React from "react";
 import {BlackKey} from "../styles";
-import {blackKeyWidth, answerStatus} from "../constants";
-import {useSession} from "../hooks";
+import {blackKeyWidth, answerStatusOptions} from "../constants";
 import CheckMark from "./CheckMark";
 
 type BlackKeyCompProps = {
@@ -10,8 +9,10 @@ type BlackKeyCompProps = {
   thisBlackKeyIsSelected: (note: string, ind: number) => boolean;
   setSelectedNote: (note: string) => void;
   isGuestKeyboard: boolean;
-  sessionId: string;
   notes: string[];
+  selectedNote: string;
+  answer: string;
+  answerStatus: string;
 };
 
 const BlackKeyComp: React.FC<BlackKeyCompProps> = ({
@@ -20,12 +21,12 @@ const BlackKeyComp: React.FC<BlackKeyCompProps> = ({
   ind,
   isGuestKeyboard,
   setSelectedNote,
-  sessionId,
   notes,
   children,
+  selectedNote,
+  answer,
+  answerStatus,
 }) => {
-  const {sessionDoc} = useSession(sessionId);
-
   const determineBackgroundColor = () => {
     let nextNote = "";
     if (ind < notes.length - 1) {
@@ -36,31 +37,31 @@ const BlackKeyComp: React.FC<BlackKeyCompProps> = ({
     if (isGuestKeyboard) {
       if (
         thisBlackKeyIsSelected(note, ind) &&
-        sessionDoc?.answerStatus === answerStatus.CORRECT
+        answerStatus === answerStatusOptions.CORRECT
       ) {
         backgroundColor = "var(--main-color)";
       } else if (
-        sessionDoc?.answerStatus !== "" &&
-        (note[0] + "s" + note[1] === sessionDoc?.selectedNote ||
-          nextNote[0] + "b" + nextNote[1] === sessionDoc?.selectedNote)
+        answerStatus !== "" &&
+        (note[0] + "s" + note[1] === selectedNote ||
+          nextNote[0] + "b" + nextNote[1] === selectedNote)
       ) {
         backgroundColor = "var(--main-color)";
       } else if (
         thisBlackKeyIsSelected(note, ind) &&
-        sessionDoc?.answerStatus === answerStatus.INCORRECT
+        answerStatus === answerStatusOptions.INCORRECT
       ) {
         backgroundColor = "var(--wrong-note-color)";
       }
     } else if (
-      note[0] + "s" + note[1] === sessionDoc?.answer &&
+      note[0] + "s" + note[1] === answer &&
       thisBlackKeyIsSelected(note, ind)
     ) {
       backgroundColor = "var(--main-color)";
     } else if (thisBlackKeyIsSelected(note, ind)) {
       backgroundColor = "var(--main-color)";
     } else if (
-      note[0] + "s" + note[1] === sessionDoc?.answer &&
-      sessionDoc?.answerStatus === answerStatus.INCORRECT
+      note[0] + "s" + note[1] === answer &&
+      answerStatus === answerStatusOptions.INCORRECT
     ) {
       backgroundColor = "var(--wrong-note-color)";
     }
@@ -82,7 +83,7 @@ const BlackKeyComp: React.FC<BlackKeyCompProps> = ({
       {children}
       {!isGuestKeyboard &&
       thisBlackKeyIsSelected(note, ind) &&
-      sessionDoc?.answerStatus === answerStatus.CORRECT ? (
+      answerStatus === answerStatusOptions.CORRECT ? (
         <CheckMark />
       ) : null}
     </BlackKey>
