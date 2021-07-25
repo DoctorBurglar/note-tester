@@ -20,7 +20,13 @@ const HelperButtons: React.FC<HelperButtonsProps> = ({
   displayingNotes,
 }) => {
   return (
-    <Flex justify="flex-start" align="center" w="50%" flexWrap="wrap">
+    <Flex
+      justify="flex-start"
+      align={{base: "flex-start", md: "center"}}
+      w="50%"
+      direction={{base: "column", md: "row"}}
+      marginBottom=".5rem"
+    >
       <StyledButtonSmall
         onClick={setShowLinesOnStaff}
         bg={showLinesOnStaff ? "var(--main-color)" : ""}
@@ -34,7 +40,6 @@ const HelperButtons: React.FC<HelperButtonsProps> = ({
         Spaces
       </StyledButtonSmall>
       <StyledButtonSmall
-        alignSelf="center"
         onClick={setDisplayingNotes}
         bg={displayingNotes ? "var(--main-color)" : ""}
       >

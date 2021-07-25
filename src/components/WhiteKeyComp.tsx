@@ -30,6 +30,11 @@ const WhiteKeyComp: React.FC<WhiteKeyCompProps> = ({
   answer,
   displayingNotes,
 }) => {
+  const handleSetSelectedNote = (event: React.SyntheticEvent) => {
+    event.preventDefault();
+    event.stopPropagation();
+    setSelectedNote(note);
+  };
   const determineBackgroundColor = () => {
     let nextNote = "";
     let prevNote = "";
@@ -83,7 +88,7 @@ const WhiteKeyComp: React.FC<WhiteKeyCompProps> = ({
   return (
     <>
       <WhiteKey
-        onClick={() => setSelectedNote(note)}
+        onClick={handleSetSelectedNote}
         style={{
           backgroundColor: determineBackgroundColor(),
         }}

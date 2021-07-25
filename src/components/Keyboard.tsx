@@ -116,6 +116,7 @@ const Keyboard: React.FC<IKeyboardProps> = ({
         alignItems="stretch"
         position="relative"
         cursor="pointer"
+        className="noHighlightOnClick"
       >
         {notes.map((note, ind) => {
           return (

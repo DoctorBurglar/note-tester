@@ -53,3 +53,7 @@ html {
 *::after {
   box-sizing: inherit;
 }
+
+.noHighlightOnClick {
+  -webkit-tap-highlight-color: transparent;
+}

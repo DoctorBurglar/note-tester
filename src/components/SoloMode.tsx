@@ -2,6 +2,7 @@ import * as React from "react";
 import Staff from "./Staff";
 import Keyboard from "./Keyboard";
 import Header from "./Header";
+import SoloScore from "./SoloScore";
 import {answerStatusOptions, bassNotes, clefs, trebleNotes} from "../constants";
 import {useDisclosure, Button, Heading, Flex} from "@chakra-ui/react";
 import AutoQuiz from "./AutoQuiz";
@@ -20,6 +21,9 @@ const SoloMode = () => {
   const [showSpacesOnStaff, setShowSpacesOnStaff] = React.useState(false);
   const [answerStatus, setAnswerStatus] = React.useState("");
   const [displayingNotes, setDisplayingNotes] = React.useState(false);
+
+  const [total, setTotal] = React.useState(0);
+  const [correct, setCorrect] = React.useState(0);
 
   const {isOpen, onOpen, onClose} = useDisclosure();
 
@@ -51,43 +55,6 @@ const SoloMode = () => {
     }
   }, [userDoc?.soloSettings, userDoc]);
 
-  React.useEffect(() => {
-    if (answer === "") {
-      return;
-    }
-    let nextNote;
-
-    if (answer[1] === "s") {
-      if (notes.indexOf(answer[0] + answer[2]) !== notes.length - 1) {
-        nextNote = notes[notes.indexOf(answer[0] + answer[2]) + 1];
-      }
-    } else {
-      if (notes.indexOf(answer) !== notes.length - 1) {
-        nextNote = notes[notes.indexOf(answer) + 1];
-      }
-    }
-
-    if (answer === selectedNote) {
-      return setAnswerStatus(answerStatusOptions.CORRECT);
-    } else if (answer[1] === "s") {
-      if (nextNote && nextNote[0] + "b" + nextNote[1] === selectedNote) {
-        return setAnswerStatus(answerStatusOptions.CORRECT);
-      }
-    } else if (answer[0] === "E" || answer[0] === "B") {
-      if (nextNote && nextNote[0] + "b" + nextNote[1] === selectedNote) {
-        return setAnswerStatus(answerStatusOptions.CORRECT);
-      }
-    } else if (answer[0] === "C" || answer[0] === "F") {
-      if (notes.indexOf(answer) > 0) {
-        const prevNote = notes[notes.indexOf(answer) - 1];
-        if (prevNote[0] + "s" + prevNote[1] === selectedNote) {
-          return setAnswerStatus(answerStatusOptions.CORRECT);
-        }
-      }
-    }
-    return setAnswerStatus(answerStatusOptions.INCORRECT);
-  }, [answer, selectedNote, notes]);
-
   const updateSettings = async (
     autoDoc: IAutoQuiz,
     selectedNote: string,
@@ -102,6 +69,49 @@ const SoloMode = () => {
     }
   };
 
+  const handleAnswer = (note: string) => {
+    let nextNote;
+
+    if (note[1] === "s") {
+      if (notes.indexOf(note[0] + note[2]) !== notes.length - 1) {
+        nextNote = notes[notes.indexOf(note[0] + note[2]) + 1];
+      }
+    } else {
+      if (notes.indexOf(note) !== notes.length - 1) {
+        nextNote = notes[notes.indexOf(note) + 1];
+      }
+    }
+
+    if (note === selectedNote) {
+      setTotal((prevTotal) => prevTotal + 1);
+      setCorrect((prevCorrect) => prevCorrect + 1);
+      return setAnswerStatus(answerStatusOptions.CORRECT);
+    } else if (note[1] === "s") {
+      if (nextNote && nextNote[0] + "b" + nextNote[1] === selectedNote) {
+        setTotal((prevTotal) => prevTotal + 1);
+        setCorrect((prevCorrect) => prevCorrect + 1);
+        return setAnswerStatus(answerStatusOptions.CORRECT);
+      }
+    } else if (note[0] === "E" || note[0] === "B") {
+      if (nextNote && nextNote[0] + "b" + nextNote[1] === selectedNote) {
+        setTotal((prevTotal) => prevTotal + 1);
+        setCorrect((prevCorrect) => prevCorrect + 1);
+        return setAnswerStatus(answerStatusOptions.CORRECT);
+      }
+    } else if (note[0] === "C" || answer[0] === "F") {
+      if (notes.indexOf(note) > 0) {
+        const prevNote = notes[notes.indexOf(note) - 1];
+        if (prevNote[0] + "s" + prevNote[1] === selectedNote) {
+          setTotal((prevTotal) => prevTotal + 1);
+          setCorrect((prevCorrect) => prevCorrect + 1);
+          return setAnswerStatus(answerStatusOptions.CORRECT);
+        }
+      }
+    }
+    setTotal((prevTotal) => prevTotal + 1);
+    setAnswerStatus(answerStatusOptions.INCORRECT);
+  };
+
   const handleSelectNote = (note: string) => {
     const result = getRandomNote(userDoc?.soloSettings, selectedNote);
     if (!result) {
@@ -110,6 +120,8 @@ const SoloMode = () => {
     }
     console.log(note);
     setAnswer(note);
+
+    handleAnswer(note);
 
     setTimeout(() => {
       setSelectedNote(result.randomNote);
@@ -127,12 +139,16 @@ const SoloMode = () => {
         position="relative"
         height="0"
         w="90%"
-        margin="0 auto"
+        margin="1rem auto"
         justify="space-between"
       >
-        <Button onClick={onOpen} margin="1rem 0">
-          Settings
-        </Button>
+        <SoloScore
+          total={total}
+          setTotal={setTotal}
+          correct={correct}
+          setCorrect={setCorrect}
+        />
+        <Button onClick={onOpen}>Settings</Button>
       </Flex>
 
       <Staff
@@ -142,10 +158,12 @@ const SoloMode = () => {
         showSpacesOnStaff={showSpacesOnStaff}
       />
       <Flex
-        marginBottom=".3rem"
+        marginBottom="1rem"
         justify="space-between"
-        w="100%"
+        w="90%"
         margin="0 auto"
+        maxWidth="var(--max-width)"
+        marginTop={{base: "-6rem", md: "-.5rem"}}
       >
         <HelperButtons
           displayingNotes={displayingNotes}
@@ -159,7 +177,7 @@ const SoloMode = () => {
           }
           showSpacesOnStaff={showSpacesOnStaff}
         />
-        <Heading as="h2" marginRight="2rem">
+        <Heading as="h2" marginRight="1rem" alignSelf="flex-end">
           {!answer
             ? null
             : answerStatus === answerStatusOptions.CORRECT

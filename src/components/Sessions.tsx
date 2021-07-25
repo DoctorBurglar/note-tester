@@ -18,10 +18,10 @@ const SessionButton = styled(Button)`
 
 const SessionBox = styled(Flex)`
   flex-direction: column;
-  width: 30%;
-  min-width: 22rem;
+  width: 15%;
+  min-width: 20rem;
   justify-content: space-between;
-  margin: 0 4rem 5rem 4rem;
+  margin: 0 3rem 4rem 3rem;
 `;
 interface IUser {
   uid: string;
@@ -178,7 +178,7 @@ const Sessions: React.FC = () => {
               as="h1"
               fontSize="2.3rem"
               fontWeight="500"
-              marginBottom="2rem"
+              marginBottom="1rem"
             >
               <span style={{color: "var(--main-color-dark)"}}>Solo</span>{" "}
               Session
@@ -188,15 +188,9 @@ const Sessions: React.FC = () => {
               direction="column"
               fontSize="1.5rem"
               justify="space-between"
-              marginBottom="2rem"
+              marginBottom="1rem"
             >
-              <p style={{marginBottom: "2rem"}}>
-                Quiz yourself on the notes of the treble clef and/or bass clef!
-              </p>
-              <p>
-                Set the range of notes that you want to be quized on. Inlude
-                accidentals if you want!
-              </p>
+              <p>Test your knowledge of notes in bass and/or treble clef.</p>
             </Flex>
           </Flex>
 
@@ -212,7 +206,7 @@ const Sessions: React.FC = () => {
               as="h1"
               fontSize="2.3rem"
               fontWeight="500"
-              marginBottom="2rem"
+              marginBottom="1rem"
             >
               <span style={{color: "var(--main-color-dark)"}}>Host</span> a
               session
@@ -222,15 +216,9 @@ const Sessions: React.FC = () => {
               direction="column"
               fontSize="1.5rem"
               justify="space-between"
-              marginBottom="2rem"
             >
               <p style={{marginBottom: "2rem"}}>
-                You’ll get a session code you can send to a student. The app
-                will keep score as they identify notes on the staff.
-              </p>
-              <p>
-                You can display helpful mnemonics on the treble staff and bass
-                staff, and show the note names on the keyboard.
+                Host a session that a student can join.
               </p>
             </Flex>
           </Flex>
@@ -248,7 +236,7 @@ const Sessions: React.FC = () => {
               as="h1"
               fontSize="2.3rem"
               fontWeight="500"
-              marginBottom="2rem"
+              marginBottom="1rem"
             >
               {" "}
               <span style={{color: "var(--main-color-dark)"}}>Join</span> a
@@ -259,14 +247,10 @@ const Sessions: React.FC = () => {
               direction="column"
               fontSize="1.5rem"
               justify="space-between"
-              marginBottom="2rem"
             >
               <p style={{marginBottom: "2rem"}}>
-                Did your music teacher say something about entering a code
-                somewhere? Enter it below and join their session to learn how to
-                read notes!
+                Enter a code to join a session.
               </p>
-              <p>You’ll be amazing in no time!</p>
             </Flex>
           </Flex>
 

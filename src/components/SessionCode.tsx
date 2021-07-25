@@ -28,12 +28,16 @@ const SessionCode: React.FC<{sessionDoc: ISession}> = ({sessionDoc}) => {
           zIndex="5"
           align="center"
         >
-          <Heading as="h3" marginRight="2rem" fontSize="2rem">
+          <Heading
+            as="h3"
+            marginRight="2rem"
+            fontSize={{base: "1.5rem", md: "2rem"}}
+          >
             {`Code: `}
           </Heading>
           <Heading
             as="h3"
-            fontSize="2rem"
+            fontSize={{base: "1.5rem", md: "2rem"}}
             color="var(--main-color-dark)"
             cursor="pointer"
             onClick={handleCopy}
