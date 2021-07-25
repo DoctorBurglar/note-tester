@@ -14,6 +14,17 @@ exports.createUserDoc = functions.auth.user().onCreate((user) => {
       photoURL: user.photoURL,
       uid: user.uid,
       hostedSessionId: "",
+      soloSettings: {
+        highBassNote: "",
+        highTrebleNote: "",
+        includeBass: false,
+        includeTreble: false,
+        includeFlats: false,
+        includeSharps: false,
+        lowBassNote: "",
+        lowTrebleNote: "",
+        on: false,
+      },
     })
     .then((res) => console.log(res))
     .catch((err) => console.log(err));
