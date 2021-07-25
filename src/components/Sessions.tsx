@@ -161,6 +161,10 @@ const Sessions: React.FC = () => {
     setSessionCodeInput(e.target.value);
   };
 
+  const startSoloSession = () => {
+    history.push("/solo-mode");
+  };
+
   return (
     <Flex width="100%" direction="column" align="center" position="relative">
       <Header />
@@ -176,8 +180,42 @@ const Sessions: React.FC = () => {
               fontWeight="500"
               marginBottom="2rem"
             >
-              <span style={{color: "var(--main-color-dark)"}}>Create</span> a
-              new session
+              <span style={{color: "var(--main-color-dark)"}}>Solo</span>{" "}
+              Session
+            </Heading>
+            <Flex
+              display={{base: "none", sm: "flex"}}
+              direction="column"
+              fontSize="1.5rem"
+              justify="space-between"
+              marginBottom="2rem"
+            >
+              <p style={{marginBottom: "2rem"}}>
+                Quiz yourself on the notes of the treble clef and/or bass clef!
+              </p>
+              <p>
+                Set the range of notes that you want to be quized on. Inlude
+                accidentals if you want!
+              </p>
+            </Flex>
+          </Flex>
+
+          <Flex direction="column" justifyContent="flex-end">
+            <SessionButton onClick={startSoloSession} bg="purple">
+              Solo Session
+            </SessionButton>
+          </Flex>
+        </SessionBox>
+        <SessionBox>
+          <Flex direction="column">
+            <Heading
+              as="h1"
+              fontSize="2.3rem"
+              fontWeight="500"
+              marginBottom="2rem"
+            >
+              <span style={{color: "var(--main-color-dark)"}}>Host</span> a
+              session
             </Heading>
             <Flex
               display={{base: "none", sm: "flex"}}

@@ -12,7 +12,6 @@ import TrebleClef from "../components/TrebleClef";
 import BassClef from "../components/BassClef";
 import Flat from "../components/Flat";
 import Sharp from "../components/Sharp";
-import {useSession} from "../hooks";
 
 const StyledLedger = styled(Box)`
   min-height: ${lineHeight};
@@ -59,16 +58,15 @@ const StaffSpaceMnemonic = styled(Heading)`
 const Staff: React.FC<{
   selectedNote: string;
   selectedClef: string;
-  sessionId: string;
-}> = ({selectedNote, selectedClef, sessionId}) => {
+  showLinesOnStaff: boolean;
+  showSpacesOnStaff: boolean;
+}> = ({selectedNote, selectedClef, showLinesOnStaff, showSpacesOnStaff}) => {
   // This is the translateY value that positions the note
 
   let notePosition = determineNotePosition(selectedNote, selectedClef);
 
   // This value determines if ledger lines are needed
   const ledgerValue = Number.parseFloat(notePosition);
-
-  const {sessionDoc} = useSession(sessionId);
 
   const determineBorderBottom = (
     offset: number,
@@ -119,7 +117,7 @@ const Staff: React.FC<{
       />
 
       <StyledLine>
-        {sessionDoc?.mnemonics?.showLinesOnStaff ? (
+        {showLinesOnStaff ? (
           <StaffLineMnemonic
             as="h2"
             left={{base: "24%", sm: "22%", md: "28%"}}
@@ -128,7 +126,7 @@ const Staff: React.FC<{
             {selectedClef === "TREBLE" ? "Fine" : "Always"}
           </StaffLineMnemonic>
         ) : null}
-        {sessionDoc?.mnemonics?.showSpacesOnStaff ? (
+        {showSpacesOnStaff ? (
           <StaffSpaceMnemonic
             as="h2"
             left={{base: "74%", md: "76%"}}
@@ -140,7 +138,7 @@ const Staff: React.FC<{
       </StyledLine>
 
       <StyledLine>
-        {sessionDoc?.mnemonics?.showLinesOnStaff ? (
+        {showLinesOnStaff ? (
           <StaffLineMnemonic
             as="h2"
             left={{base: "24%", sm: "22%", md: "26%"}}
@@ -149,7 +147,7 @@ const Staff: React.FC<{
             {selectedClef === "TREBLE" ? "Does" : "Fine"}
           </StaffLineMnemonic>
         ) : null}
-        {sessionDoc?.mnemonics?.showSpacesOnStaff ? (
+        {showSpacesOnStaff ? (
           <StaffSpaceMnemonic
             as="h2"
             left={{base: "74%", md: "74%"}}
@@ -161,7 +159,7 @@ const Staff: React.FC<{
       </StyledLine>
 
       <StyledLine>
-        {sessionDoc?.mnemonics?.showLinesOnStaff ? (
+        {showLinesOnStaff ? (
           <StaffLineMnemonic
             as="h2"
             left={{base: "24%", sm: "22%", md: "24%"}}
@@ -170,7 +168,7 @@ const Staff: React.FC<{
             {selectedClef === "TREBLE" ? "Boy" : "Do"}
           </StaffLineMnemonic>
         ) : null}
-        {sessionDoc?.mnemonics?.showSpacesOnStaff ? (
+        {showSpacesOnStaff ? (
           <StaffSpaceMnemonic
             as="h2"
             left={{base: "74%", md: "72%"}}
@@ -182,7 +180,7 @@ const Staff: React.FC<{
       </StyledLine>
 
       <StyledLine>
-        {sessionDoc?.mnemonics?.showLinesOnStaff ? (
+        {showLinesOnStaff ? (
           <StaffLineMnemonic
             as="h2"
             left={{base: "24%", sm: "22%", md: "22%"}}
@@ -191,7 +189,7 @@ const Staff: React.FC<{
             {selectedClef === "TREBLE" ? "Good" : "Boys"}
           </StaffLineMnemonic>
         ) : null}
-        {sessionDoc?.mnemonics?.showSpacesOnStaff ? (
+        {showSpacesOnStaff ? (
           <StaffSpaceMnemonic
             as="h2"
             left={{base: "74%", md: "70%"}}
@@ -203,7 +201,7 @@ const Staff: React.FC<{
       </StyledLine>
 
       <StyledLine>
-        {sessionDoc?.mnemonics?.showLinesOnStaff ? (
+        {showLinesOnStaff ? (
           <StaffLineMnemonic
             as="h2"
             left={{base: "24%", sm: "22%", md: "20%"}}

@@ -1,6 +1,5 @@
 import * as React from "react";
 import {Flex} from "@chakra-ui/react";
-import {useSession} from "../hooks";
 import {StyledButtonSmall} from "../styles";
 import ClefButton from "./ClefButton";
 import {clefs} from "../constants";
@@ -9,38 +8,26 @@ import TrebleClef from "./TrebleClef";
 
 interface hostControlsProps {
   setSelectedNote: (note: string) => void;
-  sessionId: string;
+  displayingNotes: boolean;
+  setDisplayingNotes: React.MouseEventHandler<HTMLButtonElement>;
+  showLinesOnStaff: boolean;
+  setShowLinesOnStaff: React.MouseEventHandler<HTMLButtonElement>;
+  showSpacesOnStaff: boolean;
+  setShowSpacesOnStaff: React.MouseEventHandler<HTMLButtonElement>;
+  setSelectedClef: (clef: clefs) => void;
+  selectedClef: string;
 }
 
-const HostControls: React.FC<hostControlsProps> = ({sessionId}) => {
-  const {sessionRef, sessionDoc} = useSession(sessionId);
-
-  const handleLineMnemonic = () => {
-    sessionRef.update({
-      mnemonics: {
-        ...sessionDoc.mnemonics,
-        showLinesOnStaff: !sessionDoc.mnemonics.showLinesOnStaff,
-      },
-    });
-  };
-
-  const handleSpaceMnemonic = () => {
-    sessionRef.update({
-      mnemonics: {
-        ...sessionDoc.mnemonics,
-        showSpacesOnStaff: !sessionDoc.mnemonics.showSpacesOnStaff,
-      },
-    });
-  };
-
-  const handleDisplayNotes = () => [
-    sessionRef.update({displayingNotes: !sessionDoc?.displayingNotes}),
-  ];
-
-  const handleSelectClef = (clef: string) => {
-    sessionRef.update({selectedClef: clef, selectedNote: "", answer: ""});
-  };
-
+const HostControls: React.FC<hostControlsProps> = ({
+  displayingNotes,
+  setDisplayingNotes,
+  showLinesOnStaff,
+  setShowLinesOnStaff,
+  showSpacesOnStaff,
+  setShowSpacesOnStaff,
+  setSelectedClef,
+  selectedClef,
+}) => {
   return (
     <Flex
       width={["98%", null, null, null, "90%"]}
@@ -50,29 +37,21 @@ const HostControls: React.FC<hostControlsProps> = ({sessionId}) => {
     >
       <Flex justify="flex-start" align="center" w="50%" flexWrap="wrap">
         <StyledButtonSmall
-          onClick={handleLineMnemonic}
-          bg={
-            sessionDoc && sessionDoc?.mnemonics?.showLinesOnStaff
-              ? "var(--main-color)"
-              : ""
-          }
+          onClick={setShowLinesOnStaff}
+          bg={showLinesOnStaff ? "var(--main-color)" : ""}
         >
           Lines
         </StyledButtonSmall>
         <StyledButtonSmall
-          onClick={handleSpaceMnemonic}
-          bg={
-            sessionDoc && sessionDoc?.mnemonics?.showSpacesOnStaff
-              ? "var(--main-color)"
-              : ""
-          }
+          onClick={setShowSpacesOnStaff}
+          bg={showSpacesOnStaff ? "var(--main-color)" : ""}
         >
           Spaces
         </StyledButtonSmall>
         <StyledButtonSmall
           alignSelf="center"
-          onClick={handleDisplayNotes}
-          bg={sessionDoc?.displayingNotes ? "var(--main-color)" : ""}
+          onClick={setDisplayingNotes}
+          bg={displayingNotes ? "var(--main-color)" : ""}
         >
           Keys
         </StyledButtonSmall>
@@ -84,16 +63,16 @@ const HostControls: React.FC<hostControlsProps> = ({sessionId}) => {
         align={{base: "flex-end", md: "flex-start"}}
       >
         <ClefButton
-          handleSelectedClef={handleSelectClef}
-          sessionId={sessionId}
+          handleSelectedClef={() => setSelectedClef(clefs.TREBLE)}
           clefType={clefs.TREBLE}
+          selectedClef={selectedClef}
         >
           <TrebleClef width="3rem" fill="var(--main-color-dark)" />
         </ClefButton>
         <ClefButton
-          handleSelectedClef={handleSelectClef}
-          sessionId={sessionId}
+          handleSelectedClef={() => setSelectedClef(clefs.BASS)}
           clefType={clefs.BASS}
+          selectedClef={selectedClef}
         >
           <BassClef width="3rem" fill="var(--main-color-dark)" />
         </ClefButton>

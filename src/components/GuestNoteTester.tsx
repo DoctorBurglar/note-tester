@@ -1,6 +1,6 @@
 import React from "react";
 import Staff from "./Staff";
-import {trebleNotes, bassNotes, clefs, answerStatus} from "../constants";
+import {trebleNotes, bassNotes, clefs, answerStatusOptions} from "../constants";
 import {Flex, Heading, Box} from "@chakra-ui/react";
 import Keyboard from "./Keyboard";
 import {useUser} from "reactfire";
@@ -36,9 +36,9 @@ function GuestNoteTester() {
 
   const handleAnswer = (
     note: string,
-    status: answerStatus.CORRECT | answerStatus.INCORRECT
+    status: answerStatusOptions.CORRECT | answerStatusOptions.INCORRECT
   ) => {
-    if (status === answerStatus.CORRECT) {
+    if (status === answerStatusOptions.CORRECT) {
       sessionRef.update({
         answer: note,
         identifiedNotes: sessionDoc.identifiedNotes + 1,
@@ -89,21 +89,21 @@ function GuestNoteTester() {
 
     sessionRef.update({answer: note});
     if (note === selectedNote) {
-      return handleAnswer(note, answerStatus.CORRECT);
+      return handleAnswer(note, answerStatusOptions.CORRECT);
     } else if (note[1] === "s") {
       if (nextNote[0] + "b" + nextNote[1] === selectedNote) {
-        return handleAnswer(note, answerStatus.CORRECT);
+        return handleAnswer(note, answerStatusOptions.CORRECT);
       }
     } else if (note[0] === "E" || note[0] === "B") {
       if (nextNote[0] + "b" + nextNote[1] === selectedNote) {
-        return handleAnswer(note, answerStatus.CORRECT);
+        return handleAnswer(note, answerStatusOptions.CORRECT);
       }
     } else if (note[0] === "C" || note[0] === "F") {
       if (prevNote && prevNote[0] + "s" + prevNote[1] === selectedNote) {
-        return handleAnswer(note, answerStatus.CORRECT);
+        return handleAnswer(note, answerStatusOptions.CORRECT);
       }
     }
-    handleAnswer(note, answerStatus.INCORRECT);
+    handleAnswer(note, answerStatusOptions.INCORRECT);
   };
 
   return (
@@ -122,7 +122,8 @@ function GuestNoteTester() {
             <Staff
               selectedNote={sessionDoc?.selectedNote}
               selectedClef={sessionDoc?.selectedClef}
-              sessionId={sessionId}
+              showLinesOnStaff={sessionDoc?.mnemonics.showLinesOnStaff}
+              showSpacesOnStaff={sessionDoc?.mnemonics.showSpacesOnStaff}
             />
             <Flex
               justifyContent="space-between"
@@ -141,7 +142,10 @@ function GuestNoteTester() {
               selectedClef={sessionDoc?.selectedClef}
               setSelectedNote={handleSelectNote}
               isGuestKeyboard={true}
-              sessionId={sessionId}
+              selectedNote={sessionDoc?.selectedNote}
+              displayingNotes={sessionDoc?.displayingNotes}
+              answer={sessionDoc?.answer}
+              answerStatus={sessionDoc?.answerStatus}
             />
           </Flex>
         </Box>

@@ -3,7 +3,7 @@ export enum clefs {
   BASS = "BASS",
 }
 
-export enum answerStatus {
+export enum answerStatusOptions {
   CORRECT = "CORRECT",
   INCORRECT = "INCORRECT",
 }
