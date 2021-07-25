@@ -48,7 +48,7 @@ export const BlackKey = styled(Box)`
 
 export const StyledButtonSmall = styled(Button)`
   font-size: 1rem;
-  margin: 0 0.5rem 0.3rem 0.5rem;
+  margin-bottom: 0.3rem;
   border-radius: 5px;
   padding: 0.3rem 1rem;
   cursor: pointer;

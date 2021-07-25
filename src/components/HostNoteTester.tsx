@@ -13,6 +13,7 @@ import GuestScore from "./GuestScore";
 import SessionCode from "./SessionCode";
 import AutoQuiz from "./AutoQuiz";
 import {IAutoQuiz} from "../interfacesAndTypes";
+import HelperButtons from "./HelperButtons";
 
 const Content = styled(Flex)`
   justify-content: space-around;
@@ -132,15 +133,18 @@ const HostNoteTester = () => {
         <Flex justifyContent="space-between" w="100%">
           <HostControls
             setSelectedNote={handleSelectNote}
-            setShowLinesOnStaff={handleLineMnemonic}
-            setShowSpacesOnStaff={handleSpaceMnemonic}
-            setDisplayingNotes={handleDisplayNotes}
             selectedClef={sessionDoc?.selectedClef}
             setSelectedClef={handleSelectClef}
-            displayingNotes={sessionDoc?.displayingNotes}
-            showLinesOnStaff={sessionDoc?.mnemonics.showLinesOnStaff}
-            showSpacesOnStaff={sessionDoc?.mnemonics.showSpacesOnStaff}
-          />
+          >
+            <HelperButtons
+              setShowLinesOnStaff={handleLineMnemonic}
+              setShowSpacesOnStaff={handleSpaceMnemonic}
+              setDisplayingNotes={handleDisplayNotes}
+              displayingNotes={sessionDoc?.displayingNotes}
+              showLinesOnStaff={sessionDoc?.mnemonics.showLinesOnStaff}
+              showSpacesOnStaff={sessionDoc?.mnemonics.showSpacesOnStaff}
+            />
+          </HostControls>
         </Flex>
 
         <Keyboard
