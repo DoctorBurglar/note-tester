@@ -98,7 +98,7 @@ const SoloMode = () => {
         setCorrect((prevCorrect) => prevCorrect + 1);
         return setAnswerStatus(answerStatusOptions.CORRECT);
       }
-    } else if (note[0] === "C" || answer[0] === "F") {
+    } else if (note[0] === "C" || note[0] === "F") {
       if (notes.indexOf(note) > 0) {
         const prevNote = notes[notes.indexOf(note) - 1];
         if (prevNote[0] + "s" + prevNote[1] === selectedNote) {
