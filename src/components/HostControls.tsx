@@ -5,6 +5,7 @@ import ClefButton from "./ClefButton";
 import {clefs} from "../constants";
 import BassClef from "./BassClef";
 import TrebleClef from "./TrebleClef";
+import HelperButtons from "./HelperButtons";
 
 interface hostControlsProps {
   setSelectedNote: (note: string) => void;
@@ -35,6 +36,14 @@ const HostControls: React.FC<hostControlsProps> = ({
       justify="space-between"
       maxWidth="var(--max-width)"
     >
+      <HelperButtons
+        displayingNotes={displayingNotes}
+        showLinesOnStaff={showLinesOnStaff}
+        setDisplayingNotes={setDisplayingNotes}
+        setShowLinesOnStaff={setShowLinesOnStaff}
+        setShowSpacesOnStaff={setShowSpacesOnStaff}
+        showSpacesOnStaff={showSpacesOnStaff}
+      />
       <Flex justify="flex-start" align="center" w="50%" flexWrap="wrap">
         <StyledButtonSmall
           onClick={setShowLinesOnStaff}

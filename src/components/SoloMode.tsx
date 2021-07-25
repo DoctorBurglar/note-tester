@@ -3,12 +3,12 @@ import Staff from "./Staff";
 import Keyboard from "./Keyboard";
 import Header from "./Header";
 import {answerStatusOptions, bassNotes, clefs, trebleNotes} from "../constants";
-import HostControls from "./HostControls";
 import {useDisclosure, Button, Heading, Flex} from "@chakra-ui/react";
 import AutoQuiz from "./AutoQuiz";
 import {IAutoQuiz, IUser} from "../interfacesAndTypes";
 import {useUser, useFirestore, useFirestoreDocData} from "reactfire";
 import {getRandomNote} from "../helpers";
+import HelperButtons from "./HelperButtons";
 
 const SoloMode = () => {
   const [answer, setAnswer] = React.useState("");
@@ -35,12 +35,21 @@ const SoloMode = () => {
       : Object.keys(bassNotes);
 
   React.useEffect(() => {
-    const result = getRandomNote(userDoc?.soloSettings, "");
-    if (result) {
-      setSelectedClef(result.randomClef);
-      setSelectedNote(result.randomNote);
+    // for this component the "on" field only determines if the settings have ever been set"
+    if (!userDoc?.soloSettings.on) {
+      onOpen();
     }
-  }, [userDoc?.soloSettings]);
+  }, [onOpen, userDoc?.soloSettings.on]);
+
+  React.useEffect(() => {
+    if (userDoc) {
+      const result = getRandomNote(userDoc?.soloSettings, "");
+      if (result) {
+        setSelectedClef(result.randomClef);
+        setSelectedNote(result.randomNote);
+      }
+    }
+  }, [userDoc?.soloSettings, userDoc]);
 
   React.useEffect(() => {
     if (answer === "") {
@@ -93,10 +102,6 @@ const SoloMode = () => {
     }
   };
 
-  const handleSelectClef = (clef: clefs) => {
-    setSelectedClef(clef);
-  };
-
   const handleSelectNote = (note: string) => {
     const result = getRandomNote(userDoc?.soloSettings, selectedNote);
     if (!result) {
@@ -128,13 +133,6 @@ const SoloMode = () => {
         <Button onClick={onOpen} margin="1rem 0">
           Settings
         </Button>
-        <Heading as="h2" right="5rem" top="-4rem">
-          {!answer
-            ? null
-            : answerStatus === answerStatusOptions.CORRECT
-            ? "Correct!"
-            : "Incorrect :("}
-        </Heading>
       </Flex>
 
       <Staff
@@ -143,22 +141,32 @@ const SoloMode = () => {
         showLinesOnStaff={showLinesOnStaff}
         showSpacesOnStaff={showSpacesOnStaff}
       />
-
-      <HostControls
-        setSelectedNote={setSelectedNote}
-        showLinesOnStaff={showLinesOnStaff}
-        showSpacesOnStaff={showSpacesOnStaff}
-        setShowLinesOnStaff={() =>
-          setShowLinesOnStaff((prevState) => !prevState)
-        }
-        setShowSpacesOnStaff={() =>
-          setShowSpacesOnStaff((prevState) => !prevState)
-        }
-        displayingNotes={displayingNotes}
-        setDisplayingNotes={() => setDisplayingNotes((prevState) => !prevState)}
-        setSelectedClef={handleSelectClef}
-        selectedClef={selectedClef}
-      />
+      <Flex
+        marginBottom=".3rem"
+        justify="space-between"
+        w="100%"
+        margin="0 auto"
+      >
+        <HelperButtons
+          displayingNotes={displayingNotes}
+          showLinesOnStaff={showLinesOnStaff}
+          setDisplayingNotes={() => setDisplayingNotes((prevBool) => !prevBool)}
+          setShowLinesOnStaff={() =>
+            setShowLinesOnStaff((prevBool) => !prevBool)
+          }
+          setShowSpacesOnStaff={() =>
+            setShowSpacesOnStaff((prevBool) => !prevBool)
+          }
+          showSpacesOnStaff={showSpacesOnStaff}
+        />
+        <Heading as="h2" marginRight="2rem">
+          {!answer
+            ? null
+            : answerStatus === answerStatusOptions.CORRECT
+            ? "Correct!"
+            : "Incorrect :("}
+        </Heading>
+      </Flex>
 
       <Keyboard
         answer={answer}
