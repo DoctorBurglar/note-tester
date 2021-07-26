@@ -3,6 +3,7 @@ import {WhiteKey} from "../styles";
 import {Flex, Heading} from "@chakra-ui/react";
 import {answerStatusOptions} from "../constants";
 import CheckMark from "./CheckMark";
+import {determineWhiteKeyBackgroundColor} from "../helpers";
 
 type WhiteKeyCompProps = {
   note: string;
@@ -35,62 +36,22 @@ const WhiteKeyComp: React.FC<WhiteKeyCompProps> = ({
     event.stopPropagation();
     setSelectedNote(note);
   };
-  const determineBackgroundColor = () => {
-    let nextNote = "";
-    let prevNote = "";
-    if (ind < notes.length - 1) {
-      nextNote = notes[notes.indexOf(note) + 1];
-    }
-    if (ind > 0) {
-      prevNote = notes[notes.indexOf(note) - 1];
-    }
-
-    let backgroundColor = "";
-    if (isGuestKeyboard) {
-      if (
-        thisWhiteKeyIsSelected(note, ind) &&
-        answerStatus === answerStatusOptions.CORRECT
-      ) {
-        backgroundColor = "var(--main-color)";
-      } else if (
-        answerStatus !== "" &&
-        (note[0] === "B" || note[0] === "E") &&
-        nextNote[0] + "b" + nextNote[1] === selectedNote
-      ) {
-        backgroundColor = "var(--main-color)";
-      } else if (
-        answerStatus !== "" &&
-        (note[0] === "C" || note[0] === "F") &&
-        prevNote[0] + "s" + prevNote[1] === selectedNote
-      ) {
-        backgroundColor = "var(--main-color)";
-      } else if (answerStatus !== "" && note === selectedNote) {
-        backgroundColor = "var(--main-color)";
-      } else if (
-        thisWhiteKeyIsSelected(note, ind) &&
-        answerStatus === answerStatusOptions.INCORRECT
-      ) {
-        backgroundColor = "var(--wrong-note-color)";
-      }
-    } else if (note === answer && thisWhiteKeyIsSelected(note, ind)) {
-      backgroundColor = "var(--main-color)";
-    } else if (thisWhiteKeyIsSelected(note, ind)) {
-      backgroundColor = "var(--main-color)";
-    } else if (
-      note === answer &&
-      answerStatus === answerStatusOptions.INCORRECT
-    ) {
-      backgroundColor = "var(--wrong-note-color)";
-    }
-    return backgroundColor;
-  };
 
   return (
     <>
       <WhiteKey
         onClick={handleSetSelectedNote}
         style={{
-          backgroundColor: determineBackgroundColor(),
+          backgroundColor: determineWhiteKeyBackgroundColor(
+            notes,
+            note,
+            ind,
+            selectedNote,
+            answer,
+            answerStatus,
+            isGuestKeyboard,
+            thisWhiteKeyIsSelected
+          ),
         }}
       >
         {children}

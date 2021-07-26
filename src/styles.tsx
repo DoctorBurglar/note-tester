@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import {Box, Flex, Button} from "@chakra-ui/react";
-import {whiteKeyWidth, blackKeyWidth} from "./constants";
+import {whiteKeyWidth, blackKeyWidth, whiteKeyMinWidth} from "./constants";
 
 export const WhiteKey = styled(Flex)`
   flex-direction: column;
@@ -19,7 +19,7 @@ export const WhiteKey = styled(Flex)`
   }
 
   @media (min-width: 15em) {
-    min-width: 4.5rem;
+    min-width: ${whiteKeyMinWidth};
   }
 
   @media (min-width: 60rem) {

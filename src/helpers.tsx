@@ -6,6 +6,7 @@ import {
   positionAdjustment,
   accidentals,
   presets,
+  answerStatusOptions,
 } from "./constants";
 import {IAutoQuiz} from "./interfacesAndTypes";
 
@@ -476,4 +477,117 @@ export const getBassNoteRange = (bassPreset: string) => {
       bassNoteRange.highBassNote = bassNotes.C2;
   }
   return bassNoteRange;
+};
+
+export const determineWhiteKeyBackgroundColor = (
+  notes: string[],
+  note: string,
+  ind: number,
+  selectedNote: string,
+  answer: string,
+  answerStatus: string,
+  isGuestKeyboard: boolean,
+  thisWhiteKeyIsSelected: (note: string, ind: number) => boolean
+) => {
+  let nextNote = "";
+  let prevNote = "";
+  if (ind < notes.length - 1) {
+    nextNote = notes[notes.indexOf(note) + 1];
+  }
+  if (ind > 0) {
+    prevNote = notes[notes.indexOf(note) - 1];
+  }
+
+  // isGuestKeyboard, thisWhiteKeyIsSelected, note, ind, answerStatus, notes, selectedNote, answer
+
+  let backgroundColor = "";
+  if (isGuestKeyboard) {
+    if (
+      thisWhiteKeyIsSelected(note, ind) &&
+      answerStatus === answerStatusOptions.CORRECT
+    ) {
+      backgroundColor = "var(--main-color)";
+    } else if (
+      answerStatus !== "" &&
+      (note[0] === "B" || note[0] === "E") &&
+      nextNote[0] + "b" + nextNote[1] === selectedNote
+    ) {
+      backgroundColor = "var(--main-color)";
+    } else if (
+      answerStatus !== "" &&
+      (note[0] === "C" || note[0] === "F") &&
+      prevNote[0] + "s" + prevNote[1] === selectedNote
+    ) {
+      backgroundColor = "var(--main-color)";
+    } else if (answerStatus !== "" && note === selectedNote) {
+      backgroundColor = "var(--main-color)";
+    } else if (
+      thisWhiteKeyIsSelected(note, ind) &&
+      answerStatus === answerStatusOptions.INCORRECT
+    ) {
+      backgroundColor = "var(--wrong-note-color)";
+    }
+  } else if (note === answer && thisWhiteKeyIsSelected(note, ind)) {
+    backgroundColor = "var(--main-color)";
+  } else if (thisWhiteKeyIsSelected(note, ind)) {
+    backgroundColor = "var(--main-color)";
+  } else if (
+    note === answer &&
+    answerStatus === answerStatusOptions.INCORRECT
+  ) {
+    backgroundColor = "var(--wrong-note-color)";
+  }
+  return backgroundColor;
+};
+
+export const determineBlackKeyBackgroundColor = (
+  notes: string[],
+  note: string,
+  ind: number,
+  selectedNote: string,
+  answer: string,
+  answerStatus: string,
+  isGuestKeyboard: boolean,
+  thisBlackKeyIsSelected: (note: string, ind: number) => boolean
+) => {
+  let nextNote = "";
+  if (ind < notes.length - 1) {
+    nextNote = notes[notes.indexOf(note) + 1];
+  }
+
+  let backgroundColor = "";
+  if (isGuestKeyboard) {
+    if (
+      thisBlackKeyIsSelected(note, ind) &&
+      answerStatus === answerStatusOptions.CORRECT
+    ) {
+      backgroundColor = "var(--main-color)";
+    } else if (
+      answerStatus !== "" &&
+      (note[0] + "s" + note[1] === selectedNote ||
+        nextNote[0] + "b" + nextNote[1] === selectedNote)
+    ) {
+      backgroundColor = "var(--main-color)";
+    } else if (
+      thisBlackKeyIsSelected(note, ind) &&
+      answerStatus === answerStatusOptions.INCORRECT
+    ) {
+      backgroundColor = "var(--wrong-note-color)";
+    }
+  } else if (
+    note[0] + "s" + note[1] === answer &&
+    thisBlackKeyIsSelected(note, ind)
+  ) {
+    backgroundColor = "var(--main-color)";
+  } else if (thisBlackKeyIsSelected(note, ind)) {
+    backgroundColor = "var(--main-color)";
+  } else if (
+    note[0] + "s" + note[1] === answer &&
+    answerStatus === answerStatusOptions.INCORRECT
+  ) {
+    backgroundColor = "var(--wrong-note-color)";
+  } else {
+    backgroundColor = "black";
+  }
+  return backgroundColor;
 };
