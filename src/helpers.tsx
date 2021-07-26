@@ -573,6 +573,8 @@ export const determineBlackKeyBackgroundColor = (
       answerStatus === answerStatusOptions.INCORRECT
     ) {
       backgroundColor = "var(--wrong-note-color)";
+    } else {
+      backgroundColor = "black";
     }
   } else if (
     note[0] + "s" + note[1] === answer &&
