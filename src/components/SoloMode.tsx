@@ -40,13 +40,17 @@ const SoloMode = () => {
 
   React.useEffect(() => {
     // for this component the "on" field only determines if the settings have ever been set"
-    if (!userDoc?.soloSettings.on) {
+    if (userDoc && !userDoc.soloSettings.on) {
       onOpen();
     }
-  }, [onOpen, userDoc?.soloSettings.on]);
+  }, [onOpen, userDoc?.soloSettings.on, userDoc]);
 
   React.useEffect(() => {
-    if (userDoc) {
+    if (
+      userDoc &&
+      // only run this if the document has set at least one clef before
+      (userDoc.soloSettings.includeTreble || userDoc.soloSettings.includeBass)
+    ) {
       const result = getRandomNote(userDoc?.soloSettings, "");
       if (result) {
         setSelectedClef(result.randomClef);
