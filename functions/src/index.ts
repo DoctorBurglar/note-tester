@@ -13,7 +13,8 @@ exports.createUserDoc = functions.auth.user().onCreate((user) => {
       displayName: user.displayName,
       photoURL: user.photoURL,
       uid: user.uid,
-      hostedSessionId: "",
+      hostSessionId: "",
+      guestSessionId: "",
       soloSettings: {
         highBassNote: "",
         highTrebleNote: "",
