@@ -35,15 +35,22 @@ const ClefCheckbox: React.FC<ClefCheckboxProps> = ({
   clefName,
 }) => {
   return (
-    <Flex direction="column" padding="1rem">
+    <Flex direction="column" padding="1rem" marginBottom="1rem">
       <Checkbox marginBottom="1rem" onChange={clefOnChange} defaultChecked>
-        <Heading as="h3" fontSize="1.5rem" fontWeight="400">
+        <Heading as="h3" fontSize="2rem" fontWeight="400">
           {`${clefName} clef`}
         </Heading>
       </Checkbox>
-      <FormControl isDisabled={!includeClef} w="80%" alignSelf="center">
+      <FormControl
+        isDisabled={!includeClef}
+        w="80%"
+        alignSelf="center"
+        marginBottom="1rem"
+      >
         <Flex align="center">
-          <FormLabel htmlFor="presets">Presets:</FormLabel>
+          <FormLabel htmlFor="presets" fontSize="1.3rem">
+            Presets:
+          </FormLabel>
           <Select onChange={setPreset} id="presets" value={preset}>
             {Object.values(presets).map((preset) => {
               return (
@@ -57,7 +64,9 @@ const ClefCheckbox: React.FC<ClefCheckboxProps> = ({
       </FormControl>
       <Flex justify="space-between" padding="0 1rem ">
         <FormControl isDisabled={!includeClef || preset !== "Custom"} w="45%">
-          <FormLabel htmlFor="lowNote">Low Note</FormLabel>
+          <FormLabel htmlFor="lowNote" fontSize="1.3rem">
+            Low Note
+          </FormLabel>
           <Select
             onChange={(e) => setLowNote(e.target.value)}
             id="lowNote"
@@ -73,7 +82,9 @@ const ClefCheckbox: React.FC<ClefCheckboxProps> = ({
           </Select>
         </FormControl>
         <FormControl isDisabled={!includeClef || preset !== "Custom"} w="45%">
-          <FormLabel htmlFor="highNote">High Note</FormLabel>
+          <FormLabel htmlFor="highNote" fontSize="1.3rem">
+            High Note
+          </FormLabel>
           <Select
             id="highNote"
             onChange={(e) => setHighNote(e.target.value)}
