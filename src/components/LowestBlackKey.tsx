@@ -52,7 +52,6 @@ const LowestBlackKey: React.FC<LowestBlackKeyProps> = ({
       ) {
         backgroundColor = "var(--main-color)";
       } else if (thisBlackKeyIsSelected(note, ind) && selectedNote[1] === "b") {
-        console.log(note);
         backgroundColor = "var(--main-color)";
       } else if (
         note[0] + "b" + note[1] === answer &&

@@ -11,12 +11,23 @@ const AutoQuiz: React.FC<{
   onClose: () => void;
   isOpen: boolean;
   selectedNote: string;
+  currentSettings: IAutoQuiz;
   onSubmit: (
     autoDoc: IAutoQuiz,
     selectedNote: string,
     selectedClef: clefs
   ) => void;
-}> = ({onClose, isOpen, selectedNote, onSubmit}) => {
+  submitText: string;
+  cancelButton?: boolean;
+}> = ({
+  onClose,
+  isOpen,
+  selectedNote,
+  onSubmit,
+  currentSettings,
+  submitText,
+  cancelButton,
+}) => {
   const [lowTrebleNote, setLowTrebleNote] = React.useState<
     trebleNotes | string
   >(trebleNotes.C3);
@@ -40,9 +51,36 @@ const AutoQuiz: React.FC<{
     presets.CUSTOM
   );
 
+  const resetAutoQuizFields = React.useCallback(() => {
+    if (currentSettings) {
+      const {
+        lowBassNote,
+        lowTrebleNote,
+        highBassNote,
+        highTrebleNote,
+        includeBass,
+        includeFlats,
+        includeSharps,
+        includeTreble,
+        bassPreset,
+        treblePreset,
+      } = currentSettings;
+      setLowTrebleNote(lowTrebleNote);
+      setHighTrebleNote(highTrebleNote);
+      setLowBassNote(lowBassNote);
+      setHighBassNote(highBassNote);
+      setIncludeTreble(includeTreble);
+      setIncludeBass(includeBass);
+      setIncludeSharps(includeSharps);
+      setIncludeFlats(includeFlats);
+      setBassPreset(bassPreset);
+      setTreblePreset(treblePreset);
+    }
+  }, [currentSettings]);
+
   React.useEffect(() => {
     resetAutoQuizFields();
-  }, []);
+  }, [resetAutoQuizFields]);
 
   React.useEffect(() => {
     const {lowTrebleNote, highTrebleNote} = getTrebleNoteRange(treblePreset);
@@ -56,21 +94,7 @@ const AutoQuiz: React.FC<{
     setHighBassNote(highBassNote);
   }, [bassPreset]);
 
-  const resetAutoQuizFields = () => {
-    setLowTrebleNote(trebleNotes.C3);
-    setHighTrebleNote(trebleNotes.A6);
-    setLowBassNote(bassNotes.E1);
-    setHighBassNote(bassNotes.C5);
-    setIncludeTreble(true);
-    setIncludeBass(true);
-    setIncludeSharps(true);
-    setIncludeFlats(true);
-    setBassPreset(presets.CUSTOM);
-    setTreblePreset(presets.CUSTOM);
-  };
-
   const handleModalClose = () => {
-    resetAutoQuizFields();
     onClose();
   };
 
@@ -89,6 +113,8 @@ const AutoQuiz: React.FC<{
         highTrebleNote: highTrebleNote,
         lowBassNote: lowBassNote,
         highBassNote: highBassNote,
+        bassPreset,
+        treblePreset,
       },
       selectedNote
     );
@@ -100,24 +126,40 @@ const AutoQuiz: React.FC<{
     const randomNote = result.randomNote;
     const randomClef = result.randomClef;
     // custom onSubmit function passed in from outside
-    onSubmit(
-      {
-        on: true,
-        includeFlats,
-        includeSharps,
-        includeTreble,
-        includeBass,
-        lowTrebleNote: lowTrebleNote,
-        highTrebleNote: highTrebleNote,
-        lowBassNote: lowBassNote,
-        highBassNote: highBassNote,
-      },
-      randomNote,
-      randomClef
-    );
+    try {
+      onSubmit(
+        {
+          on: true,
+          includeFlats,
+          includeSharps,
+          includeTreble,
+          includeBass,
+          lowTrebleNote: lowTrebleNote,
+          highTrebleNote: highTrebleNote,
+          lowBassNote: lowBassNote,
+          highBassNote: highBassNote,
+          bassPreset,
+          treblePreset,
+        },
+        randomNote,
+        randomClef
+      );
+    } catch (err) {
+      console.log(err);
+    }
     onClose();
-    resetAutoQuizFields();
   };
+
+  console.log(
+    includeFlats,
+    includeSharps,
+    includeTreble,
+    includeBass,
+    lowTrebleNote,
+    highTrebleNote,
+    lowBassNote,
+    highBassNote
+  );
 
   return (
     <>
@@ -125,6 +167,8 @@ const AutoQuiz: React.FC<{
         isOpen={isOpen}
         handleModalClose={handleModalClose}
         handleQuiz={handleQuiz}
+        submitText={submitText}
+        cancelButton={cancelButton}
       >
         <form>
           <ClefCheckbox
@@ -156,6 +200,8 @@ const AutoQuiz: React.FC<{
           <IncludeAccidentals
             setIncludeSharps={() => setIncludeSharps((prevBool) => !prevBool)}
             setIncludeFlats={() => setIncludeFlats((prevBool) => !prevBool)}
+            includeSharps={includeSharps}
+            inlcudeFlats={includeFlats}
           />
         </form>
       </AutoQuizModal>

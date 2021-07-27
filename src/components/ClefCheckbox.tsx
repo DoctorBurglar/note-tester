@@ -36,7 +36,11 @@ const ClefCheckbox: React.FC<ClefCheckboxProps> = ({
 }) => {
   return (
     <Flex direction="column" padding="1rem" marginBottom="1rem">
-      <Checkbox marginBottom="1rem" onChange={clefOnChange} defaultChecked>
+      <Checkbox
+        marginBottom="1rem"
+        onChange={clefOnChange}
+        defaultChecked={includeClef}
+      >
         <Heading as="h3" fontSize="2rem" fontWeight="400">
           {`${clefName} clef`}
         </Heading>

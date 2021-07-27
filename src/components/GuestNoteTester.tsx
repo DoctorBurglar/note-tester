@@ -29,7 +29,6 @@ function GuestNoteTester() {
 
   React.useEffect(() => {
     if (sessionDoc?.guestId && sessionDoc?.guestId !== data.uid) {
-      console.log("redirecting");
       history.push("/");
     }
   }, [sessionDoc?.guestId, data, history]);
@@ -59,17 +58,14 @@ function GuestNoteTester() {
       return;
     }
     if (sessionDoc.autoQuiz.on) {
-      console.log(sessionDoc);
       const result = getRandomNote(
         sessionDoc.autoQuiz,
         sessionDoc.selectedNote
       );
       let randomNote: string, randomClef: string;
-      console.log(result);
       if (result) {
         randomNote = result.randomNote;
         randomClef = result.randomClef;
-        console.log(randomNote, randomClef);
       }
       setTimeout(
         () =>

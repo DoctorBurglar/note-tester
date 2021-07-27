@@ -60,7 +60,6 @@ const Keyboard: React.FC<IKeyboardProps> = ({
 
   let maxScrollLeft;
   let scrollPercentage;
-  let scrollDiff;
   if (keyboardRef.current && size.width) {
     maxScrollLeft =
       keyboardRef.current?.scrollWidth - keyboardRef.current?.clientWidth;
@@ -142,20 +141,20 @@ const Keyboard: React.FC<IKeyboardProps> = ({
     setScrollLeft(event.currentTarget.scrollLeft);
   };
 
-  console.log(
-    "view port width",
-    size.width,
-    "scrollLeft",
-    scrollLeft,
-    "maxScroll:",
-    maxScrollLeft,
-    "scroll perecentage:",
-    scrollPercentage,
-    "view box width:",
-    viewBoxWidth,
-    "scroll diff:",
-    scrollDiff
-  );
+  // console.log(
+  //   "view port width",
+  //   size.width,
+  //   "scrollLeft",
+  //   scrollLeft,
+  //   "maxScroll:",
+  //   maxScrollLeft,
+  //   "scroll perecentage:",
+  //   scrollPercentage,
+  //   "view box width:",
+  //   viewBoxWidth,
+  //   "scroll diff:",
+  //   scrollDiff
+  // );
 
   return (
     <>
