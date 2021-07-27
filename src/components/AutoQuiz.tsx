@@ -150,17 +150,6 @@ const AutoQuiz: React.FC<{
     onClose();
   };
 
-  console.log(
-    includeFlats,
-    includeSharps,
-    includeTreble,
-    includeBass,
-    lowTrebleNote,
-    highTrebleNote,
-    lowBassNote,
-    highBassNote
-  );
-
   return (
     <>
       <AutoQuizModal
