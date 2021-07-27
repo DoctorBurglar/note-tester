@@ -98,6 +98,14 @@ const HostNoteTester = () => {
     }
   };
 
+  const handleAutoQuizButtonClick = () => {
+    if (sessionDoc?.autoQuiz.on) {
+      sessionRef.update({autoQuiz: {...sessionDoc.autoQuiz, on: false}});
+    } else {
+      onOpen();
+    }
+  };
+
   return (
     <div style={{width: "100vw"}}>
       <Header />
@@ -109,9 +117,12 @@ const HostNoteTester = () => {
             onClose={onClose}
             selectedNote={sessionDoc?.selectedNote}
             onSubmit={onSubmit}
+            submitText="Start"
+            currentSettings={sessionDoc?.autoQuiz}
+            cancelButton
           />
           <Button
-            onClick={onOpen}
+            onClick={handleAutoQuizButtonClick}
             zIndex="5"
             position="relative"
             marginLeft="2rem"

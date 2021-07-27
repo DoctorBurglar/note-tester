@@ -342,7 +342,6 @@ export const getRandomNote = (
 
   let naturalSelectedNote = selectedNote;
   if (selectedNote[1] === "s" || selectedNote[1] === "b") {
-    console.log("okie dokie");
     naturalSelectedNote = selectedNote[0] + selectedNote[2];
   }
   if (randomClef === clefs.TREBLE && lowTrebleNote && highTrebleNote) {
@@ -369,7 +368,6 @@ export const getRandomNote = (
     accidentalsArray.push("s");
   }
   if (notesRange) {
-    console.log(randomClef, notesRange, lowTrebleNote, highTrebleNote);
     const randomNaturalNote =
       notesRange[Math.floor(Math.random() * notesRange.length)];
     if (

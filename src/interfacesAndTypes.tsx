@@ -37,4 +37,6 @@ export interface IAutoQuiz {
   highTrebleNote: string;
   lowBassNote: string;
   highBassNote: string;
+  treblePreset: string;
+  bassPreset: string;
 }

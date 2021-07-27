@@ -14,6 +14,8 @@ type AutoQuizModalProps = {
   isOpen: boolean;
   handleModalClose: () => void;
   handleQuiz: () => void;
+  submitText: string;
+  cancelButton?: boolean;
 };
 
 const AutoQuizModal: React.FC<AutoQuizModalProps> = ({
@@ -21,6 +23,8 @@ const AutoQuizModal: React.FC<AutoQuizModalProps> = ({
   isOpen,
   handleModalClose,
   handleQuiz,
+  submitText,
+  cancelButton,
 }) => {
   return (
     <Modal isOpen={isOpen} onClose={handleModalClose}>
@@ -31,11 +35,13 @@ const AutoQuizModal: React.FC<AutoQuizModalProps> = ({
         <ModalBody>{children}</ModalBody>
 
         <ModalFooter>
-          <Button variant="ghost" mr={3} onClick={handleModalClose}>
-            Cancel
-          </Button>
+          {cancelButton ? (
+            <Button variant="ghost" mr={3} onClick={handleModalClose}>
+              Cancel
+            </Button>
+          ) : null}
           <Button colorScheme="blue" onClick={handleQuiz}>
-            Start
+            {submitText}
           </Button>
         </ModalFooter>
       </ModalContent>

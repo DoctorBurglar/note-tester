@@ -29,7 +29,7 @@ const SoloMode = () => {
 
   const {data} = useUser();
 
-  const userRef = useFirestore().collection("users").doc(data.uid);
+  const userRef = useFirestore().collection("users").doc(data?.uid);
 
   const userDoc = useFirestoreDocData<IUser>(userRef).data;
 
@@ -122,7 +122,6 @@ const SoloMode = () => {
       const err = new Error();
       throw err;
     }
-    console.log(note);
     setAnswer(note);
 
     handleAnswer(note);
@@ -208,7 +207,9 @@ const SoloMode = () => {
         isOpen={isOpen}
         onClose={onClose}
         onSubmit={updateSettings}
+        submitText="Save"
         selectedNote={selectedNote}
+        currentSettings={userDoc?.soloSettings}
       />
     </>
   );
