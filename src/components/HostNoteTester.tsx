@@ -110,7 +110,15 @@ const HostNoteTester = () => {
     <div style={{width: "100vw"}}>
       <Header />
       <Flex w="100%" h="0" justify="space-between" align="flex-start">
-        <Flex direction="column">
+        <Flex direction="column" align="center">
+          <Button
+            onClick={handleAutoQuizButtonClick}
+            zIndex="5"
+            position="relative"
+            margin="1rem"
+          >
+            {sessionDoc?.autoQuiz?.on ? "Stop auto quiz" : "Start auto quiz"}
+          </Button>
           <GuestScore sessionId={sessionId} isHost />
           <AutoQuiz
             isOpen={isOpen}
@@ -121,14 +129,6 @@ const HostNoteTester = () => {
             currentSettings={sessionDoc?.autoQuiz}
             cancelButton
           />
-          <Button
-            onClick={handleAutoQuizButtonClick}
-            zIndex="5"
-            position="relative"
-            marginLeft="2rem"
-          >
-            {sessionDoc?.autoQuiz?.on ? "Stop auto quiz" : "Start auto quiz"}
-          </Button>
         </Flex>
 
         <SessionCode sessionDoc={sessionDoc} />
