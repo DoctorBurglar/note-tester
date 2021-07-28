@@ -164,13 +164,13 @@ const Keyboard: React.FC<IKeyboardProps> = ({
             w="100vw"
             maxWidth="50rem"
             boxSizing="border-box"
-            margin="0 auto"
+            margin="-1rem auto"
             position="relative"
             marginBottom="1rem"
           >
             <Box
               w={viewBoxWidth}
-              h="10rem"
+              h="8rem"
               position="absolute"
               bottom="0"
               left={`calc(${scrollPercentage} * ${viewBoxWidthInverse})`}
@@ -184,8 +184,8 @@ const Keyboard: React.FC<IKeyboardProps> = ({
                   key={note}
                   w={`${100 / notes.length}%`}
                   border="1px solid black"
-                  borderRadius="0 0 5px 5px"
-                  h="7rem"
+                  borderRadius="0 0 3px 3px"
+                  h="5rem"
                   position="relative"
                   bg={determineWhiteKeyBackgroundColor(
                     notes,
@@ -216,7 +216,7 @@ const Keyboard: React.FC<IKeyboardProps> = ({
                       )}
                       h="60%"
                       transform="translateX(-50%) translateY(-1px)"
-                      borderRadius="0 0 4px 4px"
+                      borderRadius="0 0 3px 3px"
                       zIndex="3"
                     ></Box>
                   ) : null}

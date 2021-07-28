@@ -28,16 +28,18 @@ const GuestScore: React.FC<{sessionId: string; isHost?: boolean}> = ({
   return (
     <>
       {isLoading ? (
-        <Spinner size="xl" margin="1rem 0 0 2.5rem" />
+        <Spinner size="xl" margin="1rem 0 0 0" />
       ) : (
         <Flex
           w="10%"
           minWidth="10rem"
           align={{base: "flex-start", md: "center"}}
-          margin="1rem 0 .5rem 2.5rem"
-          direction={{base: "column", md: "row"}}
+          margin="0 0 .5rem 1.5rem"
+          // direction={{base: "column", md: "row"}}
           position="relative"
           zIndex="5"
+          onClick={handleResetScore}
+          cursor="pointer"
         >
           <Flex
             align="center"
@@ -50,14 +52,15 @@ const GuestScore: React.FC<{sessionId: string; isHost?: boolean}> = ({
             <Heading
               as="h2"
               fontSize="1.5rem"
+              color="var(--main-color-dark)"
             >{`${sessionDoc?.identifiedNotes} / ${sessionDoc?.totalNotes}`}</Heading>
           </Flex>
 
-          {isHost ? (
+          {/* {isHost ? (
             <StyledButtonSmall onClick={handleResetScore}>
               Reset
             </StyledButtonSmall>
-          ) : null}
+          ) : null} */}
         </Flex>
       )}
     </>

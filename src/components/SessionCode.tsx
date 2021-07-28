@@ -22,15 +22,14 @@ const SessionCode: React.FC<{sessionDoc: ISession}> = ({sessionDoc}) => {
       ) : (
         <Flex
           direction={{base: "column", md: "row"}}
-          marginRight="2.5rem"
-          marginTop="1rem"
+          margin="1rem"
           position="relative"
           zIndex="5"
           align="center"
         >
           <Heading
             as="h3"
-            marginRight="2rem"
+            marginRight="1rem"
             fontSize={{base: "1.5rem", md: "2rem"}}
           >
             {`Code: `}

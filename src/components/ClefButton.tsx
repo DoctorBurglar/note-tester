@@ -1,21 +1,29 @@
 import {Button} from "@chakra-ui/react";
 import * as React from "react";
+import TrebleClef from "./TrebleClef";
+import BassClef from "./BassClef";
+import {clefs} from "../constants";
 
 const ClefButton: React.FC<{
-  handleSelectedClef: (clef: string) => void;
-  clefType: string;
+  handleSelectedClef: (clef: clefs) => void;
+
   selectedClef: string;
-}> = ({handleSelectedClef, clefType, children, selectedClef}) => {
+}> = ({handleSelectedClef, selectedClef}) => {
+  const handleSwitchClef = () => {
+    if (selectedClef === clefs.TREBLE) {
+      handleSelectedClef(clefs.BASS);
+    } else if (selectedClef === clefs.BASS) {
+      handleSelectedClef(clefs.TREBLE);
+    }
+  };
+
   return (
-    <Button
-      h="5rem"
-      margin="0 1rem"
-      onClick={() => handleSelectedClef(clefType)}
-      backgroundColor={
-        selectedClef === clefType ? "var(--main-color)" : undefined
-      }
-    >
-      {children}
+    <Button h="5rem" margin="0 1rem" onClick={handleSwitchClef}>
+      {selectedClef === clefs.TREBLE ? (
+        <BassClef width="3rem" fill="var(--main-color-dark)" />
+      ) : (
+        <TrebleClef width="3rem" fill="var(--main-color-dark)" />
+      )}
     </Button>
   );
 };

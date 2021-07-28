@@ -1,6 +1,14 @@
 import * as React from "react";
-import {Flex} from "@chakra-ui/react";
-import {StyledButtonSmall} from "../styles";
+import {
+  Flex,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuOptionGroup,
+  MenuDivider,
+  Button,
+  MenuItem,
+} from "@chakra-ui/react";
 
 type HelperButtonsProps = {
   setShowLinesOnStaff: React.MouseEventHandler<HTMLButtonElement>;
@@ -19,32 +27,81 @@ const HelperButtons: React.FC<HelperButtonsProps> = ({
   showSpacesOnStaff,
   displayingNotes,
 }) => {
+  console.log(showSpacesOnStaff, showLinesOnStaff, displayingNotes);
+
   return (
     <Flex
       justify="flex-start"
       align={{base: "flex-start", md: "center"}}
       w="50%"
       direction={{base: "column", md: "row"}}
-      marginBottom=".5rem"
+      margin="1rem"
     >
-      <StyledButtonSmall
-        onClick={setShowLinesOnStaff}
-        bg={showLinesOnStaff ? "var(--main-color)" : ""}
-      >
-        Lines
-      </StyledButtonSmall>
-      <StyledButtonSmall
-        onClick={setShowSpacesOnStaff}
-        bg={showSpacesOnStaff ? "var(--main-color)" : ""}
-      >
-        Spaces
-      </StyledButtonSmall>
-      <StyledButtonSmall
-        onClick={setDisplayingNotes}
-        bg={displayingNotes ? "var(--main-color)" : ""}
-      >
-        Keys
-      </StyledButtonSmall>
+      <Menu closeOnSelect={false} placement="top-start">
+        <MenuButton as={Button} fontSize="1.5rem">
+          Options
+        </MenuButton>
+        <MenuList
+          minWidth="240px"
+          position="relative"
+          zIndex="15"
+          fontSize="1.5rem"
+        >
+          <MenuOptionGroup
+            title="Staff"
+            type="checkbox"
+            fontSize="1.5rem"
+            value={["lines", "spaces"]}
+          >
+            <MenuItem onClick={setShowLinesOnStaff}>
+              {showLinesOnStaff ? (
+                <span style={{width: "2.5rem"}}>&#10003;</span>
+              ) : (
+                <span style={{width: "2.5rem"}}></span>
+              )}{" "}
+              Line Mnemonic
+            </MenuItem>
+
+            <MenuItem onClick={setShowSpacesOnStaff}>
+              {showSpacesOnStaff ? (
+                <span style={{width: "2.5rem"}}>&#10003;</span>
+              ) : (
+                <span style={{width: "2.5rem"}}></span>
+              )}{" "}
+              Space Mnemonic
+            </MenuItem>
+          </MenuOptionGroup>
+          <MenuDivider />
+          <MenuOptionGroup title="Keyboard" type="checkbox" fontSize="1.5rem">
+            <MenuItem onClick={setDisplayingNotes}>
+              {displayingNotes ? (
+                <span style={{width: "2.5rem"}}>&#10003;</span>
+              ) : (
+                <span style={{width: "2.5rem"}}></span>
+              )}{" "}
+              Note Names
+            </MenuItem>
+          </MenuOptionGroup>
+        </MenuList>
+      </Menu>
+      {/* <StyledButtonSmall
+          onClick={setShowLinesOnStaff}
+          bg={showLinesOnStaff ? "var(--main-color)" : ""}
+        >
+          Lines
+        </StyledButtonSmall>
+        <StyledButtonSmall
+          onClick={setShowSpacesOnStaff}
+          bg={showSpacesOnStaff ? "var(--main-color)" : ""}
+        >
+          Spaces
+        </StyledButtonSmall>
+        <StyledButtonSmall
+          onClick={setDisplayingNotes}
+          bg={displayingNotes ? "var(--main-color)" : ""}
+        >
+          Keys
+        </StyledButtonSmall> */}
     </Flex>
   );
 };
