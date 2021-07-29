@@ -58,15 +58,10 @@ function GuestNoteTester() {
       return;
     }
     if (sessionDoc.autoQuiz.on) {
-      const result = getRandomNote(
+      const {randomNote, randomClef} = getRandomNote(
         sessionDoc.autoQuiz,
         sessionDoc.selectedNote
       );
-      let randomNote: string, randomClef: string;
-      if (result) {
-        randomNote = result.randomNote;
-        randomClef = result.randomClef;
-      }
       setTimeout(
         () =>
           sessionRef.update({

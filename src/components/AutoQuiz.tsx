@@ -102,7 +102,7 @@ const AutoQuiz: React.FC<{
     if (!includeBass && !includeTreble) {
       return;
     }
-    const result = getRandomNote(
+    const {randomNote, randomClef} = getRandomNote(
       {
         on: true,
         includeFlats,
@@ -118,14 +118,7 @@ const AutoQuiz: React.FC<{
       },
       selectedNote
     );
-    if (!result) {
-      const err = new Error();
-      err.message = "Generating a random note failed";
-      throw err;
-    }
-    const randomNote = result.randomNote;
-    const randomClef = result.randomClef;
-    // custom onSubmit function passed in from outside
+
     try {
       onSubmit(
         {

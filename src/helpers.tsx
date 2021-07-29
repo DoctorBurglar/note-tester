@@ -316,11 +316,11 @@ export const getRandomNote = (
   }: IAutoQuiz,
   selectedNote: string
 ) => {
-  const clefsArray = [];
   if (!includeBass && !includeTreble) {
     const error = new Error();
     throw error;
   }
+  const clefsArray: clefs[] = [];
   if (includeBass) {
     clefsArray.push(clefs.BASS);
   }
@@ -332,8 +332,7 @@ export const getRandomNote = (
   let notes: string[] = [];
   if (randomClef === clefs.TREBLE) {
     notes = Object.keys(trebleNotes);
-  }
-  if (randomClef === clefs.BASS) {
+  } else {
     notes = Object.keys(bassNotes);
   }
 
@@ -344,15 +343,13 @@ export const getRandomNote = (
   if (selectedNote[1] === "s" || selectedNote[1] === "b") {
     naturalSelectedNote = selectedNote[0] + selectedNote[2];
   }
-  if (randomClef === clefs.TREBLE && lowTrebleNote && highTrebleNote) {
+  if (randomClef === clefs.TREBLE) {
     lowNoteIndex = notes.indexOf(lowTrebleNote);
     notesRange = notes
       .slice(notes.indexOf(lowTrebleNote), notes.indexOf(highTrebleNote) + 1)
       // filter out currently selected note so we don't repeat
       .filter((note) => note !== naturalSelectedNote);
-  }
-
-  if (randomClef === clefs.BASS && lowBassNote && highBassNote) {
+  } else {
     lowNoteIndex = notes.indexOf(lowBassNote);
     notesRange = notes
       .slice(notes.indexOf(lowBassNote), notes.indexOf(highBassNote) + 1)
@@ -367,31 +364,30 @@ export const getRandomNote = (
   if (includeSharps) {
     accidentalsArray.push("s");
   }
-  if (notesRange) {
-    const randomNaturalNote =
-      notesRange[Math.floor(Math.random() * notesRange.length)];
-    if (
-      lowNoteIndex === 0 &&
-      (randomNaturalNote[0] === "C" || randomNaturalNote[0] === "F")
-    ) {
-      const lowestCOrFAccidentalsArray = [""];
-      if (includeSharps) {
-        lowestCOrFAccidentalsArray.push("s");
-      }
-      const randomNote =
-        randomNaturalNote[0] +
-        lowestCOrFAccidentalsArray[
-          Math.floor(Math.random() * lowestCOrFAccidentalsArray.length)
-        ] +
-        randomNaturalNote[1];
-      return {randomNote, randomClef};
-    } else {
-      const randomNote =
-        randomNaturalNote[0] +
-        accidentalsArray[Math.floor(Math.random() * accidentalsArray.length)] +
-        randomNaturalNote[1];
-      return {randomNote, randomClef};
+
+  const randomNaturalNote =
+    notesRange[Math.floor(Math.random() * notesRange.length)];
+  if (
+    lowNoteIndex === 0 &&
+    (randomNaturalNote[0] === "C" || randomNaturalNote[0] === "F")
+  ) {
+    const lowestCOrFAccidentalsArray = [""];
+    if (includeSharps) {
+      lowestCOrFAccidentalsArray.push("s");
     }
+    const randomNote =
+      randomNaturalNote[0] +
+      lowestCOrFAccidentalsArray[
+        Math.floor(Math.random() * lowestCOrFAccidentalsArray.length)
+      ] +
+      randomNaturalNote[1];
+    return {randomNote, randomClef};
+  } else {
+    const randomNote =
+      randomNaturalNote[0] +
+      accidentalsArray[Math.floor(Math.random() * accidentalsArray.length)] +
+      randomNaturalNote[1];
+    return {randomNote, randomClef};
   }
 };
 
