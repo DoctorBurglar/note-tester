@@ -464,7 +464,7 @@ export const getBassNoteRange = (bassPreset: string) => {
       break;
     case presets.NOTERSBELOWSTAFF:
       bassNoteRange.lowBassNote = bassNotes.E1;
-      bassNoteRange.highBassNote = bassNotes.G2;
+      bassNoteRange.highBassNote = bassNotes.F2;
       break;
     case presets.NOTESABOVESTAFF:
       bassNoteRange.lowBassNote = bassNotes.B3;

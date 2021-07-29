@@ -26,8 +26,6 @@ interface IKeyboardProps {
   displayingNotes: boolean;
 }
 
-// Hook
-
 const Keyboard: React.FC<IKeyboardProps> = ({
   notes,
   setSelectedNote,
