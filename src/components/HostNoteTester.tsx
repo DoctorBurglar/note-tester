@@ -115,7 +115,7 @@ const HostNoteTester = () => {
             onClick={handleAutoQuizButtonClick}
             zIndex="5"
             position="relative"
-            margin="1rem"
+            margin="1rem 0 0 1rem"
           >
             {sessionDoc?.autoQuiz?.on ? "Stop auto quiz" : "Start auto quiz"}
           </Button>
@@ -137,8 +137,8 @@ const HostNoteTester = () => {
         <Staff
           selectedNote={sessionDoc?.selectedNote}
           selectedClef={sessionDoc?.selectedClef}
-          showLinesOnStaff={sessionDoc?.mnemonics.showLinesOnStaff}
-          showSpacesOnStaff={sessionDoc?.mnemonics.showSpacesOnStaff}
+          showLinesOnStaff={sessionDoc?.mnemonics?.showLinesOnStaff}
+          showSpacesOnStaff={sessionDoc?.mnemonics?.showSpacesOnStaff}
         />
 
         <Flex justifyContent="space-between" w="100%">
@@ -152,8 +152,8 @@ const HostNoteTester = () => {
               setShowSpacesOnStaff={handleSpaceMnemonic}
               setDisplayingNotes={handleDisplayNotes}
               displayingNotes={sessionDoc?.displayingNotes}
-              showLinesOnStaff={sessionDoc?.mnemonics.showLinesOnStaff}
-              showSpacesOnStaff={sessionDoc?.mnemonics.showSpacesOnStaff}
+              showLinesOnStaff={sessionDoc?.mnemonics?.showLinesOnStaff}
+              showSpacesOnStaff={sessionDoc?.mnemonics?.showSpacesOnStaff}
             />
           </HostControls>
         </Flex>

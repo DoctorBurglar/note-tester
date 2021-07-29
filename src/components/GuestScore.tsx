@@ -38,7 +38,7 @@ const GuestScore: React.FC<{sessionId: string; isHost?: boolean}> = ({
           // direction={{base: "column", md: "row"}}
           position="relative"
           zIndex="5"
-          onClick={handleResetScore}
+          // onClick={handleResetScore}
           cursor="pointer"
         >
           <Flex
@@ -56,11 +56,11 @@ const GuestScore: React.FC<{sessionId: string; isHost?: boolean}> = ({
             >{`${sessionDoc?.identifiedNotes} / ${sessionDoc?.totalNotes}`}</Heading>
           </Flex>
 
-          {/* {isHost ? (
+          {isHost ? (
             <StyledButtonSmall onClick={handleResetScore}>
               Reset
             </StyledButtonSmall>
-          ) : null} */}
+          ) : null}
         </Flex>
       )}
     </>
