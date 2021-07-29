@@ -51,11 +51,10 @@ const SoloMode = () => {
       // only run this if the document has set at least one clef before
       (userDoc.soloSettings.includeTreble || userDoc.soloSettings.includeBass)
     ) {
-      const result = getRandomNote(userDoc?.soloSettings, "");
-      if (result) {
-        setSelectedClef(result.randomClef);
-        setSelectedNote(result.randomNote);
-      }
+      const {randomNote, randomClef} = getRandomNote(userDoc?.soloSettings, "");
+
+      setSelectedClef(randomClef);
+      setSelectedNote(randomNote);
     }
   }, [userDoc?.soloSettings, userDoc]);
 
@@ -117,18 +116,17 @@ const SoloMode = () => {
   };
 
   const handleSelectNote = (note: string) => {
-    const result = getRandomNote(userDoc?.soloSettings, selectedNote);
-    if (!result) {
-      const err = new Error();
-      throw err;
-    }
+    const {randomNote, randomClef} = getRandomNote(
+      userDoc?.soloSettings,
+      selectedNote
+    );
     setAnswer(note);
 
     handleAnswer(note);
 
     setTimeout(() => {
-      setSelectedNote(result.randomNote);
-      setSelectedClef(result.randomClef);
+      setSelectedNote(randomNote);
+      setSelectedClef(randomClef);
       setAnswer("");
       setAnswerStatus("");
     }, 1000);
