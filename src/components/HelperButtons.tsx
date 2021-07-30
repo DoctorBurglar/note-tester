@@ -84,24 +84,6 @@ const HelperButtons: React.FC<HelperButtonsProps> = ({
           </MenuOptionGroup>
         </MenuList>
       </Menu>
-      {/* <StyledButtonSmall
-          onClick={setShowLinesOnStaff}
-          bg={showLinesOnStaff ? "var(--main-color)" : ""}
-        >
-          Lines
-        </StyledButtonSmall>
-        <StyledButtonSmall
-          onClick={setShowSpacesOnStaff}
-          bg={showSpacesOnStaff ? "var(--main-color)" : ""}
-        >
-          Spaces
-        </StyledButtonSmall>
-        <StyledButtonSmall
-          onClick={setDisplayingNotes}
-          bg={displayingNotes ? "var(--main-color)" : ""}
-        >
-          Keys
-        </StyledButtonSmall> */}
     </Flex>
   );
 };

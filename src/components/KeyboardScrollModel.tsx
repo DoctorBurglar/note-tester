@@ -1,11 +1,16 @@
 import * as React from "react";
-import {Flex, Box, Heading} from "@chakra-ui/react";
+import {Flex} from "@chakra-ui/react";
 import {
   determineBlackKeyBackgroundColor,
   determineWhiteKeyBackgroundColor,
 } from "../helpers";
 import {useWindowSize} from "../hooks";
 import {whiteKeyMinWidth} from "../constants";
+import {MiddleCLabelForScrollModel} from "./MiddleCLabelForScrollModel";
+import {WhiteKeyForScrollModel} from "./WhiteKeyForScrollModel";
+import {LowestBlackKeyForScrollModel} from "./LowestBlackKeyForScrollModel";
+import {BlackKeyForScrollModel} from "./BlackKeyForScrollModel";
+import {BoxSliderForScrollModel} from "./BoxSliderForScrollModel";
 
 type KeyboardScrollModelProps = {
   notes: string[];
@@ -30,26 +35,22 @@ const KeyboardScrollModel: React.FC<KeyboardScrollModelProps> = ({
   thisBlackKeyIsSelected,
   keyboardRef,
 }) => {
-  const size = useWindowSize();
+  const {width: windowWidth} = useWindowSize();
 
   const remInPixels = Number.parseFloat(
     getComputedStyle(document.documentElement).fontSize
   );
 
-  let viewBoxWidth;
-  let viewBoxWidthInverse;
-  if (size.width) {
-    viewBoxWidth =
-      (size.width /
-        (Number.parseFloat(whiteKeyMinWidth) * notes.length * remInPixels)) *
-        100 +
-      "%";
-    viewBoxWidthInverse = 100 - Number.parseFloat(viewBoxWidth) + "%";
-  }
+  const viewBoxWidth =
+    (windowWidth /
+      (Number.parseFloat(whiteKeyMinWidth) * notes.length * remInPixels)) *
+      100 +
+    "%";
+  const viewBoxWidthInverse = 100 - Number.parseFloat(viewBoxWidth) + "%";
 
-  let maxScrollLeft;
-  let scrollPercentage;
-  if (keyboardRef.current && size.width) {
+  let maxScrollLeft = 0;
+  let scrollPercentage = 0;
+  if (keyboardRef.current) {
     maxScrollLeft =
       keyboardRef.current?.scrollWidth - keyboardRef.current?.clientWidth;
     scrollPercentage = scrollLeft / maxScrollLeft;
@@ -67,26 +68,17 @@ const KeyboardScrollModel: React.FC<KeyboardScrollModelProps> = ({
             position="relative"
             marginBottom="1rem"
           >
-            <Box
-              w={viewBoxWidth}
-              h="8rem"
-              position="absolute"
-              bottom="0"
-              left={`calc(${scrollPercentage} * ${viewBoxWidthInverse})`}
-              border="3px solid black"
-              borderRadius="3px"
-              zIndex="4"
-            ></Box>
+            <BoxSliderForScrollModel
+              scrollPercentage={scrollPercentage}
+              viewBoxWidth={viewBoxWidth}
+              viewBoxWidthInverse={viewBoxWidthInverse}
+            />
             <Flex w="98%" bottom="0" margin="2rem auto" position="relative">
               {notes.map((note, ind) => (
-                <Box
-                  key={note}
-                  w={`${100 / notes.length}%`}
-                  border="1px solid black"
-                  borderRadius="0 0 3px 3px"
-                  h="5rem"
-                  position="relative"
-                  bg={determineWhiteKeyBackgroundColor(
+                <WhiteKeyForScrollModel
+                  note={note}
+                  notes={notes}
+                  background={determineWhiteKeyBackgroundColor(
                     notes,
                     note,
                     ind,
@@ -98,12 +90,8 @@ const KeyboardScrollModel: React.FC<KeyboardScrollModelProps> = ({
                   )}
                 >
                   {note[0] !== "B" && note[0] !== "E" ? (
-                    <Box
-                      position="absolute"
-                      left="100%"
-                      w="70%"
-                      border="1px solid black"
-                      bg={determineBlackKeyBackgroundColor(
+                    <BlackKeyForScrollModel
+                      background={determineBlackKeyBackgroundColor(
                         notes,
                         note,
                         ind,
@@ -113,38 +101,17 @@ const KeyboardScrollModel: React.FC<KeyboardScrollModelProps> = ({
                         isGuestKeyboard,
                         thisBlackKeyIsSelected
                       )}
-                      h="60%"
-                      transform="translateX(-50%) translateY(-1px)"
-                      borderRadius="0 0 3px 3px"
-                      zIndex="3"
-                    ></Box>
+                    />
                   ) : null}
+
                   {note[0] !== "C" &&
                   note[0] !== "F" &&
                   notes.indexOf(note) === 0 ? (
-                    <Box
-                      position="absolute"
-                      right="100%"
-                      w="70%"
-                      bg="black"
-                      h="60%"
-                      transform="translateX(50%) translateY(-1px)"
-                      borderRadius="0 0 4px 4px"
-                    ></Box>
+                    <LowestBlackKeyForScrollModel />
                   ) : null}
-                  {note === "C4" ? (
-                    <Heading
-                      as="h3"
-                      position="absolute"
-                      bottom="-2rem"
-                      left="50%"
-                      transform="translateX(-50%)"
-                      fontSize="1.5rem"
-                    >
-                      M
-                    </Heading>
-                  ) : null}
-                </Box>
+
+                  {note === "C4" ? <MiddleCLabelForScrollModel /> : null}
+                </WhiteKeyForScrollModel>
               ))}
             </Flex>
           </Flex>

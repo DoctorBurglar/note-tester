@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import Staff from "./Staff";
 import {trebleNotes, bassNotes, clefs, answerStatusOptions} from "../constants";
 import {Flex, Heading, Box} from "@chakra-ui/react";
@@ -9,7 +9,7 @@ import {useHistory, Redirect} from "react-router-dom";
 import {useSession} from "../hooks";
 import GuestScore from "./GuestScore";
 import Header from "./Header";
-import {getRandomNote} from "../helpers";
+import {checkAnswer, getRandomNote} from "../helpers";
 
 interface IParams {
   sessionId: string;
@@ -73,28 +73,18 @@ function GuestNoteTester() {
         1500
       );
     }
-    const noteWithoutSharp = note[1] === "s" ? note[0] + note[2] : note;
-    const nextNote = notes[notes.indexOf(noteWithoutSharp) + 1];
-    const prevNote = notes[notes.indexOf(noteWithoutSharp) - 1];
-    const selectedNote = sessionDoc.selectedNote;
 
     sessionRef.update({answer: note});
-    if (note === selectedNote) {
-      return handleAnswer(note, answerStatusOptions.CORRECT);
-    } else if (note[1] === "s") {
-      if (nextNote[0] + "b" + nextNote[1] === selectedNote) {
-        return handleAnswer(note, answerStatusOptions.CORRECT);
-      }
-    } else if (note[0] === "E" || note[0] === "B") {
-      if (nextNote[0] + "b" + nextNote[1] === selectedNote) {
-        return handleAnswer(note, answerStatusOptions.CORRECT);
-      }
-    } else if (note[0] === "C" || note[0] === "F") {
-      if (prevNote && prevNote[0] + "s" + prevNote[1] === selectedNote) {
-        return handleAnswer(note, answerStatusOptions.CORRECT);
-      }
+
+    const selectedNote = sessionDoc.selectedNote;
+
+    const answerIsCorrect = checkAnswer(note, notes, selectedNote);
+
+    if (answerIsCorrect) {
+      handleAnswer(note, answerStatusOptions.CORRECT);
+    } else {
+      handleAnswer(note, answerStatusOptions.INCORRECT);
     }
-    handleAnswer(note, answerStatusOptions.INCORRECT);
   };
 
   return (

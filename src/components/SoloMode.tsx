@@ -8,7 +8,7 @@ import {useDisclosure, Button, Heading, Flex} from "@chakra-ui/react";
 import AutoQuiz from "./AutoQuiz";
 import {IAutoQuiz, IUser} from "../interfacesAndTypes";
 import {useUser, useFirestore, useFirestoreDocData} from "reactfire";
-import {getRandomNote} from "../helpers";
+import {checkAnswer, getRandomNote} from "../helpers";
 import HelperButtons from "./HelperButtons";
 
 const SoloMode = () => {
@@ -73,46 +73,15 @@ const SoloMode = () => {
   };
 
   const handleAnswer = (note: string) => {
-    let nextNote;
+    const answerIsCorrect = checkAnswer(note, notes, selectedNote);
 
-    if (note[1] === "s") {
-      if (notes.indexOf(note[0] + note[2]) !== notes.length - 1) {
-        nextNote = notes[notes.indexOf(note[0] + note[2]) + 1];
-      }
-    } else {
-      if (notes.indexOf(note) !== notes.length - 1) {
-        nextNote = notes[notes.indexOf(note) + 1];
-      }
-    }
-
-    if (note === selectedNote) {
-      setTotal((prevTotal) => prevTotal + 1);
-      setCorrect((prevCorrect) => prevCorrect + 1);
-      return setAnswerStatus(answerStatusOptions.CORRECT);
-    } else if (note[1] === "s") {
-      if (nextNote && nextNote[0] + "b" + nextNote[1] === selectedNote) {
-        setTotal((prevTotal) => prevTotal + 1);
-        setCorrect((prevCorrect) => prevCorrect + 1);
-        return setAnswerStatus(answerStatusOptions.CORRECT);
-      }
-    } else if (note[0] === "E" || note[0] === "B") {
-      if (nextNote && nextNote[0] + "b" + nextNote[1] === selectedNote) {
-        setTotal((prevTotal) => prevTotal + 1);
-        setCorrect((prevCorrect) => prevCorrect + 1);
-        return setAnswerStatus(answerStatusOptions.CORRECT);
-      }
-    } else if (note[0] === "C" || note[0] === "F") {
-      if (notes.indexOf(note) > 0) {
-        const prevNote = notes[notes.indexOf(note) - 1];
-        if (prevNote[0] + "s" + prevNote[1] === selectedNote) {
-          setTotal((prevTotal) => prevTotal + 1);
-          setCorrect((prevCorrect) => prevCorrect + 1);
-          return setAnswerStatus(answerStatusOptions.CORRECT);
-        }
-      }
-    }
     setTotal((prevTotal) => prevTotal + 1);
-    setAnswerStatus(answerStatusOptions.INCORRECT);
+    if (answerIsCorrect) {
+      setAnswerStatus(answerStatusOptions.CORRECT);
+      setCorrect((prevCorrect) => prevCorrect + 1);
+    } else {
+      setAnswerStatus(answerStatusOptions.INCORRECT);
+    }
   };
 
   const handleSelectNote = (note: string) => {

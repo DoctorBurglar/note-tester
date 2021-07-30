@@ -5,6 +5,7 @@ import {useFirestore, useUser, useFirestoreDocData} from "reactfire";
 import Header from "./Header";
 import styled from "@emotion/styled";
 import {clefs} from "../constants";
+import {SessionType} from "./SessionType";
 
 const SessionButton = styled(Button)`
   margin-top: 1rem;
@@ -16,13 +17,6 @@ const SessionButton = styled(Button)`
   height: 3rem;
 `;
 
-const SessionBox = styled(Flex)`
-  flex-direction: column;
-  width: 15%;
-  min-width: 20rem;
-  justify-content: space-between;
-  margin: 0 3rem 4rem 3rem;
-`;
 interface IUser {
   uid: string;
   email: string;
@@ -172,99 +166,34 @@ const Sessions: React.FC = () => {
         {errorMessage}
       </Heading>
       <Flex w="95%" justify="center" flexWrap="wrap" maxWidth="120rem">
-        <SessionBox>
-          <Flex direction="column">
-            <Heading
-              as="h1"
-              fontSize="2.3rem"
-              fontWeight="500"
-              marginBottom="1rem"
-            >
-              <span style={{color: "var(--main-color-dark)"}}>Solo</span>{" "}
-              Session
-            </Heading>
-            <Flex
-              display={{base: "none", sm: "flex"}}
-              direction="column"
-              fontSize="1.5rem"
-              justify="space-between"
-              marginBottom="1rem"
-            >
-              <p>Test your knowledge of notes in bass and/or treble clef.</p>
-            </Flex>
-          </Flex>
+        <SessionType
+          title="Solo"
+          description="Test your knowledge of notes in bass and/or treble clef."
+        >
+          <SessionButton onClick={startSoloSession} bg="purple">
+            Solo Session
+          </SessionButton>
+        </SessionType>
 
-          <Flex direction="column" justifyContent="flex-end">
-            <SessionButton onClick={startSoloSession} bg="purple">
-              Solo Session
-            </SessionButton>
-          </Flex>
-        </SessionBox>
-        <SessionBox>
-          <Flex direction="column">
-            <Heading
-              as="h1"
-              fontSize="2.3rem"
-              fontWeight="500"
-              marginBottom="1rem"
-            >
-              <span style={{color: "var(--main-color-dark)"}}>Host</span> a
-              session
-            </Heading>
-            <Flex
-              display={{base: "none", sm: "flex"}}
-              direction="column"
-              fontSize="1.5rem"
-              justify="space-between"
-            >
-              <p style={{marginBottom: "2rem"}}>
-                Host a session that a student can join.
-              </p>
-            </Flex>
-          </Flex>
+        <SessionType
+          title="Host"
+          description="Host a session that a student can join."
+        >
+          <SessionButton onClick={handleCreateSession} bg="purple">
+            Host Session
+          </SessionButton>
+        </SessionType>
 
-          <Flex direction="column" justifyContent="flex-end">
-            <SessionButton onClick={handleCreateSession} bg="purple">
-              Host Session
-            </SessionButton>
-          </Flex>
-        </SessionBox>
-
-        <SessionBox>
-          <Flex direction="column">
-            <Heading
-              as="h1"
-              fontSize="2.3rem"
-              fontWeight="500"
-              marginBottom="1rem"
-            >
-              {" "}
-              <span style={{color: "var(--main-color-dark)"}}>Join</span> a
-              session
-            </Heading>
-            <Flex
-              display={{base: "none", sm: "flex"}}
-              direction="column"
-              fontSize="1.5rem"
-              justify="space-between"
-            >
-              <p style={{marginBottom: "2rem"}}>
-                Enter a code to join a session.
-              </p>
-            </Flex>
-          </Flex>
-
-          <Flex direction="column" justify="flex-end">
-            <Input
-              value={sessionCodeInput}
-              placeholder="Session Code"
-              onChange={handleSessionCodeInput}
-            />
-            <SessionButton onClick={handleJoinSession}>
-              Join Session
-            </SessionButton>
-          </Flex>
-        </SessionBox>
+        <SessionType title="Join" description="Enter a code to join a session.">
+          <Input
+            value={sessionCodeInput}
+            placeholder="Session Code"
+            onChange={handleSessionCodeInput}
+          />
+          <SessionButton onClick={handleJoinSession}>
+            Join Session
+          </SessionButton>
+        </SessionType>
       </Flex>
     </Flex>
   );
