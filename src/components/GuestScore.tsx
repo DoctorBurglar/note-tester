@@ -1,5 +1,4 @@
 import * as React from "react";
-import {useSession} from "../hooks";
 import {
   Flex,
   Heading,
@@ -16,25 +15,13 @@ import {
 } from "@chakra-ui/react";
 
 const GuestScore: React.FC<{
-  sessionId: string;
   canControl?: boolean;
-}> = ({sessionId, canControl}) => {
-  const [isLoading, setIsLoading] = React.useState(true);
-  const {sessionDoc, sessionRef} = useSession(sessionId);
-
-  React.useEffect(() => {
-    if (sessionDoc) {
-      setIsLoading(false);
-    }
-  }, [sessionDoc]);
-
+  totalNotes: number;
+  identifiedNotes: number;
+  reset: () => void;
+}> = ({totalNotes, identifiedNotes, canControl, reset}) => {
   const handleResetScore = () => {
-    sessionRef.update({
-      identifiedNotes: 0,
-      totalNotes: 0,
-      answer: "",
-      answerStatus: "",
-    });
+    reset();
     onClose();
   };
 
@@ -42,13 +29,12 @@ const GuestScore: React.FC<{
 
   return (
     <>
-      {isLoading ? (
+      {totalNotes === undefined ? (
         <Spinner size="xl" margin="1rem 0 0 0" />
       ) : (
         <Flex
           align={{base: "flex-start", md: "center"}}
           // direction={{base: "column", md: "row"}}
-          position="relative"
           zIndex="5"
           onClick={canControl ? onOpen : () => {}}
           cursor="pointer"
@@ -66,8 +52,8 @@ const GuestScore: React.FC<{
               as="h2"
               fontSize={{base: "1.5rem", md: "2rem"}}
               color={canControl ? "var(--main-color-dark)" : "black"}
-              _hover={{color: "var(--main-color-very-dark)"}}
-            >{`${sessionDoc?.identifiedNotes} / ${sessionDoc?.totalNotes}`}</Heading>
+              _hover={{color: canControl ? "var(--main-color-very-dark)" : ""}}
+            >{`${identifiedNotes} / ${totalNotes}`}</Heading>
           </Flex>
           <Modal isOpen={isOpen} onClose={onClose}>
             <ModalOverlay />
@@ -76,8 +62,7 @@ const GuestScore: React.FC<{
               <ModalCloseButton />
               <ModalBody>
                 <Heading as="h2" textAlign="center" fontWeight="400">
-                  Score:{" "}
-                  {`${sessionDoc?.identifiedNotes} / ${sessionDoc?.totalNotes}`}
+                  Score: {`${identifiedNotes} / ${totalNotes}`}
                 </Heading>
               </ModalBody>
 

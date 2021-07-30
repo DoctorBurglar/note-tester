@@ -2,7 +2,7 @@ import * as React from "react";
 import Staff from "./Staff";
 import Keyboard from "./Keyboard";
 import Header from "./Header";
-import SoloScore from "./SoloScore";
+import GuestScore from "./GuestScore";
 import {answerStatusOptions, bassNotes, clefs, trebleNotes} from "../constants";
 import {useDisclosure, Button, Heading, Flex} from "@chakra-ui/react";
 import AutoQuiz from "./AutoQuiz";
@@ -101,24 +101,25 @@ const SoloMode = () => {
     }, 1000);
   };
 
+  const resetScore = () => {
+    setTotal(0);
+    setCorrect(0);
+  };
+
   return (
     <>
       <Header />
 
       <Flex
-        position="relative"
-        height="0"
-        w="90%"
+        position="absolute"
         margin="1rem auto"
         justify="space-between"
+        padding="0 2rem"
+        direction="column"
       >
-        <SoloScore
-          total={total}
-          setTotal={setTotal}
-          correct={correct}
-          setCorrect={setCorrect}
-        />
-        <Button onClick={onOpen}>Settings</Button>
+        <Button onClick={onOpen} marginBottom="1rem">
+          Settings
+        </Button>
       </Flex>
 
       <Staff
@@ -127,27 +128,44 @@ const SoloMode = () => {
         showLinesOnStaff={showLinesOnStaff}
         showSpacesOnStaff={showSpacesOnStaff}
       />
-      <Flex
-        marginBottom="1rem"
-        justify="space-between"
-        w="90%"
-        margin="0 auto"
-        maxWidth="var(--max-width)"
-        marginTop={{base: "-6rem", md: "-.5rem"}}
-      >
-        <HelperButtons
-          displayingNotes={displayingNotes}
-          showLinesOnStaff={showLinesOnStaff}
-          setDisplayingNotes={() => setDisplayingNotes((prevBool) => !prevBool)}
-          setShowLinesOnStaff={() =>
-            setShowLinesOnStaff((prevBool) => !prevBool)
-          }
-          setShowSpacesOnStaff={() =>
-            setShowSpacesOnStaff((prevBool) => !prevBool)
-          }
-          showSpacesOnStaff={showSpacesOnStaff}
-        />
-        <Heading as="h2" marginRight="1rem" alignSelf="flex-end">
+      <Flex w="100%" justify="space-between" position="relative">
+        <Flex
+          marginBottom="1rem"
+          marginLeft="5%"
+          direction="column"
+          marginTop={{base: "-4.5rem", md: "-4.5rem"}}
+        >
+          <HelperButtons
+            displayingNotes={displayingNotes}
+            showLinesOnStaff={showLinesOnStaff}
+            setDisplayingNotes={() =>
+              setDisplayingNotes((prevBool) => !prevBool)
+            }
+            setShowLinesOnStaff={() =>
+              setShowLinesOnStaff((prevBool) => !prevBool)
+            }
+            setShowSpacesOnStaff={() =>
+              setShowSpacesOnStaff((prevBool) => !prevBool)
+            }
+            showSpacesOnStaff={showSpacesOnStaff}
+          />
+
+          <GuestScore
+            totalNotes={total}
+            reset={resetScore}
+            identifiedNotes={correct}
+            canControl
+          />
+        </Flex>
+        <Heading
+          as="h2"
+          marginRight="1rem"
+          alignSelf="flex-end"
+          position="absolute"
+          fontSize={{base: "1.5rem"}}
+          right={{base: "0", md: "5%"}}
+          bottom={{base: "0", md: "1rem"}}
+        >
           {!answer
             ? null
             : answerStatus === answerStatusOptions.CORRECT

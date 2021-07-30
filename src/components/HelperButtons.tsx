@@ -27,8 +27,6 @@ const HelperButtons: React.FC<HelperButtonsProps> = ({
   showSpacesOnStaff,
   displayingNotes,
 }) => {
-  console.log(showSpacesOnStaff, showLinesOnStaff, displayingNotes);
-
   return (
     <Flex
       justify="flex-start"

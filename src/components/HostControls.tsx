@@ -23,7 +23,7 @@ const HostControls: React.FC<hostControlsProps> = ({
       marginTop={{base: "-5.5rem", md: "-rem"}}
       marginBottom="2rem"
       align="flex-end"
-      padding="0 1rem"
+      padding="0 2rem"
     >
       {children}
       <Flex
