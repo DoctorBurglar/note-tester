@@ -111,15 +111,11 @@ function GuestNoteTester() {
               w="90%"
               align="flex-end"
               maxWidth="var(--max-width)"
+              margin="-1.7rem 0 1rem 0"
             >
               <GuestScore sessionId={sessionId} />
 
-              <Heading
-                as="h2"
-                marginLeft="2rem"
-                marginBottom=".5rem"
-                minHeight="2.8rem"
-              >
+              <Heading as="h2" marginLeft="2rem" minHeight="2.8rem">
                 {sessionDoc?.answerStatus}
               </Heading>
             </Flex>

@@ -110,7 +110,7 @@ const HostNoteTester = () => {
     <div style={{width: "100vw"}}>
       <Header />
       <Flex w="100%" h="0" justify="space-between" align="flex-start">
-        <Flex direction="column" align="center">
+        <Flex direction="column" align="flex-start">
           <Button
             onClick={handleAutoQuizButtonClick}
             zIndex="5"
@@ -119,7 +119,7 @@ const HostNoteTester = () => {
           >
             {sessionDoc?.autoQuiz?.on ? "Stop auto quiz" : "Start auto quiz"}
           </Button>
-          <GuestScore sessionId={sessionId} isHost />
+
           <AutoQuiz
             isOpen={isOpen}
             onClose={onClose}
@@ -134,12 +134,14 @@ const HostNoteTester = () => {
         <SessionCode sessionDoc={sessionDoc} />
       </Flex>
       <Content>
-        <Staff
-          selectedNote={sessionDoc?.selectedNote}
-          selectedClef={sessionDoc?.selectedClef}
-          showLinesOnStaff={sessionDoc?.mnemonics?.showLinesOnStaff}
-          showSpacesOnStaff={sessionDoc?.mnemonics?.showSpacesOnStaff}
-        />
+        <Flex position="relative">
+          <Staff
+            selectedNote={sessionDoc?.selectedNote}
+            selectedClef={sessionDoc?.selectedClef}
+            showLinesOnStaff={sessionDoc?.mnemonics?.showLinesOnStaff}
+            showSpacesOnStaff={sessionDoc?.mnemonics?.showSpacesOnStaff}
+          />
+        </Flex>
 
         <Flex justifyContent="space-between" w="100%">
           <HostControls
@@ -147,14 +149,17 @@ const HostNoteTester = () => {
             selectedClef={sessionDoc?.selectedClef}
             setSelectedClef={handleSelectClef}
           >
-            <HelperButtons
-              setShowLinesOnStaff={handleLineMnemonic}
-              setShowSpacesOnStaff={handleSpaceMnemonic}
-              setDisplayingNotes={handleDisplayNotes}
-              displayingNotes={sessionDoc?.displayingNotes}
-              showLinesOnStaff={sessionDoc?.mnemonics?.showLinesOnStaff}
-              showSpacesOnStaff={sessionDoc?.mnemonics?.showSpacesOnStaff}
-            />
+            <Flex direction="column" align="stretch">
+              <HelperButtons
+                setShowLinesOnStaff={handleLineMnemonic}
+                setShowSpacesOnStaff={handleSpaceMnemonic}
+                setDisplayingNotes={handleDisplayNotes}
+                displayingNotes={sessionDoc?.displayingNotes}
+                showLinesOnStaff={sessionDoc?.mnemonics?.showLinesOnStaff}
+                showSpacesOnStaff={sessionDoc?.mnemonics?.showSpacesOnStaff}
+              />
+              <GuestScore sessionId={sessionId} canControl />
+            </Flex>
           </HostControls>
         </Flex>
 

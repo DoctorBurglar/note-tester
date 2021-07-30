@@ -33,16 +33,15 @@ const HelperButtons: React.FC<HelperButtonsProps> = ({
     <Flex
       justify="flex-start"
       align={{base: "flex-start", md: "center"}}
-      w="50%"
       direction={{base: "column", md: "row"}}
-      margin="1rem"
+      marginBottom="1rem"
     >
-      <Menu closeOnSelect={false} placement="top-start">
-        <MenuButton as={Button} fontSize="1.5rem">
+      <Menu closeOnSelect={false} placement="right">
+        <MenuButton as={Button} fontSize="1.5rem" w="100%">
           Options
         </MenuButton>
         <MenuList
-          minWidth="240px"
+          minWidth="180px"
           position="relative"
           zIndex="15"
           fontSize="1.5rem"

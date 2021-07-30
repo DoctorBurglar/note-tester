@@ -62,7 +62,7 @@ const KeyboardScrollModel: React.FC<KeyboardScrollModelProps> = ({
         <>
           <Flex
             w="100vw"
-            maxWidth="50rem"
+            maxWidth="60rem"
             boxSizing="border-box"
             margin="-1rem auto"
             position="relative"
