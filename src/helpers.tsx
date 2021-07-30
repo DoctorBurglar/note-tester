@@ -587,3 +587,43 @@ export const determineBlackKeyBackgroundColor = (
   }
   return backgroundColor;
 };
+
+export const checkAnswer = (
+  note: string,
+  notes: string[],
+  selectedNote: string
+) => {
+  let nextNote;
+
+  if (note[1] === "s") {
+    if (notes.indexOf(note[0] + note[2]) !== notes.length - 1) {
+      nextNote = notes[notes.indexOf(note[0] + note[2]) + 1];
+    }
+  } else {
+    if (notes.indexOf(note) !== notes.length - 1) {
+      nextNote = notes[notes.indexOf(note) + 1];
+    }
+  }
+
+  let answerIsCorrect = false;
+
+  if (note === selectedNote) {
+    answerIsCorrect = true;
+  } else if (note[1] === "s") {
+    if (nextNote && nextNote[0] + "b" + nextNote[1] === selectedNote) {
+      answerIsCorrect = true;
+    }
+  } else if (note[0] === "E" || note[0] === "B") {
+    if (nextNote && nextNote[0] + "b" + nextNote[1] === selectedNote) {
+      answerIsCorrect = true;
+    }
+  } else if (note[0] === "C" || note[0] === "F") {
+    if (notes.indexOf(note) > 0) {
+      const prevNote = notes[notes.indexOf(note) - 1];
+      if (prevNote[0] + "s" + prevNote[1] === selectedNote) {
+        answerIsCorrect = true;
+      }
+    }
+  }
+  return answerIsCorrect;
+};
