@@ -15,6 +15,48 @@ export const lineHeightInt = Number.parseFloat(lineHeight);
 
 export const positionAdjustment = 0.1;
 
+export const lowerLedgerLinesOffsetValues = [4, 3, 2, 1];
+
+export const staffLines = [
+  {
+    trebleLineMnemonic: "Fine",
+    bassLineMnemonic: "Always",
+    trebleSpaceMnemonic: "E",
+    bassSpaceMnemonic: "Grass",
+    staffLineNumber: 5,
+  },
+  {
+    trebleLineMnemonic: "Does",
+    bassLineMnemonic: "Fine",
+    trebleSpaceMnemonic: "C",
+    bassSpaceMnemonic: "Eat",
+    staffLineNumber: 4,
+  },
+  {
+    trebleLineMnemonic: "Boy",
+    bassLineMnemonic: "Do",
+    trebleSpaceMnemonic: "A",
+    bassSpaceMnemonic: "Cows",
+    staffLineNumber: 3,
+  },
+  {
+    trebleLineMnemonic: "Good",
+    bassLineMnemonic: "Boys",
+    trebleSpaceMnemonic: "F",
+    bassSpaceMnemonic: "All",
+    staffLineNumber: 2,
+  },
+  {
+    trebleLineMnemonic: "Every",
+    bassLineMnemonic: "Good",
+    trebleSpaceMnemonic: "",
+    bassSpaceMnemonic: "",
+    staffLineNumber: 1,
+  },
+];
+
+export const upperLedgerLinesOffsetValues = [12, 11, 10, 9];
+
 export enum bassNotes {
   E1 = "E1",
   F1 = "F1",

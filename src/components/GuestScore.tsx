@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import {useSession} from "../hooks";
 import {Flex, Heading, Spinner} from "@chakra-ui/react";
 import {StyledButtonSmall} from "../styles";

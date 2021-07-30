@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import {FirebaseAppProvider, SuspenseWithPerf} from "reactfire";
 import {BrowserRouter} from "react-router-dom";
 import {ChakraProvider} from "@chakra-ui/react";

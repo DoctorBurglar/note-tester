@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import Staff from "./Staff";
 import HostControls from "./HostControls";
 import {trebleNotes, bassNotes, clefs} from "../constants";

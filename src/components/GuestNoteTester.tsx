@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import Staff from "./Staff";
 import {trebleNotes, bassNotes, clefs, answerStatusOptions} from "../constants";
 import {Flex, Heading, Box} from "@chakra-ui/react";

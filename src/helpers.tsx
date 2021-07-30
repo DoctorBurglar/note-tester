@@ -627,3 +627,19 @@ export const checkAnswer = (
   }
   return answerIsCorrect;
 };
+
+export const determineBorderBottom = (
+  offset: number,
+  position: "UPPER" | "LOWER",
+  ledgerValue: number
+) => {
+  if (position === "UPPER") {
+    return ledgerValue < -(offset * lineHeightInt + positionAdjustment)
+      ? ".3rem solid black"
+      : "none";
+  } else if (position === "LOWER") {
+    return ledgerValue > -(offset * lineHeightInt + positionAdjustment)
+      ? ".3rem solid black"
+      : "none";
+  }
+};
