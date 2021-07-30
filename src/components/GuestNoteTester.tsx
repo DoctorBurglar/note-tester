@@ -113,7 +113,11 @@ function GuestNoteTester() {
               maxWidth="var(--max-width)"
               margin="-1.7rem 0 1rem 0"
             >
-              <GuestScore sessionId={sessionId} />
+              <GuestScore
+                reset={() => {}}
+                identifiedNotes={sessionDoc?.identifiedNotes}
+                totalNotes={sessionDoc?.totalNotes}
+              />
 
               <Heading as="h2" marginLeft="2rem" minHeight="2.8rem">
                 {sessionDoc?.answerStatus}

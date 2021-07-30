@@ -98,6 +98,15 @@ const HostNoteTester = () => {
     }
   };
 
+  const resetScore = () => {
+    sessionRef.update({
+      identifiedNotes: 0,
+      totalNotes: 0,
+      answer: "",
+      answerStatus: "",
+    });
+  };
+
   const handleAutoQuizButtonClick = () => {
     if (sessionDoc?.autoQuiz.on) {
       sessionRef.update({autoQuiz: {...sessionDoc.autoQuiz, on: false}});
@@ -109,7 +118,13 @@ const HostNoteTester = () => {
   return (
     <div style={{width: "100vw"}}>
       <Header />
-      <Flex w="100%" h="0" justify="space-between" align="flex-start">
+      <Flex
+        w="100%"
+        h="0"
+        justify="space-between"
+        align="flex-start"
+        padding="0 2rem"
+      >
         <Flex direction="column" align="flex-start">
           <Button
             onClick={handleAutoQuizButtonClick}
@@ -143,25 +158,28 @@ const HostNoteTester = () => {
           />
         </Flex>
 
-        <Flex justifyContent="space-between" w="100%">
-          <HostControls
-            setSelectedNote={handleSelectNote}
-            selectedClef={sessionDoc?.selectedClef}
-            setSelectedClef={handleSelectClef}
-          >
-            <Flex direction="column" align="stretch">
-              <HelperButtons
-                setShowLinesOnStaff={handleLineMnemonic}
-                setShowSpacesOnStaff={handleSpaceMnemonic}
-                setDisplayingNotes={handleDisplayNotes}
-                displayingNotes={sessionDoc?.displayingNotes}
-                showLinesOnStaff={sessionDoc?.mnemonics?.showLinesOnStaff}
-                showSpacesOnStaff={sessionDoc?.mnemonics?.showSpacesOnStaff}
-              />
-              <GuestScore sessionId={sessionId} canControl />
-            </Flex>
-          </HostControls>
-        </Flex>
+        <HostControls
+          setSelectedNote={handleSelectNote}
+          selectedClef={sessionDoc?.selectedClef}
+          setSelectedClef={handleSelectClef}
+        >
+          <Flex direction="column" align="stretch">
+            <HelperButtons
+              setShowLinesOnStaff={handleLineMnemonic}
+              setShowSpacesOnStaff={handleSpaceMnemonic}
+              setDisplayingNotes={handleDisplayNotes}
+              displayingNotes={sessionDoc?.displayingNotes}
+              showLinesOnStaff={sessionDoc?.mnemonics?.showLinesOnStaff}
+              showSpacesOnStaff={sessionDoc?.mnemonics?.showSpacesOnStaff}
+            />
+            <GuestScore
+              reset={resetScore}
+              canControl
+              identifiedNotes={sessionDoc?.identifiedNotes}
+              totalNotes={sessionDoc?.totalNotes}
+            />
+          </Flex>
+        </HostControls>
 
         <Keyboard
           notes={

@@ -76,6 +76,7 @@ const KeyboardScrollModel: React.FC<KeyboardScrollModelProps> = ({
             <Flex w="98%" bottom="0" margin="2rem auto" position="relative">
               {notes.map((note, ind) => (
                 <WhiteKeyForScrollModel
+                  key={note}
                   note={note}
                   notes={notes}
                   background={determineWhiteKeyBackgroundColor(
