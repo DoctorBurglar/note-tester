@@ -20,12 +20,13 @@ const HostControls: React.FC<hostControlsProps> = ({
       margin="0 auto"
       justify="space-between"
       maxWidth="var(--max-width)"
-      marginTop={{base: "-6.5rem", md: "-3rem"}}
+      marginTop={{base: "-5.5rem", md: "-rem"}}
+      marginBottom="2rem"
       align="flex-end"
+      padding="0 1rem"
     >
       {children}
       <Flex
-        marginBottom="1rem"
         w="40%"
         justify="flex-end"
         align={{base: "flex-end", md: "flex-start"}}

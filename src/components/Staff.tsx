@@ -26,7 +26,6 @@ const Staff: React.FC<{
   showSpacesOnStaff: boolean;
 }> = ({selectedNote, selectedClef, showLinesOnStaff, showSpacesOnStaff}) => {
   // This is the translateY value that positions the note
-
   let notePosition = determineNotePosition(selectedNote, selectedClef);
 
   // This value determines if ledger lines are needed

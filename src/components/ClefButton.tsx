@@ -18,7 +18,7 @@ const ClefButton: React.FC<{
   };
 
   return (
-    <Button h="5rem" margin="0 1rem" onClick={handleSwitchClef}>
+    <Button h="5rem" onClick={handleSwitchClef}>
       {selectedClef === clefs.TREBLE ? (
         <BassClef width="3rem" fill="var(--main-color-dark)" />
       ) : (
