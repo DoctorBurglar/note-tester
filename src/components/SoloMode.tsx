@@ -112,7 +112,7 @@ const SoloMode = () => {
 
       <Flex
         position="absolute"
-        margin="1.5rem auto 0 auto"
+        margin="1.5rem auto -1rem auto"
         justify="space-between"
         padding="0 2rem"
         direction="column"
@@ -162,7 +162,7 @@ const SoloMode = () => {
           marginRight="1rem"
           alignSelf="flex-end"
           position="absolute"
-          fontSize={{base: "1.5rem"}}
+          fontSize={{base: "1.5rem", md: "2rem"}}
           right={{base: "0", md: "5%"}}
           bottom={{base: "0", md: "1rem"}}
         >
