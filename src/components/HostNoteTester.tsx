@@ -123,7 +123,8 @@ const HostNoteTester = () => {
         h="0"
         justify="space-between"
         align="flex-start"
-        padding="1.5rem 2rem 0 2rem"
+        padding="1.5rem 1.5rem 0 1.5rem"
+        marginBottom="-1.7rem"
       >
         <Flex direction="column" align="flex-start">
           <Button
