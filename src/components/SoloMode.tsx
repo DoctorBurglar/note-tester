@@ -112,7 +112,7 @@ const SoloMode = () => {
 
       <Flex
         position="absolute"
-        margin="1rem auto"
+        margin="1.5rem auto 0 auto"
         justify="space-between"
         padding="0 2rem"
         direction="column"
