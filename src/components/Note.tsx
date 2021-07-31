@@ -35,7 +35,6 @@ const Note: React.FC<NoteProps> = ({selectedNote, notePosition}) => {
           fill="black"
           height={2.6 * lineHeightInt}
         />{" "}
-        ;
       </Box>
 
       <Box
