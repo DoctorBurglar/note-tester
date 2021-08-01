@@ -127,7 +127,12 @@ const SoloMode = () => {
         padding="0 2rem"
         direction="column"
       >
-        <Button onClick={onOpen} marginBottom="1rem">
+        <Button
+          onClick={onOpen}
+          marginBottom="1rem"
+          position="relative"
+          zIndex="20"
+        >
           Settings
         </Button>
         <Button
@@ -140,6 +145,8 @@ const SoloMode = () => {
               }
             })
           }
+          position="relative"
+          zIndex="20"
         >
           Instrument
         </Button>
