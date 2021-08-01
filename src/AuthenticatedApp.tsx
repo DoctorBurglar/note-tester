@@ -10,7 +10,7 @@ function AuthenticatedApp() {
     <div className="App">
       <Switch>
         <Route path="/hosted-session/:sessionId" component={HostNoteTester} />
-        <Route path="/guest-session/:sessionId" component={GuestNoteTester} />
+        <Route path="/guest-session/:sessionId" component={GuestNoteTester} />\
         <Route path="/solo-mode" component={SoloMode} />
         <Route path="/" component={Sessions} />
       </Switch>

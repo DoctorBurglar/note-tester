@@ -3,13 +3,20 @@ import Staff from "./Staff";
 import Keyboard from "./Keyboard";
 import Header from "./Header";
 import GuestScore from "./GuestScore";
-import {answerStatusOptions, bassNotes, clefs, trebleNotes} from "../constants";
+import {
+  answerStatusOptions,
+  bassNotes,
+  clefs,
+  trebleNotes,
+  instruments,
+} from "../constants";
 import {useDisclosure, Button, Heading, Flex} from "@chakra-ui/react";
 import AutoQuiz from "./AutoQuiz";
 import {IAutoQuiz, IUser} from "../interfacesAndTypes";
 import {useUser, useFirestore, useFirestoreDocData} from "reactfire";
 import {checkAnswer, getRandomNote} from "../helpers";
 import HelperButtons from "./HelperButtons";
+import {Guitar} from "./Guitar";
 
 const SoloMode = () => {
   const [answer, setAnswer] = React.useState("");
@@ -21,6 +28,9 @@ const SoloMode = () => {
   const [showSpacesOnStaff, setShowSpacesOnStaff] = React.useState(false);
   const [answerStatus, setAnswerStatus] = React.useState("");
   const [displayingNotes, setDisplayingNotes] = React.useState(false);
+  const [keyboardOrGuitar, setKeyboardOrGuitar] = React.useState<instruments>(
+    instruments.GUITAR
+  );
 
   const [total, setTotal] = React.useState(0);
   const [correct, setCorrect] = React.useState(0);
@@ -120,6 +130,19 @@ const SoloMode = () => {
         <Button onClick={onOpen} marginBottom="1rem">
           Settings
         </Button>
+        <Button
+          onClick={() =>
+            setKeyboardOrGuitar((prevInstrument) => {
+              if (prevInstrument === instruments.GUITAR) {
+                return instruments.KEYBOARD;
+              } else {
+                return instruments.GUITAR;
+              }
+            })
+          }
+        >
+          Instrument
+        </Button>
       </Flex>
 
       <Staff
@@ -174,20 +197,30 @@ const SoloMode = () => {
         </Heading>
       </Flex>
 
-      <Keyboard
-        answer={answer}
-        answerStatus={answerStatus}
-        displayingNotes={displayingNotes}
-        isGuestKeyboard
-        notes={
-          selectedClef === clefs.TREBLE
-            ? Object.keys(trebleNotes)
-            : Object.keys(bassNotes)
-        }
-        selectedClef={selectedClef}
-        selectedNote={selectedNote}
-        setSelectedNote={handleSelectNote}
-      />
+      {keyboardOrGuitar === instruments.KEYBOARD ? (
+        <Keyboard
+          answer={answer}
+          answerStatus={answerStatus}
+          displayingNotes={displayingNotes}
+          isGuestKeyboard
+          notes={
+            selectedClef === clefs.TREBLE
+              ? Object.keys(trebleNotes)
+              : Object.keys(bassNotes)
+          }
+          selectedClef={selectedClef}
+          selectedNote={selectedNote}
+          setSelectedNote={handleSelectNote}
+        />
+      ) : (
+        <Guitar
+          answer={answer}
+          answerStatus={answerStatus}
+          displayingNotes={displayingNotes}
+          selectedNote={selectedNote}
+          setSelectedNote={handleSelectNote}
+        />
+      )}
       <AutoQuiz
         isOpen={isOpen}
         onClose={onClose}

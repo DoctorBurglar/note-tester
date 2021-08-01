@@ -4,6 +4,12 @@
   --main-color-very-dark: #386f81;
   --wrong-note-color: red;
   --grey-dark: #434343;
+  --guitar-brown: #df9c66;
+  --guitar-string-grey: #8d8d8d;
+  --guitar-fret-silver: rgb(78, 78, 78);
+  --guitar-fret-shine: rgb(224, 224, 224);
+  --guitar-shine: #d6d6d6;
+  --guitar-dot-shine: #858585;
   --white: #f8f8f8;
   --max-width: 120rem;
 }
