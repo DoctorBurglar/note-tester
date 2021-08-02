@@ -1,22 +1,22 @@
 import * as React from "react";
 import Staff from "./Staff";
-import Keyboard from "./Keyboard";
 import Header from "./Header";
 import GuestScore from "./GuestScore";
-import {answerStatusOptions, bassNotes, clefs, trebleNotes} from "../constants";
+import {answerStatusOptions, clefs, trebleNotes} from "../constants";
 import {useDisclosure, Button, Heading, Flex} from "@chakra-ui/react";
-import AutoQuiz from "./AutoQuiz";
 import {IAutoQuiz, IUser} from "../interfacesAndTypes";
 import {useUser, useFirestore, useFirestoreDocData} from "reactfire";
 import {checkAnswer, getRandomNote} from "../helpers";
 import HelperButtons from "./HelperButtons";
+import {Guitar} from "./Guitar";
+import AutoQuizModal from "./FormModal";
 import {useHistory} from "react-router-dom";
 
-const SoloMode = () => {
+const SoloModeGuitar: React.FC = () => {
   const [answer, setAnswer] = React.useState("");
-  const [selectedClef, setSelectedClef] = React.useState<clefs | string>(
-    clefs.TREBLE
-  );
+  //   const [selectedClef, setSelectedClef] = React.useState<clefs | string>(
+  //     clefs.TREBLE
+  //   );
   const [selectedNote, setSelectedNote] = React.useState("");
   const [showLinesOnStaff, setShowLinesOnStaff] = React.useState(false);
   const [showSpacesOnStaff, setShowSpacesOnStaff] = React.useState(false);
@@ -29,9 +29,9 @@ const SoloMode = () => {
   const [total, setTotal] = React.useState(0);
   const [correct, setCorrect] = React.useState(0);
 
-  const {isOpen, onOpen, onClose} = useDisclosure();
-
   const history = useHistory();
+
+  const {isOpen, onOpen, onClose} = useDisclosure();
 
   const {data} = useUser();
 
@@ -39,10 +39,7 @@ const SoloMode = () => {
 
   const userDoc = useFirestoreDocData<IUser>(userRef).data;
 
-  const notes =
-    selectedClef === clefs.TREBLE
-      ? Object.keys(trebleNotes)
-      : Object.keys(bassNotes);
+  const notes = Object.keys(trebleNotes);
 
   React.useEffect(() => {
     // for this component the "on" field only determines if the settings have ever been set"
@@ -57,20 +54,14 @@ const SoloMode = () => {
       // only run this if the document has set at least one clef before
       (userDoc.soloSettings.includeTreble || userDoc.soloSettings.includeBass)
     ) {
-      const {randomNote, randomClef} = getRandomNote(userDoc?.soloSettings, "");
-
-      setSelectedClef(randomClef);
+      const {randomNote} = getRandomNote(userDoc?.soloSettings, "");
       setSelectedNote(randomNote);
     }
   }, [userDoc?.soloSettings, userDoc]);
 
-  const updateSettings = async (
-    autoDoc: IAutoQuiz,
-    selectedNote: string,
-    selectedClef: clefs
-  ) => {
+  // will be used in the settings modal
+  const updateSettings = async (autoDoc: IAutoQuiz, selectedNote: string) => {
     setSelectedNote(selectedNote);
-    setSelectedClef(selectedClef);
     try {
       await userRef.update({soloSettings: autoDoc});
     } catch (err) {
@@ -91,17 +82,13 @@ const SoloMode = () => {
   };
 
   const handleSelectNote = (note: string) => {
-    const {randomNote, randomClef} = getRandomNote(
-      userDoc?.soloSettings,
-      selectedNote
-    );
+    const {randomNote} = getRandomNote(userDoc?.soloSettings, selectedNote);
     setAnswer(note);
 
     handleAnswer(note);
 
     setTimeout(() => {
       setSelectedNote(randomNote);
-      setSelectedClef(randomClef);
       setAnswer("");
       setAnswerStatus("");
     }, 1000);
@@ -132,17 +119,17 @@ const SoloMode = () => {
           Settings
         </Button>
         <Button
+          w="8rem"
           position="relative"
           zIndex="20"
-          w="8rem"
-          onClick={() => history.push("/solo-mode/guitar")}
+          onClick={() => history.push("/solo-mode/keyboard")}
         >
-          Guitar &rarr;
+          Keyboard &rarr;
         </Button>
       </Flex>
 
       <Staff
-        selectedClef={selectedClef}
+        selectedClef={clefs.TREBLE}
         selectedNote={selectedNote}
         showLinesOnStaff={showLinesOnStaff}
         showSpacesOnStaff={showSpacesOnStaff}
@@ -193,31 +180,21 @@ const SoloMode = () => {
         </Heading>
       </Flex>
 
-      <Keyboard
+      <Guitar
         answer={answer}
         answerStatus={answerStatus}
         displayingNotes={displayingNotes}
-        isGuestKeyboard
-        notes={
-          selectedClef === clefs.TREBLE
-            ? Object.keys(trebleNotes)
-            : Object.keys(bassNotes)
-        }
-        selectedClef={selectedClef}
         selectedNote={selectedNote}
         setSelectedNote={handleSelectNote}
       />
-
-      <AutoQuiz
-        isOpen={isOpen}
-        onClose={onClose}
-        onSubmit={updateSettings}
+      <AutoQuizModal
         submitText="Save"
-        selectedNote={selectedNote}
-        currentSettings={userDoc?.soloSettings}
-      />
+        handleModalClose={onClose}
+        isOpen={isOpen}
+        handleQuiz={() => console.log("quiz!!")}
+      ></AutoQuizModal>
     </>
   );
 };
 
-export default SoloMode;
+export default SoloModeGuitar;

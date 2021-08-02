@@ -41,7 +41,7 @@ const ClefCheckbox: React.FC<ClefCheckboxProps> = ({
         onChange={clefOnChange}
         defaultChecked={includeClef}
       >
-        <Heading as="h3" fontSize="2rem" fontWeight="400">
+        <Heading as="h3" fontSize="2rem" fontWeight="400" marginLeft=".5rem">
           {`${clefName} clef`}
         </Heading>
       </Checkbox>

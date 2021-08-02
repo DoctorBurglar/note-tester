@@ -8,8 +8,11 @@
   --guitar-string-grey: #8d8d8d;
   --guitar-fret-silver: rgb(78, 78, 78);
   --guitar-fret-shine: rgb(224, 224, 224);
+  --guitar-fret-shine-2: rgb(224, 224, 224, 0.5);
   --guitar-shine: #d6d6d6;
+  --guitar-nut: #f3f3e2;
   --guitar-dot-shine: #858585;
+  --guitar-dot: #242424;
   --white: #f8f8f8;
   --max-width: 120rem;
 }

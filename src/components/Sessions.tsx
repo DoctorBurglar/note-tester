@@ -156,7 +156,7 @@ const Sessions: React.FC = () => {
   };
 
   const startSoloSession = () => {
-    history.push("/solo-mode");
+    history.push("/solo-mode/keyboard");
   };
 
   return (
