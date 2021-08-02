@@ -61,7 +61,7 @@ const Guitar: React.FC<GuitarProps> = ({
       <Box
         position="absolute"
         h="14.4rem"
-        w="100%"
+        w="80rem"
         bg="var(--guitar-brown)"
         top="1.8rem"
         zIndex="-20"
