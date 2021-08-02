@@ -57,7 +57,15 @@ const Guitar: React.FC<GuitarProps> = ({
   console.log(constructedStrings);
 
   return (
-    <Flex w="100vw" overflowX="scroll" overFlowY="visible">
+    <Flex w="100vw" overflowX="scroll" overFlowY="visible" position="relative">
+      <Box
+        position="absolute"
+        h="14.4rem"
+        w="100%"
+        bg="var(--guitar-brown)"
+        top="1.8rem"
+        zIndex="-20"
+      ></Box>
       <Flex direction="column" cursor="pointer" w="100%" minWidth="80rem">
         <Box
           w="10%"
