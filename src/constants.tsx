@@ -8,6 +8,11 @@ export enum answerStatusOptions {
   INCORRECT = "INCORRECT",
 }
 
+export enum instruments {
+  GUITAR = "GUITAR",
+  KEYBOARD = "KEYBOARD",
+}
+
 // source of truth for line height and note height.  If changed position of treble and bass clefs have to be adjusted
 export const lineHeight = "2.3rem";
 
