@@ -180,8 +180,8 @@ const AutoQuiz: React.FC<{
           />
 
           <IncludeAccidentals
-            setIncludeSharps={() => setIncludeSharps((prevBool) => !prevBool)}
-            setIncludeFlats={() => setIncludeFlats((prevBool) => !prevBool)}
+            setIncludeSharps={setIncludeSharps}
+            setIncludeFlats={setIncludeFlats}
             includeSharps={includeSharps}
             inlcudeFlats={includeFlats}
           />

@@ -122,6 +122,31 @@ export enum trebleNotes {
   A6 = "A6",
 }
 
+export enum guitarNotes {
+  E3 = "E3",
+  F3 = "F3",
+  G3 = "G3",
+  A3 = "A3",
+  B3 = "B3",
+  C4 = "C4",
+  D4 = "D4",
+  E4 = "E4",
+  F4 = "F4",
+  G4 = "G4",
+  A4 = "A4",
+  B4 = "B4",
+  C5 = "C5",
+  D5 = "D5",
+  E5 = "E5",
+  F5 = "F5",
+  G5 = "G5",
+  A5 = "A5",
+  B5 = "B5",
+  C6 = "C6",
+  D6 = "D6",
+  E6 = "E6",
+}
+
 export enum guestKeyboard {
   C = "C",
   D = "D",
@@ -253,4 +278,32 @@ export enum presets {
   NOTESONSTAFF = "Notes on staff",
   NOTERSBELOWSTAFF = "Notes below staff",
   NOTESABOVESTAFF = "Notes above staff",
+}
+
+export enum guitarPresets {
+  CUSTOM = "Custom",
+
+  FIRST_POSITION = "First position",
+  FIFTH_POSITION = "Fifth position",
+  NINTH_POSITION = "Ninth position",
+
+  STRING_1_AND_2_FIRST_POSITION = "String 1 and 2 in first position",
+  STRING_2_AND_3_FIRST_POSITION = "String 2 and 3 in first position",
+  STRING_3_AND_4_FIRST_POSITION = "String 3 and 4 in first position",
+  STRING_4_AND_5_FIRST_POSITION = "String 4 and 5 in first position",
+  STRING_5_AND_6_FIRST_POSITION = "String 5 and 6 in first position",
+
+  STRING_1_AND_2_FIFTH_POSITION = "String 1 and 2 in fifth position",
+  STRING_2_AND_3_FIFTH_POSITION = "String 2 and 3 in fifth position",
+  STRING_3_AND_4_FIFTH_POSITION = "String 3 and 4 in fifth position",
+  STRING_4_AND_5_FIFTH_POSITION = "String 4 and 5 in fifth position",
+  STRING_5_AND_6_FIFTH_POSITION = "String 5 and 6 in fifth position",
+
+  STRING_1_AND_2_NINTH_POSITION = "String 1 and 2 in ninth position",
+  STRING_2_AND_3_NINTH_POSITION = "String 2 and 3 in ninth position",
+  STRING_3_AND_4_NINTH_POSITION = "String 3 and 4 in ninth position",
+  STRING_4_AND_5_NINTH_POSITION = "String 4 and 5 in ninth position",
+  STRING_5_AND_6_NINTH_POSITION = "String 5 and 6 in ninth position",
+
+  STRINGS_1_2_3_FIRST_POSITION = "Strings 1, 2, and 3 in first position",
 }

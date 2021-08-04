@@ -2,8 +2,8 @@ import * as React from "react";
 import {Flex, Checkbox, Heading} from "@chakra-ui/react";
 
 type IncludeAccidentalsProps = {
-  setIncludeSharps: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  setIncludeFlats: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  setIncludeSharps: React.Dispatch<React.SetStateAction<boolean>>;
+  setIncludeFlats: React.Dispatch<React.SetStateAction<boolean>>;
   inlcudeFlats: boolean;
   includeSharps: boolean;
 };
@@ -18,7 +18,7 @@ const IncludeAccidentals: React.FC<IncludeAccidentalsProps> = ({
     <Flex justify="center" marginTop="1.5rem">
       <Checkbox
         marginRight="3rem"
-        onChange={setIncludeSharps}
+        onChange={() => setIncludeSharps((prevBool) => !prevBool)}
         defaultChecked={includeSharps}
       >
         <Heading as="h5" fontSize="1.5rem" fontWeight="500">
@@ -26,7 +26,10 @@ const IncludeAccidentals: React.FC<IncludeAccidentalsProps> = ({
           Sharps
         </Heading>
       </Checkbox>
-      <Checkbox onChange={setIncludeFlats} defaultChecked={inlcudeFlats}>
+      <Checkbox
+        onChange={() => setIncludeFlats((prevBool) => !prevBool)}
+        defaultChecked={inlcudeFlats}
+      >
         <Heading as="h5" fontSize="1.5rem" fontWeight="500">
           {" "}
           Flats

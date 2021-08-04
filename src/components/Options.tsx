@@ -10,16 +10,16 @@ import {
   MenuItem,
 } from "@chakra-ui/react";
 
-type HelperButtonsProps = {
-  setShowLinesOnStaff: React.MouseEventHandler<HTMLButtonElement>;
+type OptionsProps = {
+  setShowLinesOnStaff: React.Dispatch<React.SetStateAction<boolean>>;
   showLinesOnStaff: boolean;
-  setShowSpacesOnStaff: React.MouseEventHandler<HTMLButtonElement>;
+  setShowSpacesOnStaff: React.Dispatch<React.SetStateAction<boolean>>;
   showSpacesOnStaff: boolean;
-  setDisplayingNotes: React.MouseEventHandler<HTMLButtonElement>;
+  setDisplayingNotes: React.Dispatch<React.SetStateAction<boolean>>;
   displayingNotes: boolean;
 };
 
-const HelperButtons: React.FC<HelperButtonsProps> = ({
+const Options: React.FC<OptionsProps> = ({
   setDisplayingNotes,
   setShowLinesOnStaff,
   setShowSpacesOnStaff,
@@ -50,7 +50,9 @@ const HelperButtons: React.FC<HelperButtonsProps> = ({
             fontSize="1.5rem"
             value={["lines", "spaces"]}
           >
-            <MenuItem onClick={setShowLinesOnStaff}>
+            <MenuItem
+              onClick={() => setShowLinesOnStaff((prevBool) => !prevBool)}
+            >
               {showLinesOnStaff ? (
                 <span style={{width: "2.5rem"}}>&#10003;</span>
               ) : (
@@ -59,7 +61,9 @@ const HelperButtons: React.FC<HelperButtonsProps> = ({
               Line Mnemonic
             </MenuItem>
 
-            <MenuItem onClick={setShowSpacesOnStaff}>
+            <MenuItem
+              onClick={() => setShowSpacesOnStaff((prevBool) => !prevBool)}
+            >
               {showSpacesOnStaff ? (
                 <span style={{width: "2.5rem"}}>&#10003;</span>
               ) : (
@@ -70,7 +74,9 @@ const HelperButtons: React.FC<HelperButtonsProps> = ({
           </MenuOptionGroup>
           <MenuDivider />
           <MenuOptionGroup title="Keyboard" type="checkbox" fontSize="1.5rem">
-            <MenuItem onClick={setDisplayingNotes}>
+            <MenuItem
+              onClick={() => setDisplayingNotes((prevBool) => !prevBool)}
+            >
               {displayingNotes ? (
                 <span style={{width: "2.5rem"}}>&#10003;</span>
               ) : (
@@ -85,4 +91,4 @@ const HelperButtons: React.FC<HelperButtonsProps> = ({
   );
 };
 
-export default HelperButtons;
+export {Options};
