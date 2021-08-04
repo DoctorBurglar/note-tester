@@ -58,6 +58,7 @@ const Staff: React.FC<{
       {staffLines.map((staffLine) => {
         return (
           <StaffLine
+            key={staffLine.staffLineNumber}
             selectedClef={selectedClef}
             showLinesOnStaff={showLinesOnStaff}
             showSpacesOnStaff={showSpacesOnStaff}

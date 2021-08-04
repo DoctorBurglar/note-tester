@@ -4,27 +4,21 @@ import Header from "./Header";
 import GuestScore from "./GuestScore";
 import {answerStatusOptions, clefs, trebleNotes} from "../constants";
 import {useDisclosure, Button, Heading, Flex} from "@chakra-ui/react";
-import {IAutoQuiz, IUser} from "../interfacesAndTypes";
+import {IGuitarSettings, IUser} from "../interfacesAndTypes";
 import {useUser, useFirestore, useFirestoreDocData} from "reactfire";
-import {checkAnswer, getRandomNote} from "../helpers";
-import HelperButtons from "./HelperButtons";
+import {checkAnswer, getRandomGuitarNote} from "../helpers";
+import {Options} from "./Options";
 import {Guitar} from "./Guitar";
-import AutoQuizModal from "./FormModal";
 import {useHistory} from "react-router-dom";
+import {GuitarSettings} from "./GuitarSettings";
 
 const SoloModeGuitar: React.FC = () => {
   const [answer, setAnswer] = React.useState("");
-  //   const [selectedClef, setSelectedClef] = React.useState<clefs | string>(
-  //     clefs.TREBLE
-  //   );
   const [selectedNote, setSelectedNote] = React.useState("");
   const [showLinesOnStaff, setShowLinesOnStaff] = React.useState(false);
   const [showSpacesOnStaff, setShowSpacesOnStaff] = React.useState(false);
   const [answerStatus, setAnswerStatus] = React.useState("");
   const [displayingNotes, setDisplayingNotes] = React.useState(false);
-  //   const [activeInstrument, setActiveInstrument] = React.useState<instruments>(
-  //     instruments.GUITAR
-  //   );
 
   const [total, setTotal] = React.useState(0);
   const [correct, setCorrect] = React.useState(0);
@@ -41,29 +35,28 @@ const SoloModeGuitar: React.FC = () => {
 
   const notes = Object.keys(trebleNotes);
 
-  React.useEffect(() => {
-    // for this component the "on" field only determines if the settings have ever been set"
-    if (userDoc && !userDoc.soloSettings.on) {
-      onOpen();
-    }
-  }, [onOpen, userDoc?.soloSettings.on, userDoc]);
+  //   React.useEffect(() => {
+  //     // for this component the "on" field only determines if the settings have ever been set"
+  //     if (userDoc && !userDoc.guitarSettings) {
+  //       onOpen();
+  //     }
+  //   }, [onOpen, userDoc?.soloSettings.on, userDoc]);
 
   React.useEffect(() => {
-    if (
-      userDoc &&
-      // only run this if the document has set at least one clef before
-      (userDoc.soloSettings.includeTreble || userDoc.soloSettings.includeBass)
-    ) {
-      const {randomNote} = getRandomNote(userDoc?.soloSettings, "");
+    if (userDoc) {
+      const randomNote = getRandomGuitarNote(userDoc?.guitarSettings, "");
       setSelectedNote(randomNote);
     }
-  }, [userDoc?.soloSettings, userDoc]);
+  }, [userDoc?.guitarSettings, userDoc]);
 
   // will be used in the settings modal
-  const updateSettings = async (autoDoc: IAutoQuiz, selectedNote: string) => {
+  const updateSettings = async (
+    guitarSettingsObject: IGuitarSettings,
+    selectedNote: string
+  ) => {
     setSelectedNote(selectedNote);
     try {
-      await userRef.update({soloSettings: autoDoc});
+      await userRef.update({guitarSettings: guitarSettingsObject});
     } catch (err) {
       console.log(err);
     }
@@ -82,7 +75,10 @@ const SoloModeGuitar: React.FC = () => {
   };
 
   const handleSelectNote = (note: string) => {
-    const {randomNote} = getRandomNote(userDoc?.soloSettings, selectedNote);
+    const randomNote = getRandomGuitarNote(
+      userDoc?.guitarSettings,
+      selectedNote
+    );
     setAnswer(note);
 
     handleAnswer(note);
@@ -141,18 +137,12 @@ const SoloModeGuitar: React.FC = () => {
           direction="column"
           marginTop={{base: "-4.5rem", md: "-4.5rem"}}
         >
-          <HelperButtons
+          <Options
             displayingNotes={displayingNotes}
             showLinesOnStaff={showLinesOnStaff}
-            setDisplayingNotes={() =>
-              setDisplayingNotes((prevBool) => !prevBool)
-            }
-            setShowLinesOnStaff={() =>
-              setShowLinesOnStaff((prevBool) => !prevBool)
-            }
-            setShowSpacesOnStaff={() =>
-              setShowSpacesOnStaff((prevBool) => !prevBool)
-            }
+            setDisplayingNotes={setDisplayingNotes}
+            setShowLinesOnStaff={setShowLinesOnStaff}
+            setShowSpacesOnStaff={setShowSpacesOnStaff}
             showSpacesOnStaff={showSpacesOnStaff}
           />
 
@@ -187,12 +177,14 @@ const SoloModeGuitar: React.FC = () => {
         selectedNote={selectedNote}
         setSelectedNote={handleSelectNote}
       />
-      <AutoQuizModal
-        submitText="Save"
-        handleModalClose={onClose}
+
+      <GuitarSettings
         isOpen={isOpen}
-        handleQuiz={() => console.log("quiz!!")}
-      ></AutoQuizModal>
+        onClose={onClose}
+        onSubmit={updateSettings}
+        selectedNote={selectedNote}
+        currentSettings={userDoc?.guitarSettings}
+      />
     </>
   );
 };

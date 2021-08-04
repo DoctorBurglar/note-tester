@@ -13,7 +13,7 @@ import GuestScore from "./GuestScore";
 import SessionCode from "./SessionCode";
 import AutoQuiz from "./AutoQuiz";
 import {IAutoQuiz} from "../interfacesAndTypes";
-import HelperButtons from "./HelperButtons";
+import {Options} from "./Options";
 
 const Content = styled(Flex)`
   justify-content: space-around;
@@ -165,7 +165,7 @@ const HostNoteTester = () => {
           setSelectedClef={handleSelectClef}
         >
           <Flex direction="column" align="stretch">
-            <HelperButtons
+            <Options
               setShowLinesOnStaff={handleLineMnemonic}
               setShowSpacesOnStaff={handleSpaceMnemonic}
               setDisplayingNotes={handleDisplayNotes}

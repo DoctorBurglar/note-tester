@@ -9,7 +9,7 @@ import AutoQuiz from "./AutoQuiz";
 import {IAutoQuiz, IUser} from "../interfacesAndTypes";
 import {useUser, useFirestore, useFirestoreDocData} from "reactfire";
 import {checkAnswer, getRandomNote} from "../helpers";
-import HelperButtons from "./HelperButtons";
+import {Options} from "./Options";
 import {useHistory} from "react-router-dom";
 
 const SoloMode = () => {
@@ -154,18 +154,12 @@ const SoloMode = () => {
           direction="column"
           marginTop={{base: "-4.5rem", md: "-4.5rem"}}
         >
-          <HelperButtons
+          <Options
             displayingNotes={displayingNotes}
             showLinesOnStaff={showLinesOnStaff}
-            setDisplayingNotes={() =>
-              setDisplayingNotes((prevBool) => !prevBool)
-            }
-            setShowLinesOnStaff={() =>
-              setShowLinesOnStaff((prevBool) => !prevBool)
-            }
-            setShowSpacesOnStaff={() =>
-              setShowSpacesOnStaff((prevBool) => !prevBool)
-            }
+            setDisplayingNotes={setDisplayingNotes}
+            setShowLinesOnStaff={setShowLinesOnStaff}
+            setShowSpacesOnStaff={setShowSpacesOnStaff}
             showSpacesOnStaff={showSpacesOnStaff}
           />
 

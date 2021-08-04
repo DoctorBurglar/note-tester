@@ -5,6 +5,7 @@ export interface IUser {
   displayName: string;
   photoURL: string;
   soloSettings: IAutoQuiz;
+  guitarSettings: IGuitarSettings;
 }
 
 export interface ISession {
@@ -39,4 +40,12 @@ export interface IAutoQuiz {
   highBassNote: string;
   treblePreset: string;
   bassPreset: string;
+}
+
+export interface IGuitarSettings {
+  preset: string;
+  lowNote: string;
+  highNote: string;
+  includeFlats: boolean;
+  includeSharps: boolean;
 }

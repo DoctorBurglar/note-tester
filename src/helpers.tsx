@@ -7,6 +7,8 @@ import {
   accidentals,
   presets,
   answerStatusOptions,
+  guitarPresets,
+  guitarNotes,
 } from "./constants";
 import {IAutoQuiz} from "./interfacesAndTypes";
 
@@ -391,6 +393,67 @@ export const getRandomNote = (
   }
 };
 
+export const getRandomGuitarNote = (
+  {
+    includeFlats,
+    includeSharps,
+    lowNote,
+    highNote,
+  }: {
+    includeFlats: boolean;
+    includeSharps: boolean;
+    lowNote: string;
+    highNote: string;
+  },
+  selectedNote: string
+) => {
+  let notes = Object.keys(guitarNotes);
+
+  let notesRange;
+  let lowNoteIndex;
+
+  let naturalSelectedNote = selectedNote;
+  if (selectedNote[1] === "s" || selectedNote[1] === "b") {
+    naturalSelectedNote = selectedNote[0] + selectedNote[2];
+  }
+
+  lowNoteIndex = notes.indexOf(lowNote);
+  notesRange = notes
+    .slice(notes.indexOf(lowNote), notes.indexOf(highNote) + 1)
+    // filter out currently selected note so we don't repeat
+    .filter((note) => note !== naturalSelectedNote);
+
+  const accidentalsArray = [""];
+  if (includeFlats) {
+    accidentalsArray.push("b");
+  }
+  if (includeSharps) {
+    accidentalsArray.push("s");
+  }
+
+  const randomNaturalNote =
+    notesRange[Math.floor(Math.random() * notesRange.length)];
+  if (lowNoteIndex === 0) {
+    const lowestAccidentalsArray = [""];
+    if (includeSharps) {
+      lowestAccidentalsArray.push("s");
+    }
+    const randomNote =
+      randomNaturalNote[0] +
+      lowestAccidentalsArray[
+        Math.floor(Math.random() * lowestAccidentalsArray.length)
+      ] +
+      randomNaturalNote[1];
+    return randomNote;
+  } else {
+    const randomNote =
+      randomNaturalNote[0] +
+      accidentalsArray[Math.floor(Math.random() * accidentalsArray.length)] +
+      randomNaturalNote[1];
+    return randomNote;
+  }
+};
+
 export const getTrebleNoteRange = (treblePreset: string) => {
   const trebleNoteRange = {
     lowTrebleNote: trebleNotes.C3,
@@ -471,6 +534,35 @@ export const getBassNoteRange = (bassPreset: string) => {
       bassNoteRange.highBassNote = bassNotes.C2;
   }
   return bassNoteRange;
+};
+
+export const getGuitarNoteRange = (preset: string) => {
+  const guitarNoteRange = {
+    lowGuitarNote: trebleNotes.E3,
+    highGuitarNote: trebleNotes.E6,
+  };
+  switch (preset) {
+    case presets.CUSTOM:
+      guitarNoteRange.lowGuitarNote = trebleNotes.E3;
+      guitarNoteRange.highGuitarNote = trebleNotes.E6;
+      break;
+    case guitarPresets.FIRST_POSITION:
+      guitarNoteRange.lowGuitarNote = trebleNotes.E3;
+      guitarNoteRange.highGuitarNote = trebleNotes.G5;
+      break;
+    case guitarPresets.FIFTH_POSITION:
+      guitarNoteRange.lowGuitarNote = trebleNotes.A3;
+      guitarNoteRange.highGuitarNote = trebleNotes.C6;
+      break;
+    case guitarPresets.NINTH_POSITION:
+      guitarNoteRange.lowGuitarNote = trebleNotes.D4;
+      guitarNoteRange.highGuitarNote = trebleNotes.E6;
+      break;
+    default:
+      guitarNoteRange.lowGuitarNote = trebleNotes.E3;
+      guitarNoteRange.highGuitarNote = trebleNotes.E6;
+  }
+  return guitarNoteRange;
 };
 
 export const determineWhiteKeyBackgroundColor = (

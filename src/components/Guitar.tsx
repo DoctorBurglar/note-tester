@@ -57,7 +57,13 @@ const Guitar: React.FC<GuitarProps> = ({
   console.log(constructedStrings);
 
   return (
-    <Flex w="100vw" overflowX="scroll" overFlowY="visible" position="relative">
+    <Flex
+      w="100vw"
+      overflowX="scroll"
+      overflowY="visible"
+      position="relative"
+      className="noHighlightOnClick"
+    >
       <Box
         position="absolute"
         h="14.4rem"
@@ -113,123 +119,125 @@ const Guitar: React.FC<GuitarProps> = ({
               </Box>
               {string.map((note, innerInd) => {
                 return (
-                  <>
-                    <Box position="relative" w={15 - 0.6 * innerInd + "rem"}>
-                      <Flex>
-                        <Box
-                          onClick={() => {
-                            setSelectedNote(note);
-                          }}
-                          key={note + innerInd}
-                          h="2.4rem"
-                          // border="1px solid black"
-                          w="100%"
-                          display="inline-block"
-                          position="relative"
-                          zIndex="7"
-                          boxSizing="border-box"
-                          _hover={{
-                            // backgroundColor: "var(--main-color)",
-                            border: "4px solid var(--main-color-dark)",
-                            borderRadius: "5px",
-                          }}
-                        >
-                          {displayingNotes && note[1] !== "s" ? (
-                            <Heading
-                              as="h3"
-                              position="absolute"
-                              top="58%"
-                              left="50%"
-                              transform="translate(-50%, -50%)"
-                              fontSize="2rem"
-                              w="2.5rem"
-                              h="2.5rem"
-                              textAlign="center"
-                              className="note-name"
-                              bg={
-                                note[0] === "C" && note[1] === "4"
-                                  ? "var(--main-color)"
-                                  : "white"
-                              }
-                              borderRadius="50%"
-                              opacity=".6"
-                              // color="var(--main-color-very-dark)"
-                            >
-                              {note[0]}
-                            </Heading>
-                          ) : null}
-                        </Box>
-                        {innerInd === 0 && outerInd === 0 ? (
-                          <Box
-                            minHeight="14.4rem"
+                  <Box
+                    key={note}
+                    position="relative"
+                    w={15 - 0.6 * innerInd + "rem"}
+                  >
+                    <Flex>
+                      <Box
+                        onClick={() => {
+                          setSelectedNote(note);
+                        }}
+                        key={note + innerInd}
+                        h="2.4rem"
+                        // border="1px solid black"
+                        w="100%"
+                        display="inline-block"
+                        position="relative"
+                        zIndex="7"
+                        boxSizing="border-box"
+                        _hover={{
+                          // backgroundColor: "var(--main-color)",
+                          border: "4px solid var(--main-color-dark)",
+                          borderRadius: "5px",
+                        }}
+                      >
+                        {displayingNotes && note[1] !== "s" ? (
+                          <Heading
+                            as="h3"
                             position="absolute"
-                            minWidth="1rem"
-                            bg="var(--guitar-nut)"
-                            zIndex="2"
-                            borderRadius="1px"
-                            boxShadow="2px 1px 6px rgb(0,0,0,0.4)"
-                            right="0"
-                          />
-                        ) : (
-                          <Box
-                            minHeight={
-                              outerInd === 0 && innerInd > 0 ? "14.4rem" : ""
+                            top="58%"
+                            left="50%"
+                            transform="translate(-50%, -50%)"
+                            fontSize="2rem"
+                            w="2.5rem"
+                            h="2.5rem"
+                            textAlign="center"
+                            className="note-name"
+                            bg={
+                              note[0] === "C" && note[1] === "4"
+                                ? "var(--main-color)"
+                                : "white"
                             }
-                            position="absolute"
-                            right="0"
-                            minWidth=".4rem"
-                            bg="var(--guitar-fret-silver)"
-                            zIndex="2"
-                            borderRadius="3px"
-                            backgroundImage="linear-gradient(to right, transparent, var(--guitar-fret-shine-2), transparent), linear-gradient(to top, var(--guitar-fret-silver) 65%, var(--guitar-fret-shine) 83%, var(--guitar-fret-silver) 100%)"
-                            boxShadow="2px 1px 6px rgb(0,0,0,0.4)"
-                          />
-                        )}
-                      </Flex>
-
-                      {outerInd === 3 &&
-                      (innerInd === 3 ||
-                        innerInd === 5 ||
-                        innerInd === 7 ||
-                        innerInd === 9 ||
-                        innerInd === 15 ||
-                        innerInd === 17 ||
-                        innerInd === 19 ||
-                        innerInd === 21) ? (
+                            borderRadius="50%"
+                            opacity=".6"
+                            // color="var(--main-color-very-dark)"
+                          >
+                            {note[0]}
+                          </Heading>
+                        ) : null}
+                      </Box>
+                      {innerInd === 0 && outerInd === 0 ? (
                         <Box
-                          border="3px solid black"
-                          bg="black"
-                          backgroundImage="linear-gradient(300deg, var(--guitar-dot) 0%, var(--guitar-dot) 60%,  var(--guitar-dot-shine) 90%, var(--guitar-dot) 100%)"
-                          h="2rem"
-                          w="2rem"
-                          borderRadius="50%"
+                          minHeight="14.4rem"
                           position="absolute"
-                          top="0"
-                          left="50%"
-                          transform="translateY(-50%) translateX(-50%)"
+                          minWidth="1rem"
+                          bg="var(--guitar-nut)"
                           zIndex="2"
-                        ></Box>
-                      ) : null}
-                      {(outerInd === 2 || outerInd === 4) && innerInd === 12 ? (
+                          borderRadius="1px"
+                          boxShadow="2px 1px 6px rgb(0,0,0,0.4)"
+                          right="0"
+                        />
+                      ) : (
                         <Box
-                          border="3px solid black"
-                          bg="black"
-                          backgroundImage="linear-gradient(300deg, black, black, black,black,  var(--guitar-dot-shine), black)"
-                          h="2rem"
-                          w="2rem"
-                          borderRadius="50%"
-                          position="absolute"
-                          top="0"
-                          left="50%"
-                          transform={
-                            outerInd === 2
-                              ? "translateY(-75%) translateX(-50%)"
-                              : "translateY(-25%) translateX(-50%)"
+                          minHeight={
+                            outerInd === 0 && innerInd > 0 ? "14.4rem" : ""
                           }
-                        ></Box>
-                      ) : null}
-                    </Box>
-                  </>
+                          position="absolute"
+                          right="0"
+                          minWidth=".4rem"
+                          bg="var(--guitar-fret-silver)"
+                          zIndex="2"
+                          borderRadius="3px"
+                          backgroundImage="linear-gradient(to right, transparent, var(--guitar-fret-shine-2), transparent), linear-gradient(to top, var(--guitar-fret-silver) 65%, var(--guitar-fret-shine) 83%, var(--guitar-fret-silver) 100%)"
+                          boxShadow="2px 1px 6px rgb(0,0,0,0.4)"
+                        />
+                      )}
+                    </Flex>
+
+                    {outerInd === 3 &&
+                    (innerInd === 3 ||
+                      innerInd === 5 ||
+                      innerInd === 7 ||
+                      innerInd === 9 ||
+                      innerInd === 15 ||
+                      innerInd === 17 ||
+                      innerInd === 19 ||
+                      innerInd === 21) ? (
+                      <Box
+                        border="3px solid black"
+                        bg="black"
+                        backgroundImage="linear-gradient(300deg, var(--guitar-dot) 0%, var(--guitar-dot) 60%,  var(--guitar-dot-shine) 90%, var(--guitar-dot) 100%)"
+                        h="2rem"
+                        w="2rem"
+                        borderRadius="50%"
+                        position="absolute"
+                        top="0"
+                        left="50%"
+                        transform="translateY(-50%) translateX(-50%)"
+                        zIndex="2"
+                      ></Box>
+                    ) : null}
+                    {(outerInd === 2 || outerInd === 4) && innerInd === 12 ? (
+                      <Box
+                        border="3px solid black"
+                        bg="black"
+                        backgroundImage="linear-gradient(300deg, black, black, black,black,  var(--guitar-dot-shine), black)"
+                        h="2rem"
+                        w="2rem"
+                        borderRadius="50%"
+                        position="absolute"
+                        top="0"
+                        left="50%"
+                        transform={
+                          outerInd === 2
+                            ? "translateY(-75%) translateX(-50%)"
+                            : "translateY(-25%) translateX(-50%)"
+                        }
+                      ></Box>
+                    ) : null}
+                  </Box>
                 );
               })}{" "}
             </Flex>
