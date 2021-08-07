@@ -467,8 +467,17 @@ export const getRandomGuitarNote = (
 
   // remove currently selected note so we don't have repeats
   allSelectedNotes = allSelectedNotes.filter((note) => {
-    // TODO: add logic to prevent flat notes from repeating
-    return note !== selectedNote;
+    if (selectedNote[1] === "b") {
+      const naturalSelectedNote = selectedNote[0] + selectedNote[2];
+      const prevNote =
+        fullNaturalNoteRange[
+          fullNaturalNoteRange.indexOf(naturalSelectedNote) - 1
+        ];
+      const prevSharpNote = prevNote[0] + "s" + prevNote[1];
+      return note !== prevSharpNote;
+    } else {
+      return note !== selectedNote;
+    }
   });
 
   if (allSelectedNotes.length === 0 || allSelectedNotes.length === 1) {
