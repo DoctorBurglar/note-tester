@@ -30,7 +30,7 @@ const AutoQuizModal: React.FC<AutoQuizModalProps> = ({
     <Modal isOpen={isOpen} onClose={handleModalClose}>
       <ModalOverlay />
       <ModalContent alignSelf="center" minWidth="16rem">
-        <ModalHeader fontSize="2rem">Auto Quiz</ModalHeader>
+        <ModalHeader fontSize="2rem">Settings</ModalHeader>
         <ModalCloseButton />
         <ModalBody>{children}</ModalBody>
 
