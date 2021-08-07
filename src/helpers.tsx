@@ -463,12 +463,13 @@ export const getRandomGuitarNote = (
     });
   });
 
+  const fullNaturalNoteRange = Object.keys(guitarNotes);
+
   // remove currently selected note so we don't have repeats
   allSelectedNotes = allSelectedNotes.filter((note) => {
+    // TODO: add logic to prevent flat notes from repeating
     return note !== selectedNote;
   });
-
-  const fullNaturalNoteRange = Object.keys(guitarNotes);
 
   if (allSelectedNotes.length === 0 || allSelectedNotes.length === 1) {
     const error = new Error("Your selection doesn't have enough notes");
@@ -483,17 +484,22 @@ export const getRandomGuitarNote = (
       allSelectedNotes[Math.floor(Math.random() * allSelectedNotes.length)];
     return randomNaturalNoteInRange;
   } else if (!includeSharps && includeFlats) {
-    allSelectedNotes.map((note) => {
+    const allSelectedNotesWithFlats = allSelectedNotes.map((note) => {
       if (note[1] === "s") {
         const nextNote =
-          fullNaturalNoteRange[fullNaturalNoteRange.indexOf(note) + 1];
+          fullNaturalNoteRange[
+            fullNaturalNoteRange.indexOf(note[0] + note[2]) + 1
+          ];
         return nextNote[0] + "b" + nextNote[1];
       } else {
         return note;
       }
     });
+    console.log(allSelectedNotesWithFlats);
     const randomNaturalOrFlatNoteInRange =
-      allSelectedNotes[Math.floor(Math.random() * allSelectedNotes.length)];
+      allSelectedNotesWithFlats[
+        Math.floor(Math.random() * allSelectedNotesWithFlats.length)
+      ];
     return randomNaturalOrFlatNoteInRange;
   } else if (includeSharps && !includeFlats) {
     const randomNaturalOrSharpNoteInRange =
