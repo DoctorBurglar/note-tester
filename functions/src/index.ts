@@ -26,6 +26,15 @@ exports.createUserDoc = functions.auth.user().onCreate((user) => {
         lowTrebleNote: "",
         on: false,
       },
+      guitarSettings: {
+        lowString: 6,
+        highString: 1,
+        lowFret: 0,
+        highFret: 13,
+        includeSharps: true,
+        includeFlats: true,
+        preset: "Custom",
+      },
     })
     .then((res) => console.log(res))
     .catch((err) => console.log(err));
