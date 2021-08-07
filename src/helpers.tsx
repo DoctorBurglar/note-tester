@@ -393,64 +393,130 @@ export const getRandomNote = (
   }
 };
 
+const createGuitarFromOpenStrings = (openStrings: string[], toFret: number) => {
+  const noteOrder = ["A", "B", "C", "D", "E", "F", "G", "A"];
+  const guitarStringArray: string[][] = [];
+  openStrings.forEach((openString, ind) => {
+    let currentNote = openString;
+    const currentStringArray = [];
+    for (let i = 0; i <= toFret; i++) {
+      currentStringArray.push(currentNote);
+      let letter = currentNote[0];
+      let octave;
+      if (letter === "B" || letter === "E") {
+        if (letter === "B") {
+          octave = +currentNote[1] + 1;
+        } else {
+          octave = currentNote[1];
+        }
+        currentNote = noteOrder[noteOrder.indexOf(letter) + 1] + octave;
+      } else if (currentNote[1] === "s") {
+        octave = currentNote[2];
+        currentNote = noteOrder[noteOrder.indexOf(letter) + 1] + octave;
+      } else {
+        octave = currentNote[1];
+        currentNote = letter + "s" + octave;
+      }
+    }
+    guitarStringArray.push(currentStringArray);
+  });
+  return guitarStringArray;
+};
+
+const standardTuning = ["E5", "B4", "G4", "D4", "A3", "E3"];
+
+export const standardTuningGuitar = createGuitarFromOpenStrings(
+  standardTuning,
+  13
+);
+
 export const getRandomGuitarNote = (
   {
     includeFlats,
     includeSharps,
-    lowNote,
-    highNote,
+    lowString,
+    highString,
+    lowFret,
+    highFret,
   }: {
     includeFlats: boolean;
     includeSharps: boolean;
-    lowNote: string;
-    highNote: string;
+    lowString: number;
+    highString: number;
+    lowFret: number;
+    highFret: number;
   },
   selectedNote: string
 ) => {
-  let notes = Object.keys(guitarNotes);
+  let allSelectedNotes: string[] = [];
 
-  let notesRange;
-  let lowNoteIndex;
+  const selectedStrings = standardTuningGuitar.filter((guitarString, ind) => {
+    console.log(ind, lowString, highString);
+    return ind + 1 <= lowString && ind + 1 >= highString;
+  });
 
-  let naturalSelectedNote = selectedNote;
-  if (selectedNote[1] === "s" || selectedNote[1] === "b") {
-    naturalSelectedNote = selectedNote[0] + selectedNote[2];
+  selectedStrings.forEach((guitarString) => {
+    guitarString.forEach((note, ind) => {
+      if (ind >= lowFret && ind <= highFret) {
+        allSelectedNotes.push(note);
+      }
+    });
+  });
+
+  // remove currently selected note so we don't have repeats
+  allSelectedNotes = allSelectedNotes.filter((note) => {
+    return note !== selectedNote;
+  });
+
+  const fullNaturalNoteRange = Object.keys(guitarNotes);
+
+  if (allSelectedNotes.length === 0 || allSelectedNotes.length === 1) {
+    const error = new Error("Your selection doesn't have enough notes");
+    throw error;
   }
 
-  lowNoteIndex = notes.indexOf(lowNote);
-  notesRange = notes
-    .slice(notes.indexOf(lowNote), notes.indexOf(highNote) + 1)
-    // filter out currently selected note so we don't repeat
-    .filter((note) => note !== naturalSelectedNote);
-
-  const accidentalsArray = [""];
-  if (includeFlats) {
-    accidentalsArray.push("b");
-  }
-  if (includeSharps) {
-    accidentalsArray.push("s");
-  }
-
-  const randomNaturalNote =
-    notesRange[Math.floor(Math.random() * notesRange.length)];
-  if (lowNoteIndex === 0) {
-    const lowestAccidentalsArray = [""];
-    if (includeSharps) {
-      lowestAccidentalsArray.push("s");
-    }
-    const randomNote =
-      randomNaturalNote[0] +
-      lowestAccidentalsArray[
-        Math.floor(Math.random() * lowestAccidentalsArray.length)
-      ] +
-      randomNaturalNote[1];
-    return randomNote;
+  if (!includeSharps && !includeFlats) {
+    allSelectedNotes = allSelectedNotes.filter((note) => {
+      return note[1] !== "s";
+    });
+    const randomNaturalNoteInRange =
+      allSelectedNotes[Math.floor(Math.random() * allSelectedNotes.length)];
+    return randomNaturalNoteInRange;
+  } else if (!includeSharps && includeFlats) {
+    allSelectedNotes.map((note) => {
+      if (note[1] === "s") {
+        const nextNote =
+          fullNaturalNoteRange[fullNaturalNoteRange.indexOf(note) + 1];
+        return nextNote[0] + "b" + nextNote[1];
+      } else {
+        return note;
+      }
+    });
+    const randomNaturalOrFlatNoteInRange =
+      allSelectedNotes[Math.floor(Math.random() * allSelectedNotes.length)];
+    return randomNaturalOrFlatNoteInRange;
+  } else if (includeSharps && !includeFlats) {
+    const randomNaturalOrSharpNoteInRange =
+      allSelectedNotes[Math.floor(Math.random() * allSelectedNotes.length)];
+    return randomNaturalOrSharpNoteInRange;
   } else {
-    const randomNote =
-      randomNaturalNote[0] +
-      accidentalsArray[Math.floor(Math.random() * accidentalsArray.length)] +
-      randomNaturalNote[1];
-    return randomNote;
+    const randomNoteInRange =
+      allSelectedNotes[Math.floor(Math.random() * allSelectedNotes.length)];
+    if (randomNoteInRange[1] !== "s") {
+      // write logic to occasionally return E#, Cb, B#, and Fb
+      return randomNoteInRange;
+    } else {
+      const randomNoteMadeNatural = randomNoteInRange[0] + randomNoteInRange[2];
+      const nextNote =
+        fullNaturalNoteRange[
+          fullNaturalNoteRange.indexOf(randomNoteMadeNatural) + 1
+        ];
+      const flatSpelling = nextNote[0] + "b" + nextNote[1];
+      const accidentalOptions = [randomNoteInRange, flatSpelling];
+      const randomSpelling =
+        accidentalOptions[Math.floor(Math.random() * accidentalOptions.length)];
+      return randomSpelling;
+    }
   }
 };
 
@@ -537,32 +603,44 @@ export const getBassNoteRange = (bassPreset: string) => {
 };
 
 export const getGuitarNoteRange = (preset: string) => {
-  const guitarNoteRange = {
-    lowGuitarNote: trebleNotes.E3,
-    highGuitarNote: trebleNotes.E6,
+  const guitarRange = {
+    lowGuitarString: 6,
+    highGuitarString: 1,
+    lowFret: 0,
+    highFret: 13,
   };
   switch (preset) {
     case presets.CUSTOM:
-      guitarNoteRange.lowGuitarNote = trebleNotes.E3;
-      guitarNoteRange.highGuitarNote = trebleNotes.E6;
+      guitarRange.lowGuitarString = 6;
+      guitarRange.highGuitarString = 1;
+      guitarRange.lowFret = 0;
+      guitarRange.highFret = 13;
       break;
     case guitarPresets.FIRST_POSITION:
-      guitarNoteRange.lowGuitarNote = trebleNotes.E3;
-      guitarNoteRange.highGuitarNote = trebleNotes.G5;
+      guitarRange.lowGuitarString = 6;
+      guitarRange.highGuitarString = 1;
+      guitarRange.lowFret = 0;
+      guitarRange.highFret = 4;
       break;
     case guitarPresets.FIFTH_POSITION:
-      guitarNoteRange.lowGuitarNote = trebleNotes.A3;
-      guitarNoteRange.highGuitarNote = trebleNotes.C6;
+      guitarRange.lowGuitarString = 6;
+      guitarRange.highGuitarString = 1;
+      guitarRange.lowFret = 5;
+      guitarRange.highFret = 8;
       break;
     case guitarPresets.NINTH_POSITION:
-      guitarNoteRange.lowGuitarNote = trebleNotes.D4;
-      guitarNoteRange.highGuitarNote = trebleNotes.E6;
+      guitarRange.lowGuitarString = 6;
+      guitarRange.highGuitarString = 1;
+      guitarRange.lowFret = 9;
+      guitarRange.highFret = 12;
       break;
     default:
-      guitarNoteRange.lowGuitarNote = trebleNotes.E3;
-      guitarNoteRange.highGuitarNote = trebleNotes.E6;
+      guitarRange.lowGuitarString = 6;
+      guitarRange.highGuitarString = 1;
+      guitarRange.lowFret = 0;
+      guitarRange.highFret = 13;
   }
-  return guitarNoteRange;
+  return guitarRange;
 };
 
 export const determineWhiteKeyBackgroundColor = (

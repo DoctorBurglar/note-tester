@@ -44,8 +44,10 @@ export interface IAutoQuiz {
 
 export interface IGuitarSettings {
   preset: string;
-  lowNote: string;
-  highNote: string;
+  lowString: number;
+  highString: number;
+  lowFret: number;
+  highFret: number;
   includeFlats: boolean;
   includeSharps: boolean;
 }

@@ -26,7 +26,7 @@ const NoteRangeSelect: React.FC<NoteRangeSelectProps> = ({
         htmlFor={option === "low" ? "lowNote" : "highNote"}
         fontSize="1.3rem"
       >
-        {option === "low" ? "Low Note" : "High Note"}
+        {option === "low" ? "Lowest Note" : "Highest Note"}
       </FormLabel>
       <Select
         onChange={(e) => setNote(e.target.value)}

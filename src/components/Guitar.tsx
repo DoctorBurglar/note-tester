@@ -1,5 +1,6 @@
 import * as React from "react";
 import {Box, Flex, Heading} from "@chakra-ui/react";
+import {standardTuningGuitar} from "../helpers";
 
 type GuitarProps = {
   isGuestGuitar?: boolean;
@@ -8,6 +9,7 @@ type GuitarProps = {
   answer: string;
   answerStatus: string;
   displayingNotes: boolean;
+  fretNumber: number;
 };
 
 const Guitar: React.FC<GuitarProps> = ({
@@ -16,46 +18,8 @@ const Guitar: React.FC<GuitarProps> = ({
   answer,
   answerStatus,
   displayingNotes,
+  fretNumber,
 }) => {
-  const standardTuning = ["E5", "B4", "G4", "D4", "A3", "E3"];
-
-  const createGuitarFromOpenStrings = (
-    openStrings: string[],
-    toFret: number
-  ) => {
-    const noteOrder = ["A", "B", "C", "D", "E", "F", "G", "A"];
-    const guitarStringArray: string[][] = [];
-    openStrings.forEach((openString, ind) => {
-      let currentNote = openString;
-      const currentStringArray = [];
-      for (let i = 0; i <= toFret; i++) {
-        currentStringArray.push(currentNote);
-        let letter = currentNote[0];
-        let octave;
-        if (letter === "B" || letter === "E") {
-          if (letter === "B") {
-            octave = +currentNote[1] + 1;
-          } else {
-            octave = currentNote[1];
-          }
-          currentNote = noteOrder[noteOrder.indexOf(letter) + 1] + octave;
-        } else if (currentNote[1] === "s") {
-          octave = currentNote[2];
-          currentNote = noteOrder[noteOrder.indexOf(letter) + 1] + octave;
-        } else {
-          octave = currentNote[1];
-          currentNote = letter + "s" + octave;
-        }
-      }
-      guitarStringArray.push(currentStringArray);
-    });
-    return guitarStringArray;
-  };
-
-  const constructedStrings = createGuitarFromOpenStrings(standardTuning, 13);
-
-  console.log(constructedStrings);
-
   return (
     <Flex
       w="100vw"
@@ -90,7 +54,7 @@ const Guitar: React.FC<GuitarProps> = ({
           transform="rotate(-.2deg) translateY(.3rem)"
           boxShadow="inset .5px 3px rgb(0, 0, 0 , 0.2)"
         />
-        {constructedStrings.map((string, outerInd) => {
+        {standardTuningGuitar.map((string, outerInd) => {
           return (
             <Flex
               key={string[0] + outerInd}

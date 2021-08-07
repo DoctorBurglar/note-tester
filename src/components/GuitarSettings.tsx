@@ -1,12 +1,13 @@
 import {Flex} from "@chakra-ui/react";
 import * as React from "react";
-import {NoteRange} from "./NoteRange";
 import {PresetSelect} from "./PresetSelect";
-import {guitarPresets, trebleNotes} from "../constants";
+import {guitarPresets} from "../constants";
 import {getGuitarNoteRange, getRandomGuitarNote} from "../helpers";
 import AutoQuizModal from "./FormModal";
 import IncludeAccidentals from "./IncludeAccidentals";
 import {IGuitarSettings} from "../interfacesAndTypes";
+import {FretRange} from "./FretRange";
+import {StringRange} from "./StringRange";
 
 type guitarSettingsProps = {
   onClose: () => void;
@@ -14,6 +15,7 @@ type guitarSettingsProps = {
   onSubmit: (SettingsObject: IGuitarSettings, selectedNote: string) => void;
   selectedNote: string;
   currentSettings: IGuitarSettings;
+  fretNumber: number;
 };
 
 const GuitarSettings: React.FC<guitarSettingsProps> = ({
@@ -22,62 +24,97 @@ const GuitarSettings: React.FC<guitarSettingsProps> = ({
   onSubmit,
   selectedNote,
   currentSettings,
+  fretNumber,
 }) => {
   const [preset, setPreset] = React.useState<guitarPresets | string>(
     guitarPresets.CUSTOM
   );
-  const [lowNote, setLowNote] = React.useState<trebleNotes | string>(
-    trebleNotes.E3
-  );
-  const [highNote, setHighNote] = React.useState<trebleNotes | string>(
-    trebleNotes.E6
-  );
+
+  const [lowFret, setLowFret] = React.useState(0);
+  const [highFret, setHighFret] = React.useState(13);
+  const [lowString, setLowString] = React.useState(6);
+  const [highString, setHighString] = React.useState(1);
   const [includeSharps, setIncludeSharps] = React.useState(true);
   const [includeFlats, setIncludeFlats] = React.useState(true);
+  const [error, setError] = React.useState("");
 
   const resetGuitarSettingsFields = React.useCallback(() => {
     if (currentSettings) {
-      const {lowNote, highNote, includeFlats, includeSharps, preset} =
-        currentSettings;
-      setLowNote(lowNote);
-      setHighNote(highNote);
+      const {
+        lowString,
+        highString,
+        lowFret,
+        highFret,
+        includeFlats,
+        includeSharps,
+        preset,
+      } = currentSettings;
+      setLowString(lowString);
+      setHighString(highString);
       setIncludeSharps(includeSharps);
       setIncludeFlats(includeFlats);
+      setLowFret(lowFret);
+      setHighFret(highFret);
       setPreset(preset);
+      setError("");
     }
   }, [currentSettings]);
 
   React.useEffect(() => {
-    const {lowGuitarNote, highGuitarNote} = getGuitarNoteRange(preset);
-    setLowNote(lowGuitarNote);
-    setHighNote(highGuitarNote);
+    resetGuitarSettingsFields();
+  }, [resetGuitarSettingsFields]);
+
+  React.useEffect(() => {
+    const {lowGuitarString, highGuitarString, lowFret, highFret} =
+      getGuitarNoteRange(preset);
+    setLowString(lowGuitarString);
+    setHighString(highGuitarString);
+    setLowFret(lowFret);
+    setHighFret(highFret);
   }, [preset]);
 
-  const notesArray = Object.keys(trebleNotes);
-  const guitarNotes = notesArray.slice(
-    notesArray.indexOf(trebleNotes.E3),
-    notesArray.indexOf(trebleNotes.F6)
-  );
-
-  console.log(guitarNotes);
-
   const handleSettingsSubmit = () => {
-    const randomNote = getRandomGuitarNote(
-      {highNote, includeSharps, includeFlats, lowNote},
-      selectedNote
-    );
-    console.log("set backend settings");
-    onSubmit(
-      {lowNote, highNote, preset, includeFlats, includeSharps},
-      randomNote
-    );
-    handleClose();
+    try {
+      const randomNote = getRandomGuitarNote(
+        {
+          highString,
+          includeSharps,
+          includeFlats,
+          lowString,
+          lowFret,
+          highFret,
+        },
+        selectedNote
+      );
+      console.log("set backend settings");
+      onSubmit(
+        {
+          lowString,
+          highString,
+          preset,
+          includeFlats,
+          includeSharps,
+          lowFret,
+          highFret,
+        },
+        randomNote
+      );
+      handleClose();
+    } catch (err) {
+      console.log(err);
+      setError(err.message);
+    }
   };
 
   const handleClose = () => {
     resetGuitarSettingsFields();
     onClose();
   };
+
+  const frets: number[] = [];
+  for (let i = 0; i <= fretNumber; i++) {
+    frets.push(i);
+  }
 
   return (
     <AutoQuizModal
@@ -86,7 +123,26 @@ const GuitarSettings: React.FC<guitarSettingsProps> = ({
       isOpen={isOpen}
       handleQuiz={handleSettingsSubmit}
     >
-      <Flex direction="column" padding="1rem" marginBottom="1rem">
+      <Flex
+        direction="column"
+        padding="1rem"
+        marginBottom="1rem"
+        position="relative"
+      >
+        {error ? (
+          <Flex
+            color="red"
+            position="absolute"
+            top="-1.5rem"
+            left="0"
+            justify="center"
+            textAlign="center"
+            w="100%"
+            fontWeight="700"
+          >
+            {error}
+          </Flex>
+        ) : null}
         <PresetSelect
           includeClef={true}
           preset={preset}
@@ -94,14 +150,22 @@ const GuitarSettings: React.FC<guitarSettingsProps> = ({
           setPreset={(e) => setPreset(e.target.value)}
         />
 
-        <NoteRange
-          includeClef={true}
+        <StringRange
+          stringNumber={6}
+          highString={highString}
+          setLowString={setLowString}
+          lowString={lowString}
           preset={preset}
-          setLowNote={setLowNote}
-          setHighNote={setHighNote}
-          notesArray={guitarNotes}
-          lowNote={lowNote}
-          highNote={highNote}
+          setHighString={setHighString}
+        />
+
+        <FretRange
+          frets={frets}
+          highFret={highFret}
+          setLowFret={setLowFret}
+          lowFret={lowFret}
+          preset={preset}
+          setHighFret={setHighFret}
         />
       </Flex>
       <IncludeAccidentals
