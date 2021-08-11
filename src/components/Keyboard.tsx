@@ -8,7 +8,9 @@ import {Sharp} from "./Sharp";
 import {BlackKeyOverlay} from "./BlackKeyOverlay";
 import {WhiteKeyOverlay} from "./WhiteKeyOverlay";
 import {LowestBlackKeyOverlay} from "./LowestBlackKeyOverlay";
-import {KeyboardScrollModel} from "./KeyboardScrollModel";
+import {ScrollModel} from "./ScrollModel";
+import {KeyboardForScrollModel} from "./KeyboardForScrollModel";
+import {whiteKeyMinWidth} from "../constants";
 
 type KeyboardProps = {
   notes: string[];
@@ -111,17 +113,23 @@ const Keyboard: React.FC<KeyboardProps> = ({
 
   return (
     <>
-      <KeyboardScrollModel
-        answer={answer}
-        answerStatus={answerStatus}
-        isGuestKeyboard={isGuestKeyboard}
-        notes={notes}
-        selectedNote={selectedNote}
-        thisBlackKeyIsSelected={thisBlackKeyIsSelected}
-        thisWhiteKeyIsSelected={thisWhiteKeyIsSelected}
+      <ScrollModel
+        originalComponentWidthInRem={
+          Number.parseFloat(whiteKeyMinWidth) * notes.length
+        }
         scrollLeft={scrollLeft}
-        keyboardRef={keyboardRef}
-      />
+        componentRef={keyboardRef}
+      >
+        <KeyboardForScrollModel
+          answer={answer}
+          answerStatus={answerStatus}
+          isGuestKeyboard={isGuestKeyboard}
+          notes={notes}
+          selectedNote={selectedNote}
+          thisBlackKeyIsSelected={thisBlackKeyIsSelected}
+          thisWhiteKeyIsSelected={thisWhiteKeyIsSelected}
+        />
+      </ScrollModel>
 
       <Flex
         w="100vw"
