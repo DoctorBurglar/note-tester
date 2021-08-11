@@ -1,13 +1,17 @@
 import * as React from "react";
 import {trebleNotes, bassNotes} from "../constants";
-import {getBassNoteRange, getRandomNote, getTrebleNoteRange} from "../helpers";
+import {
+  getBassNoteRange,
+  getRandomPianoNoteAndClef,
+  getTrebleNoteRange,
+} from "../helpers";
 import {presets, clefs} from "../constants";
-import ClefCheckbox from "./ClefCheckbox";
-import AutoQuizModal from "./FormModal";
-import IncludeAccidentals from "./IncludeAccidentals";
+import {ClefCheckbox} from "./ClefCheckbox";
+import {SettingsModal} from "./SettingsModal";
+import {IncludeAccidentals} from "./IncludeAccidentals";
 import {IAutoQuiz} from "../interfacesAndTypes";
 
-const AutoQuiz: React.FC<{
+const PianoSettings: React.FC<{
   onClose: () => void;
   isOpen: boolean;
   selectedNote: string;
@@ -102,7 +106,7 @@ const AutoQuiz: React.FC<{
     if (!includeBass && !includeTreble) {
       return;
     }
-    const {randomNote, randomClef} = getRandomNote(
+    const {randomNote, randomClef} = getRandomPianoNoteAndClef(
       {
         on: true,
         includeFlats,
@@ -145,7 +149,7 @@ const AutoQuiz: React.FC<{
 
   return (
     <>
-      <AutoQuizModal
+      <SettingsModal
         isOpen={isOpen}
         handleModalClose={handleModalClose}
         handleQuiz={handleQuiz}
@@ -186,9 +190,9 @@ const AutoQuiz: React.FC<{
             inlcudeFlats={includeFlats}
           />
         </form>
-      </AutoQuizModal>
+      </SettingsModal>
     </>
   );
 };
 
-export default AutoQuiz;
+export {PianoSettings};

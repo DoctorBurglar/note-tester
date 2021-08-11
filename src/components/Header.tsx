@@ -56,4 +56,4 @@ const Header: React.FC<HeaderProps> = ({children, isNotAuthenticated}) => {
   );
 };
 
-export default Header;
+export {Header};

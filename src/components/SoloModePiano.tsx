@@ -1,18 +1,18 @@
 import * as React from "react";
-import Staff from "./Staff";
-import Keyboard from "./Keyboard";
-import Header from "./Header";
-import GuestScore from "./GuestScore";
+import {Staff} from "./Staff";
+import {Keyboard} from "./Keyboard";
+import {Header} from "./Header";
+import {GuestScore} from "./GuestScore";
 import {answerStatusOptions, bassNotes, clefs, trebleNotes} from "../constants";
 import {useDisclosure, Button, Heading, Flex} from "@chakra-ui/react";
-import AutoQuiz from "./AutoQuiz";
+import {PianoSettings} from "./PianoSettings";
 import {IAutoQuiz, IUser} from "../interfacesAndTypes";
 import {useUser, useFirestore, useFirestoreDocData} from "reactfire";
-import {checkAnswer, getRandomNote} from "../helpers";
+import {checkAnswer, getRandomPianoNoteAndClef} from "../helpers";
 import {Options} from "./Options";
 import {useHistory} from "react-router-dom";
 
-const SoloMode = () => {
+const SoloModePiano = () => {
   const [answer, setAnswer] = React.useState("");
   const [selectedClef, setSelectedClef] = React.useState<clefs | string>(
     clefs.TREBLE
@@ -22,9 +22,6 @@ const SoloMode = () => {
   const [showSpacesOnStaff, setShowSpacesOnStaff] = React.useState(false);
   const [answerStatus, setAnswerStatus] = React.useState("");
   const [displayingNotes, setDisplayingNotes] = React.useState(false);
-  //   const [activeInstrument, setActiveInstrument] = React.useState<instruments>(
-  //     instruments.GUITAR
-  //   );
 
   const [total, setTotal] = React.useState(0);
   const [correct, setCorrect] = React.useState(0);
@@ -57,7 +54,10 @@ const SoloMode = () => {
       // only run this if the document has set at least one clef before
       (userDoc.soloSettings.includeTreble || userDoc.soloSettings.includeBass)
     ) {
-      const {randomNote, randomClef} = getRandomNote(userDoc?.soloSettings, "");
+      const {randomNote, randomClef} = getRandomPianoNoteAndClef(
+        userDoc?.soloSettings,
+        ""
+      );
 
       setSelectedClef(randomClef);
       setSelectedNote(randomNote);
@@ -91,7 +91,7 @@ const SoloMode = () => {
   };
 
   const handleSelectNote = (note: string) => {
-    const {randomNote, randomClef} = getRandomNote(
+    const {randomNote, randomClef} = getRandomPianoNoteAndClef(
       userDoc?.soloSettings,
       selectedNote
     );
@@ -202,7 +202,7 @@ const SoloMode = () => {
         setSelectedNote={handleSelectNote}
       />
 
-      <AutoQuiz
+      <PianoSettings
         isOpen={isOpen}
         onClose={onClose}
         onSubmit={updateSettings}
@@ -214,4 +214,4 @@ const SoloMode = () => {
   );
 };
 
-export default SoloMode;
+export {SoloModePiano};

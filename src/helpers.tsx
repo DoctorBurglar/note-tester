@@ -304,7 +304,7 @@ export const determineNotePosition = (
   return notePosition;
 };
 
-export const getRandomNote = (
+export const getRandomPianoNoteAndClef = (
   {
     includeBass,
     includeFlats,

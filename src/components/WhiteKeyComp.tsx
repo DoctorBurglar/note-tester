@@ -2,7 +2,7 @@ import * as React from "react";
 import {WhiteKey} from "../styles";
 import {Flex, Heading} from "@chakra-ui/react";
 import {answerStatusOptions} from "../constants";
-import CheckMark from "./CheckMark";
+import {CheckMark} from "./CheckMark";
 import {determineWhiteKeyBackgroundColor} from "../helpers";
 
 type WhiteKeyCompProps = {
@@ -77,4 +77,4 @@ const WhiteKeyComp: React.FC<WhiteKeyCompProps> = ({
   );
 };
 
-export default WhiteKeyComp;
+export {WhiteKeyComp};

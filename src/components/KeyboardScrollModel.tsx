@@ -122,4 +122,4 @@ const KeyboardScrollModel: React.FC<KeyboardScrollModelProps> = ({
   );
 };
 
-export default KeyboardScrollModel;
+export {KeyboardScrollModel};

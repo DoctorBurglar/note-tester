@@ -1,15 +1,15 @@
 import * as React from "react";
-import Staff from "./Staff";
+import {Staff} from "./Staff";
 import {trebleNotes, bassNotes, clefs, answerStatusOptions} from "../constants";
 import {Flex, Heading, Box} from "@chakra-ui/react";
-import Keyboard from "./Keyboard";
+import {Keyboard} from "./Keyboard";
 import {useUser} from "reactfire";
 import {useParams} from "react-router-dom";
 import {useHistory, Redirect} from "react-router-dom";
 import {useSession} from "../hooks";
-import GuestScore from "./GuestScore";
-import Header from "./Header";
-import {checkAnswer, getRandomNote} from "../helpers";
+import {GuestScore} from "./GuestScore";
+import {Header} from "./Header";
+import {checkAnswer, getRandomPianoNoteAndClef} from "../helpers";
 
 interface IParams {
   sessionId: string;
@@ -58,7 +58,7 @@ function GuestNoteTester() {
       return;
     }
     if (sessionDoc.autoQuiz.on) {
-      const {randomNote, randomClef} = getRandomNote(
+      const {randomNote, randomClef} = getRandomPianoNoteAndClef(
         sessionDoc.autoQuiz,
         sessionDoc.selectedNote
       );
@@ -142,4 +142,4 @@ function GuestNoteTester() {
   );
 }
 
-export default GuestNoteTester;
+export {GuestNoteTester};

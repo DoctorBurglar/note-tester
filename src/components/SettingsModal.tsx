@@ -10,7 +10,7 @@ import {
   ModalCloseButton,
 } from "@chakra-ui/react";
 
-type AutoQuizModalProps = {
+type SettingsModalProps = {
   isOpen: boolean;
   handleModalClose: () => void;
   handleQuiz: () => void;
@@ -18,7 +18,7 @@ type AutoQuizModalProps = {
   cancelButton?: boolean;
 };
 
-const AutoQuizModal: React.FC<AutoQuizModalProps> = ({
+const SettingsModal: React.FC<SettingsModalProps> = ({
   children,
   isOpen,
   handleModalClose,
@@ -49,4 +49,4 @@ const AutoQuizModal: React.FC<AutoQuizModalProps> = ({
   );
 };
 
-export default AutoQuizModal;
+export {SettingsModal};

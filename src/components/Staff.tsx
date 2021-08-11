@@ -89,4 +89,4 @@ const Staff: React.FC<{
   );
 };
 
-export default Staff;
+export {Staff};

@@ -1,7 +1,7 @@
 import * as React from "react";
 import {BlackKey} from "../styles";
 import {blackKeyWidth, answerStatusOptions} from "../constants";
-import CheckMark from "./CheckMark";
+import {CheckMark} from "./CheckMark";
 import {determineBlackKeyBackgroundColor} from "../helpers";
 
 type BlackKeyCompProps = {
@@ -59,4 +59,4 @@ const BlackKeyComp: React.FC<BlackKeyCompProps> = ({
   );
 };
 
-export default BlackKeyComp;
+export {BlackKeyComp};

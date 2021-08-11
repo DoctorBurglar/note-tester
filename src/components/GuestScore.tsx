@@ -87,4 +87,4 @@ const GuestScore: React.FC<{
   );
 };
 
-export default GuestScore;
+export {GuestScore};

@@ -3,7 +3,7 @@ import "./App.css";
 import {AuthCheck} from "reactfire";
 import "firebase/auth";
 import AuthenticatedApp from "./AuthenticatedApp";
-import WelcomeScreen from "./components/WelcomeScreen";
+import {WelcomeScreen} from "./components/WelcomeScreen";
 
 const App: React.FC = () => {
   return (

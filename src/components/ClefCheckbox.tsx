@@ -59,4 +59,4 @@ const ClefCheckbox: React.FC<ClefCheckboxProps> = ({
   );
 };
 
-export default ClefCheckbox;
+export {ClefCheckbox};

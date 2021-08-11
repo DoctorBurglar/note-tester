@@ -2,7 +2,7 @@ import * as React from "react";
 import {Button, Flex, Input, Heading} from "@chakra-ui/react";
 import {useHistory} from "react-router-dom";
 import {useFirestore, useUser, useFirestoreDocData} from "reactfire";
-import Header from "./Header";
+import {Header} from "./Header";
 import styled from "@emotion/styled";
 import {clefs} from "../constants";
 import {SessionType} from "./SessionType";

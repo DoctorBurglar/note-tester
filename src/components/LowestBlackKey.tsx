@@ -1,7 +1,7 @@
 import * as React from "react";
 import {blackKeyWidth, answerStatusOptions} from "../constants";
 import {BlackKey} from "../styles";
-import CheckMark from "./CheckMark";
+import {CheckMark} from "./CheckMark";
 
 type LowestBlackKeyProps = {
   selectedNote: string;
@@ -83,4 +83,4 @@ const LowestBlackKey: React.FC<LowestBlackKeyProps> = ({
   );
 };
 
-export default LowestBlackKey;
+export {LowestBlackKey};

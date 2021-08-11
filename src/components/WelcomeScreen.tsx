@@ -1,7 +1,7 @@
 import * as React from "react";
 import {Flex, Image, Heading, UnorderedList, ListItem} from "@chakra-ui/react";
 import {Login} from "./Login";
-import Header from "./Header";
+import {Header} from "./Header";
 
 const WelcomeScreen = () => {
   const featureArray = [
@@ -91,4 +91,4 @@ const WelcomeScreen = () => {
   );
 };
 
-export default WelcomeScreen;
+export {WelcomeScreen};

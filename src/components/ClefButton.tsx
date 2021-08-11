@@ -1,7 +1,7 @@
 import {Button} from "@chakra-ui/react";
 import * as React from "react";
-import TrebleClef from "./TrebleClef";
-import BassClef from "./BassClef";
+import {TrebleClef} from "./TrebleClef";
+import {BassClef} from "./BassClef";
 import {clefs} from "../constants";
 
 const ClefButton: React.FC<{
@@ -28,4 +28,4 @@ const ClefButton: React.FC<{
   );
 };
 
-export default ClefButton;
+export {ClefButton};

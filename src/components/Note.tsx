@@ -1,8 +1,8 @@
 import * as React from "react";
 import {lineHeightInt, lineHeight} from "../constants";
 import {Flex, Box} from "@chakra-ui/react";
-import Flat from "./Flat";
-import Sharp from "./Sharp";
+import {Flat} from "./Flat";
+import {Sharp} from "./Sharp";
 
 type NoteProps = {selectedNote: string; notePosition: string};
 

@@ -5,7 +5,7 @@ type BassClefProps = {
   fill: string;
 };
 
-const BassClef: React.FC<BassClefProps> = ({ width, fill }) => {
+const BassClef: React.FC<BassClefProps> = ({width, fill}) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -42,4 +42,4 @@ const BassClef: React.FC<BassClefProps> = ({ width, fill }) => {
   );
 };
 
-export default BassClef;
+export {BassClef};
