@@ -2,7 +2,7 @@ import * as React from "react";
 import {trebleNotes, bassNotes} from "../constants";
 import {
   getBassNoteRange,
-  getRandomPianoNoteAndClef,
+  getRandomKeyboardNoteAndClef,
   getTrebleNoteRange,
 } from "../helpers";
 import {presets, clefs} from "../constants";
@@ -11,7 +11,7 @@ import {SettingsModal} from "./SettingsModal";
 import {IncludeAccidentals} from "./IncludeAccidentals";
 import {IAutoQuiz} from "../interfacesAndTypes";
 
-type PianoSettingsProps = {
+type KeyboardSettingsProps = {
   onClose: () => void;
   isOpen: boolean;
   selectedNote: string;
@@ -25,7 +25,7 @@ type PianoSettingsProps = {
   cancelButton?: boolean;
 };
 
-const PianoSettings: React.FC<PianoSettingsProps> = ({
+const KeyboardSettings: React.FC<KeyboardSettingsProps> = ({
   onClose,
   isOpen,
   selectedNote,
@@ -108,7 +108,7 @@ const PianoSettings: React.FC<PianoSettingsProps> = ({
     if (!includeBass && !includeTreble) {
       return;
     }
-    const {randomNote, randomClef} = getRandomPianoNoteAndClef(
+    const {randomNote, randomClef} = getRandomKeyboardNoteAndClef(
       {
         on: true,
         includeFlats,
@@ -197,4 +197,4 @@ const PianoSettings: React.FC<PianoSettingsProps> = ({
   );
 };
 
-export {PianoSettings};
+export {KeyboardSettings};

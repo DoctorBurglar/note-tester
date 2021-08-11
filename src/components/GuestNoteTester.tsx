@@ -9,7 +9,7 @@ import {useHistory, Redirect} from "react-router-dom";
 import {useSession} from "../hooks";
 import {Score} from "./Score";
 import {Header} from "./Header";
-import {checkAnswer, getRandomPianoNoteAndClef} from "../helpers";
+import {checkAnswer, getRandomKeyboardNoteAndClef} from "../helpers";
 
 interface IParams {
   sessionId: string;
@@ -58,7 +58,7 @@ function GuestNoteTester() {
       return;
     }
     if (sessionDoc.autoQuiz.on) {
-      const {randomNote, randomClef} = getRandomPianoNoteAndClef(
+      const {randomNote, randomClef} = getRandomKeyboardNoteAndClef(
         sessionDoc.autoQuiz,
         sessionDoc.selectedNote
       );

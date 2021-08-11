@@ -5,14 +5,14 @@ import {Header} from "./Header";
 import {Score} from "./Score";
 import {answerStatusOptions, bassNotes, clefs, trebleNotes} from "../constants";
 import {useDisclosure, Button, Heading, Flex} from "@chakra-ui/react";
-import {PianoSettings} from "./PianoSettings";
+import {KeyboardSettings} from "./KeyboardSettings";
 import {IAutoQuiz, IUser} from "../interfacesAndTypes";
 import {useUser, useFirestore, useFirestoreDocData} from "reactfire";
-import {checkAnswer, getRandomPianoNoteAndClef} from "../helpers";
+import {checkAnswer, getRandomKeyboardNoteAndClef} from "../helpers";
 import {Options} from "./Options";
 import {useHistory} from "react-router-dom";
 
-const SoloModePiano = () => {
+const SoloModeKeyboard = () => {
   const [answer, setAnswer] = React.useState("");
   const [selectedClef, setSelectedClef] = React.useState<clefs | string>(
     clefs.TREBLE
@@ -54,7 +54,7 @@ const SoloModePiano = () => {
       // only run this if the document has set at least one clef before
       (userDoc.soloSettings.includeTreble || userDoc.soloSettings.includeBass)
     ) {
-      const {randomNote, randomClef} = getRandomPianoNoteAndClef(
+      const {randomNote, randomClef} = getRandomKeyboardNoteAndClef(
         userDoc?.soloSettings,
         ""
       );
@@ -91,7 +91,7 @@ const SoloModePiano = () => {
   };
 
   const handleSelectNote = (note: string) => {
-    const {randomNote, randomClef} = getRandomPianoNoteAndClef(
+    const {randomNote, randomClef} = getRandomKeyboardNoteAndClef(
       userDoc?.soloSettings,
       selectedNote
     );
@@ -202,7 +202,7 @@ const SoloModePiano = () => {
         setSelectedNote={handleSelectNote}
       />
 
-      <PianoSettings
+      <KeyboardSettings
         isOpen={isOpen}
         onClose={onClose}
         onSubmit={updateSettings}
@@ -214,4 +214,4 @@ const SoloModePiano = () => {
   );
 };
 
-export {SoloModePiano};
+export {SoloModeKeyboard};

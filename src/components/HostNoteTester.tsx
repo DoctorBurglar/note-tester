@@ -11,7 +11,7 @@ import {Header} from "./Header";
 import styled from "@emotion/styled";
 import {Score} from "./Score";
 import {SessionCode} from "./SessionCode";
-import {PianoSettings} from "./PianoSettings";
+import {KeyboardSettings} from "./KeyboardSettings";
 import {IAutoQuiz} from "../interfacesAndTypes";
 import {Options} from "./Options";
 
@@ -136,7 +136,7 @@ const HostNoteTester = () => {
             {sessionDoc?.autoQuiz?.on ? "Stop auto quiz" : "Start auto quiz"}
           </Button>
 
-          <PianoSettings
+          <KeyboardSettings
             isOpen={isOpen}
             onClose={onClose}
             selectedNote={sessionDoc?.selectedNote}
