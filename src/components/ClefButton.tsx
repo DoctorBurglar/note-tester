@@ -4,11 +4,15 @@ import {TrebleClef} from "./TrebleClef";
 import {BassClef} from "./BassClef";
 import {clefs} from "../constants";
 
-const ClefButton: React.FC<{
+type ClefButtonProps = {
   handleSelectedClef: (clef: clefs) => void;
-
   selectedClef: string;
-}> = ({handleSelectedClef, selectedClef}) => {
+};
+
+const ClefButton: React.FC<ClefButtonProps> = ({
+  handleSelectedClef,
+  selectedClef,
+}) => {
   const handleSwitchClef = () => {
     if (selectedClef === clefs.TREBLE) {
       handleSelectedClef(clefs.BASS);

@@ -1,7 +1,7 @@
 import * as React from "react";
 import {Flex, Heading} from "@chakra-ui/react";
 
-const CheckMark: React.FC = () => {
+const CheckMark = () => {
   return (
     <Flex
       height="100%"

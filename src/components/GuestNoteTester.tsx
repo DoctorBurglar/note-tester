@@ -7,7 +7,7 @@ import {useUser} from "reactfire";
 import {useParams} from "react-router-dom";
 import {useHistory, Redirect} from "react-router-dom";
 import {useSession} from "../hooks";
-import {GuestScore} from "./GuestScore";
+import {Score} from "./Score";
 import {Header} from "./Header";
 import {checkAnswer, getRandomPianoNoteAndClef} from "../helpers";
 
@@ -113,7 +113,7 @@ function GuestNoteTester() {
               maxWidth="var(--max-width)"
               margin="-1.7rem 0 1rem 0"
             >
-              <GuestScore
+              <Score
                 reset={() => {}}
                 identifiedNotes={sessionDoc?.identifiedNotes}
                 totalNotes={sessionDoc?.totalNotes}

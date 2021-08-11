@@ -1,7 +1,7 @@
 import * as React from "react";
 import {Staff} from "./Staff";
 import {Header} from "./Header";
-import {GuestScore} from "./GuestScore";
+import {Score} from "./Score";
 import {answerStatusOptions, clefs, trebleNotes} from "../constants";
 import {useDisclosure, Button, Heading, Flex} from "@chakra-ui/react";
 import {IGuitarSettings, IUser} from "../interfacesAndTypes";
@@ -12,7 +12,7 @@ import {Guitar} from "./Guitar";
 import {useHistory} from "react-router-dom";
 import {GuitarSettings} from "./GuitarSettings";
 
-const SoloModeGuitar: React.FC = () => {
+const SoloModeGuitar = () => {
   const [answer, setAnswer] = React.useState("");
   const [selectedNote, setSelectedNote] = React.useState("");
   const [showLinesOnStaff, setShowLinesOnStaff] = React.useState(false);
@@ -149,7 +149,7 @@ const SoloModeGuitar: React.FC = () => {
             showSpacesOnStaff={showSpacesOnStaff}
           />
 
-          <GuestScore
+          <Score
             totalNotes={total}
             reset={resetScore}
             identifiedNotes={correct}

@@ -519,7 +519,7 @@ export const getRandomGuitarNote = (
     const randomNoteInRange =
       allSelectedNotes[Math.floor(Math.random() * allSelectedNotes.length)];
     if (randomNoteInRange[1] !== "s") {
-      // write logic to occasionally return E#, Cb, B#, and Fb
+      // TODO: write logic to occasionally return E#, Cb, B#, and Fb
       return randomNoteInRange;
     } else {
       const randomNoteMadeNatural = randomNoteInRange[0] + randomNoteInRange[2];
@@ -677,8 +677,6 @@ export const determineWhiteKeyBackgroundColor = (
   if (ind > 0) {
     prevNote = notes[notes.indexOf(note) - 1];
   }
-
-  // isGuestKeyboard, thisWhiteKeyIsSelected, note, ind, answerStatus, notes, selectedNote, answer
 
   let backgroundColor = "";
   if (isGuestKeyboard) {

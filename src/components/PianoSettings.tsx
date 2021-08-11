@@ -11,7 +11,7 @@ import {SettingsModal} from "./SettingsModal";
 import {IncludeAccidentals} from "./IncludeAccidentals";
 import {IAutoQuiz} from "../interfacesAndTypes";
 
-const PianoSettings: React.FC<{
+type PianoSettingsProps = {
   onClose: () => void;
   isOpen: boolean;
   selectedNote: string;
@@ -23,7 +23,9 @@ const PianoSettings: React.FC<{
   ) => void;
   submitText: string;
   cancelButton?: boolean;
-}> = ({
+};
+
+const PianoSettings: React.FC<PianoSettingsProps> = ({
   onClose,
   isOpen,
   selectedNote,

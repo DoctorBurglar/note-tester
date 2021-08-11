@@ -9,7 +9,7 @@ import {useHistory, useParams} from "react-router-dom";
 import {useSession} from "../hooks";
 import {Header} from "./Header";
 import styled from "@emotion/styled";
-import {GuestScore} from "./GuestScore";
+import {Score} from "./Score";
 import {SessionCode} from "./SessionCode";
 import {PianoSettings} from "./PianoSettings";
 import {IAutoQuiz} from "../interfacesAndTypes";
@@ -173,7 +173,7 @@ const HostNoteTester = () => {
               showLinesOnStaff={sessionDoc?.mnemonics?.showLinesOnStaff}
               showSpacesOnStaff={sessionDoc?.mnemonics?.showSpacesOnStaff}
             />
-            <GuestScore
+            <Score
               reset={resetScore}
               canControl
               identifiedNotes={sessionDoc?.identifiedNotes}

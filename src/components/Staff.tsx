@@ -19,12 +19,19 @@ const StyledLedger = styled(Box)`
   transform: translateX(3rem);
 `;
 
-const Staff: React.FC<{
+type StaffProps = {
   selectedNote: string;
   selectedClef: string;
   showLinesOnStaff: boolean;
   showSpacesOnStaff: boolean;
-}> = ({selectedNote, selectedClef, showLinesOnStaff, showSpacesOnStaff}) => {
+};
+
+const Staff: React.FC<StaffProps> = ({
+  selectedNote,
+  selectedClef,
+  showLinesOnStaff,
+  showSpacesOnStaff,
+}) => {
   // This is the translateY value that positions the note
   let notePosition = determineNotePosition(selectedNote, selectedClef);
 

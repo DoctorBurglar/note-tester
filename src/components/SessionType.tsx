@@ -10,10 +10,16 @@ const SessionBox = styled(Flex)`
   margin: 0 3rem 4rem 3rem;
 `;
 
-const SessionType: React.FC<{
+type SessionTypeProps = {
   description: string;
   title: string;
-}> = ({children, description, title}) => {
+};
+
+const SessionType: React.FC<SessionTypeProps> = ({
+  children,
+  description,
+  title,
+}) => {
   return (
     <SessionBox>
       <Flex direction="column">

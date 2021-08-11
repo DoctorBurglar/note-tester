@@ -10,7 +10,7 @@ import {WhiteKeyOverlay} from "./WhiteKeyOverlay";
 import {LowestBlackKeyOverlay} from "./LowestBlackKeyOverlay";
 import {KeyboardScrollModel} from "./KeyboardScrollModel";
 
-interface IKeyboardProps {
+type KeyboardProps = {
   notes: string[];
   isGuestKeyboard: boolean;
   selectedClef: string;
@@ -19,9 +19,9 @@ interface IKeyboardProps {
   answer: string;
   answerStatus: string;
   displayingNotes: boolean;
-}
+};
 
-const Keyboard: React.FC<IKeyboardProps> = ({
+const Keyboard: React.FC<KeyboardProps> = ({
   notes,
   setSelectedNote,
   isGuestKeyboard,

@@ -1,11 +1,17 @@
 import * as React from "react";
 import {Box} from "@chakra-ui/react";
 
-const BoxSliderForScrollModel: React.FC<{
+type BoxSliderForScrollModelProps = {
   viewBoxWidth: string;
   scrollPercentage: number;
   viewBoxWidthInverse: string;
-}> = ({scrollPercentage, viewBoxWidth, viewBoxWidthInverse}) => {
+};
+
+const BoxSliderForScrollModel: React.FC<BoxSliderForScrollModelProps> = ({
+  scrollPercentage,
+  viewBoxWidth,
+  viewBoxWidthInverse,
+}) => {
   return (
     <Box
       w={viewBoxWidth}

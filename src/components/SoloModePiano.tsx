@@ -2,7 +2,7 @@ import * as React from "react";
 import {Staff} from "./Staff";
 import {Keyboard} from "./Keyboard";
 import {Header} from "./Header";
-import {GuestScore} from "./GuestScore";
+import {Score} from "./Score";
 import {answerStatusOptions, bassNotes, clefs, trebleNotes} from "../constants";
 import {useDisclosure, Button, Heading, Flex} from "@chakra-ui/react";
 import {PianoSettings} from "./PianoSettings";
@@ -163,7 +163,7 @@ const SoloModePiano = () => {
             showSpacesOnStaff={showSpacesOnStaff}
           />
 
-          <GuestScore
+          <Score
             totalNotes={total}
             reset={resetScore}
             identifiedNotes={correct}
