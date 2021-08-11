@@ -1,6 +1,9 @@
 import * as React from "react";
 import {Box, Flex, Heading} from "@chakra-ui/react";
 import {standardTuningGuitar} from "../helpers";
+import {useUser, useFirestore, useFirestoreDocData} from "reactfire";
+import {IUser} from "../interfacesAndTypes";
+import {fretHeight, fretBoardHeight} from "../constants";
 
 type GuitarProps = {
   isGuestGuitar?: boolean;
@@ -20,6 +23,21 @@ const Guitar: React.FC<GuitarProps> = ({
   displayingNotes,
   fretNumber,
 }) => {
+  const {data} = useUser();
+
+  const userRef = useFirestore().collection("users").doc(data.uid);
+
+  const userDoc = useFirestoreDocData<IUser>(userRef).data;
+
+  const fretIsInRange = (outerInd: number, innerInd: number) => {
+    return (
+      outerInd + 1 <= userDoc?.guitarSettings.lowString &&
+      outerInd + 1 >= userDoc?.guitarSettings.highString &&
+      innerInd >= userDoc?.guitarSettings.lowFret &&
+      innerInd <= userDoc?.guitarSettings.highFret
+    );
+  };
+
   return (
     <Flex
       w="100vw"
@@ -27,16 +45,18 @@ const Guitar: React.FC<GuitarProps> = ({
       overflowY="visible"
       position="relative"
       className="noHighlightOnClick"
+      marginTop="-1rem"
     >
       <Box
         position="absolute"
-        h="14.4rem"
-        w="80rem"
+        h={`${fretBoardHeight - 1}rem`}
+        minWidth="80rem"
+        w="100%"
         bg="var(--guitar-brown)"
         top="1.8rem"
         zIndex="-20"
       ></Box>
-      <Flex direction="column" cursor="pointer" w="100%" minWidth="80rem">
+      <Flex direction="column" w="100%" minWidth="80rem">
         <Box
           w="10%"
           minHeight="1.2rem"
@@ -61,7 +81,6 @@ const Guitar: React.FC<GuitarProps> = ({
               position="relative"
               bg="var(--guitar-brown)"
               backgroundImage="linear-gradient(to right, var(--guitar-brown) 5%, rgb(255, 255, 255, 0.3) 8%,var(--guitar-brown) 8.9%, var(--guitar-brown) 10%)"
-              // zIndex="5"
             >
               <Box
                 w="100%"
@@ -86,26 +105,35 @@ const Guitar: React.FC<GuitarProps> = ({
                   <Box
                     key={note}
                     position="relative"
+                    cursor={!fretIsInRange(outerInd, innerInd) ? "" : "pointer"}
                     w={15 - 0.6 * innerInd + "rem"}
                   >
                     <Flex>
                       <Box
-                        onClick={() => {
-                          setSelectedNote(note);
-                        }}
+                        onClick={
+                          fretIsInRange(outerInd, innerInd)
+                            ? () => {
+                                setSelectedNote(note);
+                              }
+                            : () => {
+                                console.log("out of range!");
+                              }
+                        }
                         key={note + innerInd}
-                        h="2.4rem"
-                        // border="1px solid black"
+                        h={`${fretHeight}rem`}
                         w="100%"
                         display="inline-block"
                         position="relative"
                         zIndex="7"
                         boxSizing="border-box"
-                        _hover={{
-                          // backgroundColor: "var(--main-color)",
-                          border: "4px solid var(--main-color-dark)",
-                          borderRadius: "5px",
-                        }}
+                        _hover={
+                          fretIsInRange(outerInd, innerInd)
+                            ? {
+                                border: "4px solid var(--main-color-dark)",
+                                borderRadius: "5px",
+                              }
+                            : {}
+                        }
                       >
                         {displayingNotes && note[1] !== "s" ? (
                           <Heading
@@ -126,7 +154,6 @@ const Guitar: React.FC<GuitarProps> = ({
                             }
                             borderRadius="50%"
                             opacity=".6"
-                            // color="var(--main-color-very-dark)"
                           >
                             {note[0]}
                           </Heading>
@@ -134,7 +161,7 @@ const Guitar: React.FC<GuitarProps> = ({
                       </Box>
                       {innerInd === 0 && outerInd === 0 ? (
                         <Box
-                          minHeight="14.4rem"
+                          minHeight={`${fretBoardHeight}rem`}
                           position="absolute"
                           minWidth="1rem"
                           bg="var(--guitar-nut)"
@@ -146,7 +173,9 @@ const Guitar: React.FC<GuitarProps> = ({
                       ) : (
                         <Box
                           minHeight={
-                            outerInd === 0 && innerInd > 0 ? "14.4rem" : ""
+                            outerInd === 0 && innerInd > 0
+                              ? `${fretBoardHeight}rem`
+                              : ""
                           }
                           position="absolute"
                           right="0"
