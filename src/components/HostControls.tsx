@@ -1,6 +1,6 @@
 import * as React from "react";
 import {Flex} from "@chakra-ui/react";
-import ClefButton from "./ClefButton";
+import {ClefButton} from "./ClefButton";
 import {clefs} from "../constants";
 
 interface hostControlsProps {
@@ -41,4 +41,4 @@ const HostControls: React.FC<hostControlsProps> = ({
   );
 };
 
-export default HostControls;
+export {HostControls};

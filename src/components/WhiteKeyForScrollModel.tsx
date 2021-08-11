@@ -1,11 +1,18 @@
 import * as React from "react";
 import {Box} from "@chakra-ui/react";
 
-const WhiteKeyForScrollModel: React.FC<{
+type WhiteKeyForScrollModelProps = {
   note: string;
   notes: string[];
   background: string;
-}> = ({note, notes, background, children}) => {
+};
+
+const WhiteKeyForScrollModel: React.FC<WhiteKeyForScrollModelProps> = ({
+  note,
+  notes,
+  background,
+  children,
+}) => {
   return (
     <Box
       key={note}

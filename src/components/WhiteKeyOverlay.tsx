@@ -59,4 +59,4 @@ const WhiteKeyOverlay: React.FC<WhiteKeyOverlayProps> = ({
   );
 };
 
-export default WhiteKeyOverlay;
+export {WhiteKeyOverlay};

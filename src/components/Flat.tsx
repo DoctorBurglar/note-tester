@@ -29,4 +29,4 @@ const Flat: React.FC<FlatProps> = ({fill, width}) => {
   );
 };
 
-export default Flat;
+export {Flat};

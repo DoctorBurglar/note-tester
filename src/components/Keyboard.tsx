@@ -1,16 +1,16 @@
 import * as React from "react";
 import {Flex, Box} from "@chakra-ui/react";
-import WhiteKeyComp from "./WhiteKeyComp";
-import BlackKeyComp from "./BlackKeyComp";
-import LowestBlackKey from "./LowestBlackKey";
-import Flat from "./Flat";
-import Sharp from "./Sharp";
-import BlackKeyOverlay from "./BlackKeyOverlay";
-import WhiteKeyOverlay from "./WhiteKeyOverlay";
-import LowestBlackKeyOverlay from "./LowestBlackKeyOverlay";
-import KeyboardScrollModel from "./KeyboardScrollModel";
+import {WhiteKeyComp} from "./WhiteKeyComp";
+import {BlackKeyComp} from "./BlackKeyComp";
+import {LowestBlackKey} from "./LowestBlackKey";
+import {Flat} from "./Flat";
+import {Sharp} from "./Sharp";
+import {BlackKeyOverlay} from "./BlackKeyOverlay";
+import {WhiteKeyOverlay} from "./WhiteKeyOverlay";
+import {LowestBlackKeyOverlay} from "./LowestBlackKeyOverlay";
+import {KeyboardScrollModel} from "./KeyboardScrollModel";
 
-interface IKeyboardProps {
+type KeyboardProps = {
   notes: string[];
   isGuestKeyboard: boolean;
   selectedClef: string;
@@ -19,9 +19,9 @@ interface IKeyboardProps {
   answer: string;
   answerStatus: string;
   displayingNotes: boolean;
-}
+};
 
-const Keyboard: React.FC<IKeyboardProps> = ({
+const Keyboard: React.FC<KeyboardProps> = ({
   notes,
   setSelectedNote,
   isGuestKeyboard,
@@ -240,4 +240,4 @@ const Keyboard: React.FC<IKeyboardProps> = ({
   );
 };
 
-export default Keyboard;
+export {Keyboard};

@@ -1,17 +1,17 @@
 import * as React from "react";
-import Staff from "./Staff";
-import HostControls from "./HostControls";
+import {Staff} from "./Staff";
+import {HostControls} from "./HostControls";
 import {trebleNotes, bassNotes, clefs} from "../constants";
 import {Flex, Button, useDisclosure} from "@chakra-ui/react";
-import Keyboard from "./Keyboard";
+import {Keyboard} from "./Keyboard";
 import {useUser} from "reactfire";
 import {useHistory, useParams} from "react-router-dom";
 import {useSession} from "../hooks";
-import Header from "./Header";
+import {Header} from "./Header";
 import styled from "@emotion/styled";
-import GuestScore from "./GuestScore";
-import SessionCode from "./SessionCode";
-import AutoQuiz from "./AutoQuiz";
+import {Score} from "./Score";
+import {SessionCode} from "./SessionCode";
+import {KeyboardSettings} from "./KeyboardSettings";
 import {IAutoQuiz} from "../interfacesAndTypes";
 import {Options} from "./Options";
 
@@ -136,7 +136,7 @@ const HostNoteTester = () => {
             {sessionDoc?.autoQuiz?.on ? "Stop auto quiz" : "Start auto quiz"}
           </Button>
 
-          <AutoQuiz
+          <KeyboardSettings
             isOpen={isOpen}
             onClose={onClose}
             selectedNote={sessionDoc?.selectedNote}
@@ -173,7 +173,7 @@ const HostNoteTester = () => {
               showLinesOnStaff={sessionDoc?.mnemonics?.showLinesOnStaff}
               showSpacesOnStaff={sessionDoc?.mnemonics?.showSpacesOnStaff}
             />
-            <GuestScore
+            <Score
               reset={resetScore}
               canControl
               identifiedNotes={sessionDoc?.identifiedNotes}
@@ -201,4 +201,4 @@ const HostNoteTester = () => {
   );
 };
 
-export default HostNoteTester;
+export {HostNoteTester};

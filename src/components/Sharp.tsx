@@ -38,4 +38,4 @@ const Sharp: React.FC<SharpProps> = ({fill, width, height}) => {
   );
 };
 
-export default Sharp;
+export {Sharp};

@@ -1,8 +1,8 @@
 import * as React from "react";
 import {Box} from "@chakra-ui/react";
 import {lineHeightInt, clefs} from "../constants";
-import TrebleClef from "./TrebleClef";
-import BassClef from "./BassClef";
+import {TrebleClef} from "./TrebleClef";
+import {BassClef} from "./BassClef";
 
 const Clef: React.FC<{selectedClef: string}> = ({selectedClef}) => {
   return (

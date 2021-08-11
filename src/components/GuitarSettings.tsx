@@ -3,8 +3,8 @@ import * as React from "react";
 import {PresetSelect} from "./PresetSelect";
 import {guitarPresets} from "../constants";
 import {getGuitarNoteRange, getRandomGuitarNote} from "../helpers";
-import AutoQuizModal from "./FormModal";
-import IncludeAccidentals from "./IncludeAccidentals";
+import {SettingsModal} from "./SettingsModal";
+import {IncludeAccidentals} from "./IncludeAccidentals";
 import {IGuitarSettings} from "../interfacesAndTypes";
 import {FretRange} from "./FretRange";
 import {StringRange} from "./StringRange";
@@ -117,7 +117,7 @@ const GuitarSettings: React.FC<guitarSettingsProps> = ({
   }
 
   return (
-    <AutoQuizModal
+    <SettingsModal
       submitText="Save"
       handleModalClose={handleClose}
       isOpen={isOpen}
@@ -174,7 +174,7 @@ const GuitarSettings: React.FC<guitarSettingsProps> = ({
         setIncludeSharps={setIncludeSharps}
         setIncludeFlats={setIncludeFlats}
       />
-    </AutoQuizModal>
+    </SettingsModal>
   );
 };
 export {GuitarSettings};

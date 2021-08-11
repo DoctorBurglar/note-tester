@@ -14,12 +14,19 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 
-const GuestScore: React.FC<{
+type ScoreProps = {
   canControl?: boolean;
   totalNotes: number;
   identifiedNotes: number;
   reset: () => void;
-}> = ({totalNotes, identifiedNotes, canControl, reset}) => {
+};
+
+const Score: React.FC<ScoreProps> = ({
+  totalNotes,
+  identifiedNotes,
+  canControl,
+  reset,
+}) => {
   const handleResetScore = () => {
     reset();
     onClose();
@@ -87,4 +94,4 @@ const GuestScore: React.FC<{
   );
 };
 
-export default GuestScore;
+export {Score};

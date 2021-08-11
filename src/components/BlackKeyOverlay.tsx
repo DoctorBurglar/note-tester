@@ -1,7 +1,7 @@
 import * as React from "react";
 import {Box, Flex, Heading} from "@chakra-ui/react";
-import Flat from "./Flat";
-import Sharp from "./Sharp";
+import {Flat} from "./Flat";
+import {Sharp} from "./Sharp";
 
 type BlackKeyOverlayProps = {
   note: string;
@@ -99,4 +99,4 @@ const BlackKeyOverlay: React.FC<BlackKeyOverlayProps> = ({
   );
 };
 
-export default BlackKeyOverlay;
+export {BlackKeyOverlay};

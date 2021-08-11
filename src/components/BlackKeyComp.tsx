@@ -1,7 +1,7 @@
 import * as React from "react";
 import {BlackKey} from "../styles";
 import {blackKeyWidth, answerStatusOptions} from "../constants";
-import CheckMark from "./CheckMark";
+import {CheckMark} from "./CheckMark";
 import {determineBlackKeyBackgroundColor} from "../helpers";
 
 type BlackKeyCompProps = {
@@ -28,6 +28,7 @@ const BlackKeyComp: React.FC<BlackKeyCompProps> = ({
   answer,
   answerStatus,
 }) => {
+  // the prop 'note' is the natural note (the white key) below this black key
   const handleClick = () => {
     setSelectedNote(note[0] + "s" + note[1]);
   };
@@ -59,4 +60,4 @@ const BlackKeyComp: React.FC<BlackKeyCompProps> = ({
   );
 };
 
-export default BlackKeyComp;
+export {BlackKeyComp};

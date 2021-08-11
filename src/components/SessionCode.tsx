@@ -51,4 +51,4 @@ const SessionCode: React.FC<{sessionDoc: ISession}> = ({sessionDoc}) => {
   );
 };
 
-export default SessionCode;
+export {SessionCode};

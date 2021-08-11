@@ -39,4 +39,4 @@ const IncludeAccidentals: React.FC<IncludeAccidentalsProps> = ({
   );
 };
 
-export default IncludeAccidentals;
+export {IncludeAccidentals};

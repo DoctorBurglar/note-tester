@@ -5,7 +5,7 @@ type TrebleClefProps = {
   fill: string;
 };
 
-const TrebleClef: React.FC<TrebleClefProps> = ({ width, fill }) => {
+const TrebleClef: React.FC<TrebleClefProps> = ({width, fill}) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -22,4 +22,4 @@ const TrebleClef: React.FC<TrebleClefProps> = ({ width, fill }) => {
   );
 };
 
-export default TrebleClef;
+export {TrebleClef};

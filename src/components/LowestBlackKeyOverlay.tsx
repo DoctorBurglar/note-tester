@@ -1,6 +1,6 @@
 import * as React from "react";
 import {Heading, Flex} from "@chakra-ui/react";
-import Flat from "./Flat";
+import {Flat} from "./Flat";
 
 type LowestBlackKeyOverlayProps = {
   thisBlackKeyIsSelected: (note: string, ind: number) => boolean;
@@ -48,4 +48,4 @@ const LowestBlackKeyOverlay: React.FC<LowestBlackKeyOverlayProps> = ({
   );
 };
 
-export default LowestBlackKeyOverlay;
+export {LowestBlackKeyOverlay};

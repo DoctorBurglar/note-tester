@@ -1,7 +1,7 @@
 import * as React from "react";
-import Staff from "./Staff";
-import Header from "./Header";
-import GuestScore from "./GuestScore";
+import {Staff} from "./Staff";
+import {Header} from "./Header";
+import {Score} from "./Score";
 import {answerStatusOptions, clefs, trebleNotes} from "../constants";
 import {useDisclosure, Button, Heading, Flex} from "@chakra-ui/react";
 import {IGuitarSettings, IUser} from "../interfacesAndTypes";
@@ -12,7 +12,7 @@ import {Guitar} from "./Guitar";
 import {useHistory} from "react-router-dom";
 import {GuitarSettings} from "./GuitarSettings";
 
-const SoloModeGuitar: React.FC = () => {
+const SoloModeGuitar = () => {
   const [answer, setAnswer] = React.useState("");
   const [selectedNote, setSelectedNote] = React.useState("");
   const [showLinesOnStaff, setShowLinesOnStaff] = React.useState(false);
@@ -22,8 +22,6 @@ const SoloModeGuitar: React.FC = () => {
 
   const [total, setTotal] = React.useState(0);
   const [correct, setCorrect] = React.useState(0);
-
-  // const [fretMap, setFretMap] = React.useState<IFretMap | null>(null);
 
   const history = useHistory();
 
@@ -38,73 +36,6 @@ const SoloModeGuitar: React.FC = () => {
   const notes = Object.keys(trebleNotes);
 
   const fretNumber = 13;
-
-  // const standardTuning = ["E5", "B4", "G4", "D4", "A3", "E3"];
-
-  // const createGuitarFromOpenStrings = (
-  //   openStrings: string[],
-  //   toFret: number
-  // ) => {
-  //   const noteOrder = ["A", "B", "C", "D", "E", "F", "G", "A"];
-  //   const guitarStringArray: string[][] = [];
-  //   openStrings.forEach((openString, ind) => {
-  //     let currentNote = openString;
-  //     const currentStringArray = [];
-  //     for (let i = 0; i <= toFret; i++) {
-  //       currentStringArray.push(currentNote);
-  //       let letter = currentNote[0];
-  //       let octave;
-  //       if (letter === "B" || letter === "E") {
-  //         if (letter === "B") {
-  //           octave = +currentNote[1] + 1;
-  //         } else {
-  //           octave = currentNote[1];
-  //         }
-  //         currentNote = noteOrder[noteOrder.indexOf(letter) + 1] + octave;
-  //       } else if (currentNote[1] === "s") {
-  //         octave = currentNote[2];
-  //         currentNote = noteOrder[noteOrder.indexOf(letter) + 1] + octave;
-  //       } else {
-  //         octave = currentNote[1];
-  //         currentNote = letter + "s" + octave;
-  //       }
-  //     }
-  //     guitarStringArray.push(currentStringArray);
-  //   });
-  //   return guitarStringArray;
-  // };
-
-  // const constructedStrings = createGuitarFromOpenStrings(
-  //   standardTuning,
-  //   fretNumber
-  // );
-
-  // React.useEffect(() => {
-  //   // this is an object that contains an array for each note that shows all possible frets that note can be played on
-  //   const newFretMap: IFretMap = {};
-
-  //   constructedStrings.forEach((string) => {
-  //     string.forEach((note, ind) => {
-  //       if (!newFretMap[note]) {
-  //         newFretMap[note] = [ind];
-  //       } else {
-  //         newFretMap[note] = [...newFretMap[note], ind];
-  //       }
-  //     });
-  //   });
-  //   if (fretMap === null) {
-  //     setFretMap(newFretMap);
-  //   }
-
-  //   console.log(fretMap);
-  // }, [constructedStrings, fretMap]);
-
-  //   React.useEffect(() => {
-  //     // for this component the "on" field only determines if the settings have ever been set"
-  //     if (userDoc && !userDoc.guitarSettings) {
-  //       onOpen();
-  //     }
-  //   }, [onOpen, userDoc?.soloSettings.on, userDoc]);
 
   React.useEffect(() => {
     if (userDoc) {
@@ -218,7 +149,7 @@ const SoloModeGuitar: React.FC = () => {
             showSpacesOnStaff={showSpacesOnStaff}
           />
 
-          <GuestScore
+          <Score
             totalNotes={total}
             reset={resetScore}
             identifiedNotes={correct}
@@ -263,4 +194,4 @@ const SoloModeGuitar: React.FC = () => {
   );
 };
 
-export default SoloModeGuitar;
+export {SoloModeGuitar};
