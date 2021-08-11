@@ -319,6 +319,7 @@ export const getRandomNote = (
   selectedNote: string
 ) => {
   if (!includeBass && !includeTreble) {
+    console.log(includeBass, includeTreble);
     const error = new Error();
     throw error;
   }

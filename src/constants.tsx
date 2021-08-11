@@ -307,3 +307,7 @@ export enum guitarPresets {
 
   STRINGS_1_2_3_FIRST_POSITION = "Strings 1, 2, and 3 in first position",
 }
+
+export const fretHeight = 2.8;
+
+export const fretBoardHeight = 6 * fretHeight;

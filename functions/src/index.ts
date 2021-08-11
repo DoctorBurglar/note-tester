@@ -24,6 +24,8 @@ exports.createUserDoc = functions.auth.user().onCreate((user) => {
         includeSharps: false,
         lowBassNote: "",
         lowTrebleNote: "",
+        treblePreset: "Custom",
+        bassPreset: "Custom",
         on: false,
       },
       guitarSettings: {
