@@ -28,6 +28,7 @@ const BlackKeyComp: React.FC<BlackKeyCompProps> = ({
   answer,
   answerStatus,
 }) => {
+  // the prop 'note' is the natural note (the white key) below this black key
   const handleClick = () => {
     setSelectedNote(note[0] + "s" + note[1]);
   };
