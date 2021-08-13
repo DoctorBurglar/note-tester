@@ -129,29 +129,38 @@ const SoloModeGuitar = () => {
   };
 
   return (
-    <>
+    <Flex
+      maxWidth="100vw"
+      direction="column"
+      overflowX="hidden"
+      position="relative"
+    >
       <Header />
 
       <Flex
-        position="absolute"
-        margin="1.5rem auto -1rem auto"
-        justify="space-between"
+        position="relative"
+        h="0"
+        margin="1.5rem 0 -1rem 0"
         padding="0 2rem"
         direction="column"
+        bg="green"
       >
         <Button
           onClick={onOpen}
           marginBottom="1rem"
           position="relative"
           zIndex="20"
+          minHeight="2.5rem"
+          w="8rem"
         >
           Settings
         </Button>
         <Button
-          w="8rem"
           position="relative"
           zIndex="20"
           onClick={() => history.push("/solo-mode/keyboard")}
+          minHeight="2.5rem"
+          w="8rem"
         >
           Keyboard &rarr;
         </Button>
@@ -243,7 +252,7 @@ const SoloModeGuitar = () => {
         currentSettings={userDoc?.guitarSettings}
         fretNumber={fretNumber}
       />
-    </>
+    </Flex>
   );
 };
 
