@@ -5,14 +5,17 @@ import {guitarPresets} from "../constants";
 import {getGuitarNoteRange, getRandomGuitarNote} from "../helpers";
 import {SettingsModal} from "./SettingsModal";
 import {IncludeAccidentals} from "./IncludeAccidentals";
-import {IGuitarSettings} from "../interfacesAndTypes";
+import {IGuitarNote, IGuitarSettings} from "../interfacesAndTypes";
 import {FretRange} from "./FretRange";
 import {StringRange} from "./StringRange";
 
 type guitarSettingsProps = {
   onClose: () => void;
   isOpen: boolean;
-  onSubmit: (SettingsObject: IGuitarSettings, selectedNote: string) => void;
+  onSubmit: (
+    SettingsObject: IGuitarSettings,
+    selectedNote: IGuitarNote
+  ) => void;
   selectedNote: string;
   currentSettings: IGuitarSettings;
   fretNumber: number;

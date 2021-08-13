@@ -2,9 +2,14 @@ import * as React from "react";
 import {Staff} from "./Staff";
 import {Header} from "./Header";
 import {Score} from "./Score";
-import {answerStatusOptions, clefs, trebleNotes} from "../constants";
-import {useDisclosure, Button, Heading, Flex} from "@chakra-ui/react";
-import {IGuitarSettings, IUser} from "../interfacesAndTypes";
+import {
+  answerStatusOptions,
+  clefs,
+  trebleNotes,
+  lineHeightInt,
+} from "../constants";
+import {useDisclosure, Button, Heading, Flex, Box} from "@chakra-ui/react";
+import {IGuitarSettings, IUser, IGuitarNote} from "../interfacesAndTypes";
 import {useUser, useFirestore, useFirestoreDocData} from "reactfire";
 import {checkAnswer, getRandomGuitarNote} from "../helpers";
 import {Options} from "./Options";
@@ -15,6 +20,7 @@ import {GuitarSettings} from "./GuitarSettings";
 const SoloModeGuitar = () => {
   const [answer, setAnswer] = React.useState("");
   const [selectedNote, setSelectedNote] = React.useState("");
+  const [selectedString, setSelectedString] = React.useState(1);
   const [showLinesOnStaff, setShowLinesOnStaff] = React.useState(false);
   const [showSpacesOnStaff, setShowSpacesOnStaff] = React.useState(false);
   const [answerStatus, setAnswerStatus] = React.useState("");
@@ -41,7 +47,8 @@ const SoloModeGuitar = () => {
     if (userDoc) {
       try {
         const randomNote = getRandomGuitarNote(userDoc?.guitarSettings, "");
-        setSelectedNote(randomNote);
+        setSelectedNote(randomNote.name);
+        setSelectedString(randomNote.stringNumber);
       } catch (err) {
         console.log(err);
       }
@@ -51,9 +58,10 @@ const SoloModeGuitar = () => {
   // will be used in the settings modal
   const updateSettings = async (
     guitarSettingsObject: IGuitarSettings,
-    selectedNote: string
+    selectedNote: IGuitarNote
   ) => {
-    setSelectedNote(selectedNote);
+    setSelectedNote(selectedNote.name);
+    setSelectedString(selectedNote.stringNumber);
     try {
       await userRef.update({guitarSettings: guitarSettingsObject});
     } catch (err) {
@@ -61,8 +69,10 @@ const SoloModeGuitar = () => {
     }
   };
 
-  const handleAnswer = (note: string) => {
-    const answerIsCorrect = checkAnswer(note, notes, selectedNote);
+  const handleAnswer = (note: IGuitarNote) => {
+    const answerIsCorrect =
+      checkAnswer(note.name, notes, selectedNote) &&
+      note.stringNumber === selectedString;
 
     setTotal((prevTotal) => prevTotal + 1);
     if (answerIsCorrect) {
@@ -73,18 +83,19 @@ const SoloModeGuitar = () => {
     }
   };
 
-  const handleSelectNote = (note: string) => {
+  const handleSelectNote = (note: IGuitarNote) => {
     try {
       const randomNote = getRandomGuitarNote(
         userDoc?.guitarSettings,
         selectedNote
       );
-      setAnswer(note);
+      setAnswer(note.name);
 
       handleAnswer(note);
 
       setTimeout(() => {
-        setSelectedNote(randomNote);
+        setSelectedNote(randomNote.name);
+        setSelectedString(randomNote.stringNumber);
         setAnswer("");
         setAnswerStatus("");
       }, 1000);
@@ -96,6 +107,25 @@ const SoloModeGuitar = () => {
   const resetScore = () => {
     setTotal(0);
     setCorrect(0);
+  };
+
+  const determineArrowPosition = () => {
+    switch (selectedString) {
+      case 1:
+        return lineHeightInt * 6.2 + "rem";
+      case 2:
+        return lineHeightInt * 5 + "rem";
+      case 3:
+        return lineHeightInt * 3.8 + "rem";
+      case 4:
+        return lineHeightInt * 2.6 + "rem";
+      case 5:
+        return lineHeightInt * 1.4 + "rem";
+      case 6:
+        return lineHeightInt * 0.2 + "rem";
+      default:
+        return lineHeightInt * 0.2 + "rem";
+    }
   };
 
   return (
@@ -126,13 +156,24 @@ const SoloModeGuitar = () => {
           Keyboard &rarr;
         </Button>
       </Flex>
+      <Flex direction="column" position="relative">
+        <Staff
+          selectedClef={clefs.TREBLE}
+          selectedNote={selectedNote}
+          showLinesOnStaff={showLinesOnStaff}
+          showSpacesOnStaff={showSpacesOnStaff}
+        />
+        <Flex
+          w="90%"
+          position="absolute"
+          bottom="8rem"
+          justify="flex-start"
+          fontSize={{base: "1.3rem", md: "2rem"}}
+          fontWeight="700"
+          marginLeft={{base: "9rem", sm: "10rem", md: "15rem"}}
+        >{`String ${selectedString}`}</Flex>
+      </Flex>
 
-      <Staff
-        selectedClef={clefs.TREBLE}
-        selectedNote={selectedNote}
-        showLinesOnStaff={showLinesOnStaff}
-        showSpacesOnStaff={showSpacesOnStaff}
-      />
       <Flex w="100%" justify="space-between" position="relative">
         <Flex
           marginBottom="1rem"
@@ -172,15 +213,27 @@ const SoloModeGuitar = () => {
             : "Incorrect :("}
         </Heading>
       </Flex>
-
-      <Guitar
-        answer={answer}
-        answerStatus={answerStatus}
-        displayingNotes={displayingNotes}
-        selectedNote={selectedNote}
-        setSelectedNote={handleSelectNote}
-        fretNumber={fretNumber}
-      />
+      <Box position="relative">
+        <Guitar
+          answer={answer}
+          answerStatus={answerStatus}
+          displayingNotes={displayingNotes}
+          selectedNote={selectedNote}
+          handleSelectNote={handleSelectNote}
+          fretNumber={fretNumber}
+          selectedString={selectedString}
+        />
+        <Box
+          position="absolute"
+          fontSize="5rem"
+          fontWeight="900"
+          bottom={determineArrowPosition()}
+          zIndex="5"
+          color="var(--main-color-very-dark)"
+        >
+          &rarr;
+        </Box>
+      </Box>
 
       <GuitarSettings
         isOpen={isOpen}

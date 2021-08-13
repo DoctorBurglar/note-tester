@@ -10,7 +10,7 @@ import {
   guitarPresets,
   guitarNotes,
 } from "./constants";
-import {IAutoQuiz} from "./interfacesAndTypes";
+import {IAutoQuiz, IGuitarNote} from "./interfacesAndTypes";
 
 export const determineNotePosition = (
   selectedNote: string,
@@ -396,12 +396,12 @@ export const getRandomKeyboardNoteAndClef = (
 
 const createGuitarFromOpenStrings = (openStrings: string[], toFret: number) => {
   const noteOrder = ["A", "B", "C", "D", "E", "F", "G", "A"];
-  const guitarStringArray: string[][] = [];
+  const guitarStringArray: IGuitarNote[][] = [];
   openStrings.forEach((openString, ind) => {
     let currentNote = openString;
-    const currentStringArray = [];
+    const currentStringArray: IGuitarNote[] = [];
     for (let i = 0; i <= toFret; i++) {
-      currentStringArray.push(currentNote);
+      currentStringArray.push({stringNumber: ind + 1, name: currentNote});
       let letter = currentNote[0];
       let octave;
       if (letter === "B" || letter === "E") {
@@ -421,6 +421,7 @@ const createGuitarFromOpenStrings = (openStrings: string[], toFret: number) => {
     }
     guitarStringArray.push(currentStringArray);
   });
+  console.log(guitarStringArray);
   return guitarStringArray;
 };
 
@@ -449,7 +450,7 @@ export const getRandomGuitarNote = (
   },
   selectedNote: string
 ) => {
-  let allSelectedNotes: string[] = [];
+  let allSelectedNotes: IGuitarNote[] = [];
 
   const selectedStrings = standardTuningGuitar.filter((guitarString, ind) => {
     console.log(ind, lowString, highString);
@@ -475,11 +476,13 @@ export const getRandomGuitarNote = (
           fullNaturalNoteRange.indexOf(naturalSelectedNote) - 1
         ];
       const prevSharpNote = prevNote[0] + "s" + prevNote[1];
-      return note !== prevSharpNote;
+      return note.name !== prevSharpNote;
     } else {
-      return note !== selectedNote;
+      return note.name !== selectedNote;
     }
   });
+
+  console.log(allSelectedNotes);
 
   if (allSelectedNotes.length === 0 || allSelectedNotes.length === 1) {
     const error = new Error("Your selection doesn't have enough notes");
@@ -488,19 +491,22 @@ export const getRandomGuitarNote = (
 
   if (!includeSharps && !includeFlats) {
     allSelectedNotes = allSelectedNotes.filter((note) => {
-      return note[1] !== "s";
+      return note.name[1] !== "s";
     });
     const randomNaturalNoteInRange =
       allSelectedNotes[Math.floor(Math.random() * allSelectedNotes.length)];
     return randomNaturalNoteInRange;
   } else if (!includeSharps && includeFlats) {
     const allSelectedNotesWithFlats = allSelectedNotes.map((note) => {
-      if (note[1] === "s") {
+      if (note.name[1] === "s") {
         const nextNote =
           fullNaturalNoteRange[
-            fullNaturalNoteRange.indexOf(note[0] + note[2]) + 1
+            fullNaturalNoteRange.indexOf(note.name[0] + note.name[2]) + 1
           ];
-        return nextNote[0] + "b" + nextNote[1];
+        return {
+          name: nextNote[0] + "b" + nextNote[1],
+          stringNumber: note.stringNumber,
+        };
       } else {
         return note;
       }
@@ -518,20 +524,24 @@ export const getRandomGuitarNote = (
   } else {
     const randomNoteInRange =
       allSelectedNotes[Math.floor(Math.random() * allSelectedNotes.length)];
-    if (randomNoteInRange[1] !== "s") {
+    if (randomNoteInRange.name[1] !== "s") {
       // TODO: write logic to occasionally return E#, Cb, B#, and Fb
       return randomNoteInRange;
     } else {
-      const randomNoteMadeNatural = randomNoteInRange[0] + randomNoteInRange[2];
+      const randomNoteMadeNatural =
+        randomNoteInRange.name[0] + randomNoteInRange.name[2];
       const nextNote =
         fullNaturalNoteRange[
           fullNaturalNoteRange.indexOf(randomNoteMadeNatural) + 1
         ];
       const flatSpelling = nextNote[0] + "b" + nextNote[1];
-      const accidentalOptions = [randomNoteInRange, flatSpelling];
+      const accidentalOptions = [randomNoteInRange.name, flatSpelling];
       const randomSpelling =
         accidentalOptions[Math.floor(Math.random() * accidentalOptions.length)];
-      return randomSpelling;
+      return {
+        name: randomSpelling,
+        stringNumber: randomNoteInRange.stringNumber,
+      };
     }
   }
 };
