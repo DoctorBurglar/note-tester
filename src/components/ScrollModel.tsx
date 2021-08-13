@@ -33,6 +33,8 @@ const ScrollModel: React.FC<ScrollModelProps> = ({
     scrollPercentage = scrollLeft / maxScrollLeft;
   }
 
+  console.log(componentRef);
+
   return (
     <>
       {maxScrollLeft === 0 ? null : (
