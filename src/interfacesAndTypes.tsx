@@ -51,3 +51,8 @@ export interface IGuitarSettings {
   includeFlats: boolean;
   includeSharps: boolean;
 }
+
+export interface IGuitarNote {
+  stringNumber: number;
+  name: string;
+}
