@@ -2,7 +2,12 @@ import * as React from "react";
 import {Staff} from "./Staff";
 import {Header} from "./Header";
 import {Score} from "./Score";
-import {answerStatusOptions, clefs, trebleNotes} from "../constants";
+import {
+  answerStatusOptions,
+  clefs,
+  trebleNotes,
+  lineHeightInt,
+} from "../constants";
 import {
   useDisclosure,
   Button,
@@ -111,6 +116,25 @@ const SoloModeGuitar = () => {
   const resetScore = () => {
     setTotal(0);
     setCorrect(0);
+  };
+
+  const determineArrowPosition = () => {
+    switch (selectedString) {
+      case 1:
+        return lineHeightInt * 6.21 + "rem";
+      case 2:
+        return lineHeightInt * 5.01 + "rem";
+      case 3:
+        return lineHeightInt * 3.79 + "rem";
+      case 4:
+        return lineHeightInt * 2.59 + "rem";
+      case 5:
+        return lineHeightInt * 1.36 + "rem";
+      case 6:
+        return lineHeightInt * 0.14 + "rem";
+      default:
+        return lineHeightInt * 0.14 + "rem";
+    }
   };
 
   const noteRange =
@@ -240,6 +264,18 @@ const SoloModeGuitar = () => {
           noteRangeAllowsDuplicates={noteRangeAllowsDuplicates}
           setAnswerStatus={setAnswerStatus}
         />
+        {noteRangeAllowsDuplicates ? (
+          <Box
+            position="absolute"
+            fontSize="5rem"
+            fontWeight="900"
+            bottom={determineArrowPosition()}
+            zIndex="5"
+            color="var(--grey-dark)"
+          >
+            &rarr;
+          </Box>
+        ) : null}
       </Box>
 
       <GuitarSettings
