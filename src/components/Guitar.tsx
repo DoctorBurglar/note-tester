@@ -344,7 +344,7 @@ const Guitar: React.FC<GuitarProps> = ({
                     opacity=".3"
                   ></Box>
                 </Box>
-                {selectedString === outerInd + 1 &&
+                {/* {selectedString === outerInd + 1 &&
                 noteRangeAllowsDuplicates ? (
                   <Box
                     position="absolute"
@@ -356,7 +356,7 @@ const Guitar: React.FC<GuitarProps> = ({
                   >
                     &rarr;
                   </Box>
-                ) : null}
+                ) : null} */}
                 {string.map((note, innerInd) => {
                   return (
                     <Box
