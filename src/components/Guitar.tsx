@@ -344,6 +344,19 @@ const Guitar: React.FC<GuitarProps> = ({
                     opacity=".3"
                   ></Box>
                 </Box>
+                {selectedString === outerInd + 1 &&
+                noteRangeAllowsDuplicates ? (
+                  <Box
+                    position="absolute"
+                    fontSize="5rem"
+                    fontWeight="900"
+                    top="-2.6rem"
+                    zIndex="5"
+                    color="var(--grey-dark)"
+                  >
+                    &rarr;
+                  </Box>
+                ) : null}
                 {string.map((note, innerInd) => {
                   return (
                     <Box
