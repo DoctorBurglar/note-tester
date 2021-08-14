@@ -21,7 +21,7 @@ const BoxSliderForScrollModel: React.FC<BoxSliderForScrollModelProps> = ({
       left={`calc(${scrollPercentage} * ${viewBoxWidthInverse})`}
       border="3px solid black"
       borderRadius="3px"
-      zIndex="4"
+      zIndex="100"
     />
   );
 };

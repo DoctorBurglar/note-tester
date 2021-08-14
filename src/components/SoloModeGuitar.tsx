@@ -8,7 +8,14 @@ import {
   trebleNotes,
   lineHeightInt,
 } from "../constants";
-import {useDisclosure, Button, Heading, Flex, Box} from "@chakra-ui/react";
+import {
+  useDisclosure,
+  Button,
+  Heading,
+  Flex,
+  Box,
+  MenuItem,
+} from "@chakra-ui/react";
 import {IGuitarSettings, IUser, IGuitarNote} from "../interfacesAndTypes";
 import {useUser, useFirestore, useFirestoreDocData} from "reactfire";
 import {checkAnswer, getRandomGuitarNote} from "../helpers";
@@ -25,6 +32,8 @@ const SoloModeGuitar = () => {
   const [showSpacesOnStaff, setShowSpacesOnStaff] = React.useState(false);
   const [answerStatus, setAnswerStatus] = React.useState("");
   const [displayingNotes, setDisplayingNotes] = React.useState(false);
+  const [displayingFretNumbers, setDisplayingFretNumbers] =
+    React.useState(false);
 
   const [total, setTotal] = React.useState(0);
   const [correct, setCorrect] = React.useState(0);
@@ -112,21 +121,26 @@ const SoloModeGuitar = () => {
   const determineArrowPosition = () => {
     switch (selectedString) {
       case 1:
-        return lineHeightInt * 6.2 + "rem";
+        return lineHeightInt * 6.27 + "rem";
       case 2:
-        return lineHeightInt * 5 + "rem";
+        return lineHeightInt * 5.07 + "rem";
       case 3:
-        return lineHeightInt * 3.8 + "rem";
+        return lineHeightInt * 3.85 + "rem";
       case 4:
-        return lineHeightInt * 2.6 + "rem";
+        return lineHeightInt * 2.65 + "rem";
       case 5:
-        return lineHeightInt * 1.4 + "rem";
+        return lineHeightInt * 1.42 + "rem";
       case 6:
         return lineHeightInt * 0.2 + "rem";
       default:
         return lineHeightInt * 0.2 + "rem";
     }
   };
+
+  const noteRange =
+    userDoc?.guitarSettings.highFret - userDoc?.guitarSettings.lowFret;
+
+  const noteRangeAllowsDuplicates = noteRange > 3;
 
   return (
     <Flex
@@ -165,14 +179,14 @@ const SoloModeGuitar = () => {
           Keyboard &rarr;
         </Button>
       </Flex>
-      <Flex direction="column" position="relative">
-        <Staff
-          selectedClef={clefs.TREBLE}
-          selectedNote={selectedNote}
-          showLinesOnStaff={showLinesOnStaff}
-          showSpacesOnStaff={showSpacesOnStaff}
-        />
-        <Flex
+      {/* <Flex direction="column" position="relative"> */}
+      <Staff
+        selectedClef={clefs.TREBLE}
+        selectedNote={selectedNote}
+        showLinesOnStaff={showLinesOnStaff}
+        showSpacesOnStaff={showSpacesOnStaff}
+      />
+      {/* <Flex
           w="90%"
           position="absolute"
           bottom="8rem"
@@ -180,8 +194,8 @@ const SoloModeGuitar = () => {
           fontSize={{base: "1.3rem", md: "2rem"}}
           fontWeight="700"
           marginLeft={{base: "9rem", sm: "10rem", md: "15rem"}}
-        >{`String ${selectedString}`}</Flex>
-      </Flex>
+        >{`String ${selectedString}`}</Flex> */}
+      {/* </Flex> */}
 
       <Flex w="100%" justify="space-between" position="relative">
         <Flex
@@ -197,7 +211,18 @@ const SoloModeGuitar = () => {
             setShowLinesOnStaff={setShowLinesOnStaff}
             setShowSpacesOnStaff={setShowSpacesOnStaff}
             showSpacesOnStaff={showSpacesOnStaff}
-          />
+          >
+            <MenuItem
+              onClick={() => setDisplayingFretNumbers((prevBool) => !prevBool)}
+            >
+              {displayingFretNumbers ? (
+                <span style={{width: "2.5rem"}}>&#10003;</span>
+              ) : (
+                <span style={{width: "2.5rem"}}></span>
+              )}{" "}
+              Fret Numbers
+            </MenuItem>
+          </Options>
 
           <Score
             totalNotes={total}
@@ -215,10 +240,14 @@ const SoloModeGuitar = () => {
           right={{base: "0", md: "5%"}}
           bottom={{base: "0", md: "1rem"}}
         >
-          {!answer
+          {!answerStatus
             ? null
             : answerStatus === answerStatusOptions.CORRECT
             ? "Correct!"
+            : answerStatus === answerStatusOptions.OUT_OF_RANGE
+            ? "Out of range"
+            : answerStatus === answerStatusOptions.WRONG_STRING
+            ? "Wrong string"
             : "Incorrect :("}
         </Heading>
       </Flex>
@@ -231,17 +260,22 @@ const SoloModeGuitar = () => {
           handleSelectNote={handleSelectNote}
           fretNumber={fretNumber}
           selectedString={selectedString}
+          displayingFretNumbers={displayingFretNumbers}
+          noteRangeAllowsDuplicates={noteRangeAllowsDuplicates}
+          setAnswerStatus={setAnswerStatus}
         />
-        <Box
-          position="absolute"
-          fontSize="5rem"
-          fontWeight="900"
-          bottom={determineArrowPosition()}
-          zIndex="5"
-          color="var(--main-color-very-dark)"
-        >
-          &rarr;
-        </Box>
+        {noteRangeAllowsDuplicates ? (
+          <Box
+            position="absolute"
+            fontSize="5rem"
+            fontWeight="900"
+            bottom={determineArrowPosition()}
+            zIndex="5"
+            color="var(--grey-dark)"
+          >
+            &rarr;
+          </Box>
+        ) : null}
       </Box>
 
       <GuitarSettings
