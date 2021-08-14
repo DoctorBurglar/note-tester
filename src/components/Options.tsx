@@ -26,6 +26,7 @@ const Options: React.FC<OptionsProps> = ({
   showLinesOnStaff,
   showSpacesOnStaff,
   displayingNotes,
+  children,
 }) => {
   return (
     <Flex
@@ -41,7 +42,7 @@ const Options: React.FC<OptionsProps> = ({
         <MenuList
           minWidth="180px"
           position="relative"
-          zIndex="15"
+          zIndex="1000"
           fontSize="1.5rem"
         >
           <MenuOptionGroup
@@ -73,7 +74,7 @@ const Options: React.FC<OptionsProps> = ({
             </MenuItem>
           </MenuOptionGroup>
           <MenuDivider />
-          <MenuOptionGroup title="Keyboard" type="checkbox" fontSize="1.5rem">
+          <MenuOptionGroup title="Instrument" type="checkbox" fontSize="1.5rem">
             <MenuItem
               onClick={() => setDisplayingNotes((prevBool) => !prevBool)}
             >
@@ -84,6 +85,7 @@ const Options: React.FC<OptionsProps> = ({
               )}{" "}
               Note Names
             </MenuItem>
+            {children}
           </MenuOptionGroup>
         </MenuList>
       </Menu>

@@ -3,7 +3,7 @@ import {Box, Flex, Heading} from "@chakra-ui/react";
 import {standardTuningGuitar} from "../helpers";
 import {useUser, useFirestore, useFirestoreDocData} from "reactfire";
 import {IGuitarNote, IUser} from "../interfacesAndTypes";
-import {fretHeight, fretBoardHeight} from "../constants";
+import {fretHeight, fretBoardHeight, answerStatusOptions} from "../constants";
 import {ScrollModel} from "./ScrollModel";
 
 type GuitarProps = {
@@ -15,6 +15,9 @@ type GuitarProps = {
   displayingNotes: boolean;
   fretNumber: number;
   selectedString: number;
+  displayingFretNumbers: boolean;
+  noteRangeAllowsDuplicates: boolean;
+  setAnswerStatus: React.Dispatch<React.SetStateAction<string>>;
 };
 
 const Guitar: React.FC<GuitarProps> = ({
@@ -25,6 +28,9 @@ const Guitar: React.FC<GuitarProps> = ({
   displayingNotes,
   fretNumber,
   selectedString,
+  displayingFretNumbers,
+  noteRangeAllowsDuplicates,
+  setAnswerStatus,
 }) => {
   const [scrollLeft, setScrollLeft] = React.useState(0);
 
@@ -49,6 +55,22 @@ const Guitar: React.FC<GuitarProps> = ({
 
   const handleScroll = (event: React.SyntheticEvent) => {
     setScrollLeft(event.currentTarget.scrollLeft);
+  };
+
+  const handleOutOfRangeAnswer = () => {
+    console.log("whee");
+    setAnswerStatus(answerStatusOptions.OUT_OF_RANGE);
+    setTimeout(() => {
+      setAnswerStatus("");
+    }, 1000);
+  };
+
+  const handleWrongStringAnswer = () => {
+    console.log("whee");
+    setAnswerStatus(answerStatusOptions.WRONG_STRING);
+    setTimeout(() => {
+      setAnswerStatus("");
+    }, 1000);
   };
 
   return (
@@ -108,7 +130,8 @@ const Guitar: React.FC<GuitarProps> = ({
                       transform="translateY(-50%)"
                       bg="grey"
                       backgroundImage={
-                        selectedString === outerInd + 1
+                        selectedString === outerInd + 1 &&
+                        noteRangeAllowsDuplicates
                           ? "linear-gradient(to left, var(--main-color-very-dark) 40%, var(--main-color) 70%, var(--main-color-very-dark) 90%)"
                           : "linear-gradient(to left, var(--guitar-string-grey) 40%, var(--guitar-shine) 70%, var(--guitar-string-grey) 90%)"
                       }
@@ -119,7 +142,8 @@ const Guitar: React.FC<GuitarProps> = ({
                         w="100%"
                         h="100%"
                         backgroundImage={
-                          selectedString === outerInd + 1
+                          selectedString === outerInd + 1 &&
+                          noteRangeAllowsDuplicates
                             ? "linear-gradient(to top, transparent 15%, var(--main-color) 50%, transparent 85%)"
                             : "linear-gradient(to top, transparent 15%, white 50%, transparent 85%)"
                         }
@@ -138,16 +162,6 @@ const Guitar: React.FC<GuitarProps> = ({
                         >
                           <Flex>
                             <Box
-                              onClick={
-                                fretIsInRange(outerInd, innerInd) &&
-                                outerInd + 1 === selectedString
-                                  ? () => {
-                                      handleSelectNote(note);
-                                    }
-                                  : () => {
-                                      console.log("out of range!");
-                                    }
-                              }
                               key={note.name + innerInd}
                               h={`${fretHeight - 2}rem`}
                               w="100%"
@@ -155,41 +169,7 @@ const Guitar: React.FC<GuitarProps> = ({
                               position="relative"
                               zIndex="7"
                               boxSizing="border-box"
-                              _hover={
-                                fretIsInRange(outerInd, innerInd) &&
-                                outerInd + 1 === selectedString
-                                  ? {
-                                      border:
-                                        "4px solid var(--main-color-dark)",
-                                      borderRadius: "5px",
-                                    }
-                                  : {}
-                              }
-                            >
-                              {displayingNotes && note.name[1] !== "s" ? (
-                                <Heading
-                                  as="h3"
-                                  position="absolute"
-                                  top="58%"
-                                  left="50%"
-                                  transform="translate(-50%, -50%)"
-                                  fontSize="2rem"
-                                  w="2.5rem"
-                                  h="2.5rem"
-                                  textAlign="center"
-                                  className="note-name"
-                                  bg={
-                                    note.name[0] === "C" && note.name[1] === "4"
-                                      ? "var(--main-color)"
-                                      : "white"
-                                  }
-                                  borderRadius="50%"
-                                  opacity=".6"
-                                >
-                                  {note.name[0]}
-                                </Heading>
-                              ) : null}
-                            </Box>
+                            ></Box>
                             {innerInd === 0 && outerInd === 0 ? (
                               <Box
                                 minHeight={`${fretBoardHeight - 12}rem`}
@@ -345,7 +325,7 @@ const Guitar: React.FC<GuitarProps> = ({
                   transform="translateY(-50%)"
                   bg="grey"
                   backgroundImage={
-                    selectedString === outerInd + 1
+                    selectedString === outerInd + 1 && noteRangeAllowsDuplicates
                       ? "linear-gradient(to left, var(--main-color-very-dark) 40%, var(--main-color) 70%, var(--main-color-very-dark) 90%)"
                       : "linear-gradient(to left, var(--guitar-string-grey) 40%, var(--guitar-shine) 70%, var(--guitar-string-grey) 90%)"
                   }
@@ -356,7 +336,8 @@ const Guitar: React.FC<GuitarProps> = ({
                     w="100%"
                     h="100%"
                     backgroundImage={
-                      selectedString === outerInd + 1
+                      selectedString === outerInd + 1 &&
+                      noteRangeAllowsDuplicates
                         ? "linear-gradient(to top, transparent 15%, var(--main-color) 50%, transparent 85%)"
                         : "linear-gradient(to top, transparent 15%, white 50%, transparent 85%)"
                     }
@@ -377,13 +358,15 @@ const Guitar: React.FC<GuitarProps> = ({
                         <Box
                           onClick={
                             fretIsInRange(outerInd, innerInd) &&
-                            outerInd + 1 === selectedString
+                            (outerInd + 1 === selectedString ||
+                              !noteRangeAllowsDuplicates)
                               ? () => {
                                   handleSelectNote(note);
                                 }
-                              : () => {
-                                  console.log("out of range!");
-                                }
+                              : fretIsInRange(outerInd, innerInd) &&
+                                outerInd + 1 !== selectedString
+                              ? handleWrongStringAnswer
+                              : handleOutOfRangeAnswer
                           }
                           key={note.name + innerInd}
                           h={`${fretHeight}rem`}
@@ -394,7 +377,8 @@ const Guitar: React.FC<GuitarProps> = ({
                           boxSizing="border-box"
                           _hover={
                             fretIsInRange(outerInd, innerInd) &&
-                            outerInd + 1 === selectedString
+                            (outerInd + 1 === selectedString ||
+                              !noteRangeAllowsDuplicates)
                               ? {
                                   border: "4px solid var(--main-color-dark)",
                                   borderRadius: "5px",
@@ -465,7 +449,7 @@ const Guitar: React.FC<GuitarProps> = ({
                         innerInd === 17 ||
                         innerInd === 19 ||
                         innerInd === 21) ? (
-                        <Box
+                        <Flex
                           border="3px solid black"
                           bg="black"
                           backgroundImage="linear-gradient(300deg, var(--guitar-dot) 0%, var(--guitar-dot) 60%,  var(--guitar-dot-shine) 90%, var(--guitar-dot) 100%)"
@@ -477,10 +461,20 @@ const Guitar: React.FC<GuitarProps> = ({
                           left="50%"
                           transform="translateY(-50%) translateX(-50%)"
                           zIndex="2"
-                        ></Box>
+                          color="white"
+                          textAlign="center"
+                          justify="center"
+                          align="center"
+                        >
+                          {displayingFretNumbers ? (
+                            <Heading as="h5" fontSize="1.8rem" fontWeight="800">
+                              {innerInd}
+                            </Heading>
+                          ) : null}
+                        </Flex>
                       ) : null}
                       {(outerInd === 2 || outerInd === 4) && innerInd === 12 ? (
-                        <Box
+                        <Flex
                           border="3px solid black"
                           bg="black"
                           backgroundImage="linear-gradient(300deg, black, black, black,black,  var(--guitar-dot-shine), black)"
@@ -495,7 +489,20 @@ const Guitar: React.FC<GuitarProps> = ({
                               ? "translateY(-75%) translateX(-50%)"
                               : "translateY(-25%) translateX(-50%)"
                           }
-                        ></Box>
+                          justify="center"
+                          align="center"
+                        >
+                          {displayingFretNumbers ? (
+                            <Heading
+                              as="h5"
+                              fontSize="1.8rem"
+                              fontWeight="800"
+                              color="white"
+                            >
+                              {innerInd}
+                            </Heading>
+                          ) : null}
+                        </Flex>
                       ) : null}
                     </Box>
                   );
