@@ -16,6 +16,7 @@ import {
   Box,
   MenuItem,
 } from "@chakra-ui/react";
+import {ArrowForwardIcon} from "@chakra-ui/icons";
 import {IGuitarSettings, IUser, IGuitarNote} from "../interfacesAndTypes";
 import {useUser, useFirestore, useFirestoreDocData} from "reactfire";
 import {checkAnswer, getRandomGuitarNote} from "../helpers";
@@ -121,19 +122,19 @@ const SoloModeGuitar = () => {
   const determineArrowPosition = () => {
     switch (selectedString) {
       case 1:
-        return lineHeightInt * 6.21 + "rem";
+        return lineHeightInt * 6.45 + "rem";
       case 2:
-        return lineHeightInt * 5.01 + "rem";
+        return lineHeightInt * 5.25 + "rem";
       case 3:
-        return lineHeightInt * 3.79 + "rem";
+        return lineHeightInt * 4.03 + "rem";
       case 4:
-        return lineHeightInt * 2.59 + "rem";
+        return lineHeightInt * 2.8 + "rem";
       case 5:
-        return lineHeightInt * 1.36 + "rem";
+        return lineHeightInt * 1.6 + "rem";
       case 6:
-        return lineHeightInt * 0.14 + "rem";
+        return lineHeightInt * 0.35 + "rem";
       default:
-        return lineHeightInt * 0.14 + "rem";
+        return lineHeightInt * 0.35 + "rem";
     }
   };
 
@@ -273,7 +274,7 @@ const SoloModeGuitar = () => {
             zIndex="5"
             color="var(--grey-dark)"
           >
-            &rarr;
+            <ArrowForwardIcon fontSize={{base: "5rem"}} />
           </Box>
         ) : null}
       </Box>
