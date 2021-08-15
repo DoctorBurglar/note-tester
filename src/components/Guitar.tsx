@@ -12,7 +12,6 @@ type GuitarProps = {
   answer: string;
   answerStatus: string;
   displayingNotes: boolean;
-  fretNumber: number;
   selectedString: number;
   displayingFretNumbers: boolean;
   noteRangeAllowsDuplicates: boolean;
@@ -25,7 +24,6 @@ const Guitar: React.FC<GuitarProps> = ({
   answer,
   answerStatus,
   displayingNotes,
-  fretNumber,
   selectedString,
   displayingFretNumbers,
   noteRangeAllowsDuplicates,
@@ -78,6 +76,9 @@ const Guitar: React.FC<GuitarProps> = ({
         noteRangeAllowsDuplicates={noteRangeAllowsDuplicates}
         selectedString={selectedString}
         setAnswerStatus={setAnswerStatus}
+        selectedNote={selectedNote}
+        answer={answer}
+        answerStatus={answerStatus}
       />
     </>
   );

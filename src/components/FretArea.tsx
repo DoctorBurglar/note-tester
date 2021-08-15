@@ -1,7 +1,6 @@
 import * as React from "react";
 import {Box, Flex} from "@chakra-ui/react";
 import {IGuitarNote} from "../interfacesAndTypes";
-import {answerStatusOptions} from "../constants";
 import {FretboardDot} from "./FretboardDot";
 import {FretboardDoubleDot} from "./FretboardDoubleDot";
 import {GuitarNut} from "./GuitarNut";
@@ -20,6 +19,9 @@ type FretAreaProps = {
   setAnswerStatus: React.Dispatch<React.SetStateAction<string>>;
   displayingNotes: boolean;
   displayingFretNumbers: boolean;
+  selectedNote: string;
+  answer: string;
+  answerStatus: string;
 };
 
 const FretArea: React.FC<FretAreaProps> = ({
@@ -33,21 +35,24 @@ const FretArea: React.FC<FretAreaProps> = ({
   setAnswerStatus,
   displayingFretNumbers,
   displayingNotes,
+  selectedNote,
+  answerStatus,
+  answer,
 }) => {
   const handleOutOfRangeAnswer = () => {
-    console.log("whee");
-    setAnswerStatus(answerStatusOptions.OUT_OF_RANGE);
-    setTimeout(() => {
-      setAnswerStatus("");
-    }, 1000);
+    console.log("out of range");
+    // setAnswerStatus(answerStatusOptions.OUT_OF_RANGE);
+    // setTimeout(() => {
+    //   setAnswerStatus("");
+    // }, 1000);
   };
 
   const handleWrongStringAnswer = () => {
-    console.log("whee");
-    setAnswerStatus(answerStatusOptions.WRONG_STRING);
-    setTimeout(() => {
-      setAnswerStatus("");
-    }, 1000);
+    console.log("wrong string");
+    // setAnswerStatus(answerStatusOptions.WRONG_STRING);
+    // setTimeout(() => {
+    //   setAnswerStatus("");
+    // }, 1000);
   };
 
   const handleFretAreaClick = () => {
@@ -82,6 +87,9 @@ const FretArea: React.FC<FretAreaProps> = ({
           noteRangeAllowsDuplicates={noteRangeAllowsDuplicates}
           outerInd={outerInd}
           selectedString={selectedString}
+          selectedNote={selectedNote}
+          answer={answer}
+          answerStatus={answerStatus}
         >
           <GuitarNoteName displayingNotes={displayingNotes} note={note} />
         </GuitarSpaceBetweenFrets>

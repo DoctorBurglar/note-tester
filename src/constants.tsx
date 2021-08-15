@@ -6,8 +6,6 @@ export enum clefs {
 export enum answerStatusOptions {
   CORRECT = "CORRECT",
   INCORRECT = "INCORRECT",
-  OUT_OF_RANGE = "OUT OF RANGE",
-  WRONG_STRING = "WRONG STRING",
 }
 
 export enum instruments {

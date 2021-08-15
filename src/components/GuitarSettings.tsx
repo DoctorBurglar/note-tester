@@ -2,7 +2,7 @@ import {Flex} from "@chakra-ui/react";
 import * as React from "react";
 import {PresetSelect} from "./PresetSelect";
 import {guitarPresets} from "../constants";
-import {getGuitarNoteRange, getRandomGuitarNote} from "../helpers";
+import {getGuitarNoteRange, getRandomGuitarNote, fretNumber} from "../helpers";
 import {SettingsModal} from "./SettingsModal";
 import {IncludeAccidentals} from "./IncludeAccidentals";
 import {IGuitarNote, IGuitarSettings} from "../interfacesAndTypes";
@@ -18,7 +18,6 @@ type guitarSettingsProps = {
   ) => void;
   selectedNote: string;
   currentSettings: IGuitarSettings;
-  fretNumber: number;
 };
 
 const GuitarSettings: React.FC<guitarSettingsProps> = ({
@@ -27,7 +26,6 @@ const GuitarSettings: React.FC<guitarSettingsProps> = ({
   onSubmit,
   selectedNote,
   currentSettings,
-  fretNumber,
 }) => {
   const [preset, setPreset] = React.useState<guitarPresets | string>(
     guitarPresets.CUSTOM
@@ -89,7 +87,6 @@ const GuitarSettings: React.FC<guitarSettingsProps> = ({
         },
         selectedNote
       );
-      console.log("set backend settings");
       onSubmit(
         {
           lowString,

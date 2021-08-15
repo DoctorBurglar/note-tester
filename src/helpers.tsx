@@ -319,7 +319,6 @@ export const getRandomKeyboardNoteAndClef = (
   selectedNote: string
 ) => {
   if (!includeBass && !includeTreble) {
-    console.log(includeBass, includeTreble);
     const error = new Error();
     throw error;
   }
@@ -421,15 +420,16 @@ const createGuitarFromOpenStrings = (openStrings: string[], toFret: number) => {
     }
     guitarStringArray.push(currentStringArray);
   });
-  console.log(guitarStringArray);
   return guitarStringArray;
 };
+
+export const fretNumber = 13;
 
 const standardTuning = ["E5", "B4", "G4", "D4", "A3", "E3"];
 
 export const standardTuningGuitar = createGuitarFromOpenStrings(
   standardTuning,
-  13
+  fretNumber
 );
 
 export const getRandomGuitarNote = (
@@ -453,7 +453,6 @@ export const getRandomGuitarNote = (
   let allSelectedNotes: IGuitarNote[] = [];
 
   const selectedStrings = standardTuningGuitar.filter((guitarString, ind) => {
-    console.log(ind, lowString, highString);
     return ind + 1 <= lowString && ind + 1 >= highString;
   });
 
@@ -482,8 +481,6 @@ export const getRandomGuitarNote = (
     }
   });
 
-  console.log(allSelectedNotes);
-
   if (allSelectedNotes.length === 0 || allSelectedNotes.length === 1) {
     const error = new Error("Your selection doesn't have enough notes");
     throw error;
@@ -511,7 +508,6 @@ export const getRandomGuitarNote = (
         return note;
       }
     });
-    console.log(allSelectedNotesWithFlats);
     const randomNaturalOrFlatNoteInRange =
       allSelectedNotesWithFlats[
         Math.floor(Math.random() * allSelectedNotesWithFlats.length)

@@ -2,6 +2,10 @@
   --main-color: #add8e6;
   --main-color-dark: #478aa0;
   --main-color-very-dark: #386f81;
+  --main-color-darkest: #20404b;
+  --wild-pink: rgb(255, 83, 112);
+  --wild-pink-brighter: rgb(255, 174, 187);
+  --wild-pink-dark: rgb(109, 39, 51);
   --wrong-note-color: red;
   --grey-dark: #434343;
   --guitar-brown: #df9c66;
