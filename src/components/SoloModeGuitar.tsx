@@ -2,21 +2,8 @@ import * as React from "react";
 import {Staff} from "./Staff";
 import {Header} from "./Header";
 import {Score} from "./Score";
-import {
-  answerStatusOptions,
-  clefs,
-  trebleNotes,
-  lineHeightInt,
-} from "../constants";
-import {
-  useDisclosure,
-  Button,
-  Heading,
-  Flex,
-  Box,
-  MenuItem,
-} from "@chakra-ui/react";
-import {ArrowForwardIcon} from "@chakra-ui/icons";
+import {answerStatusOptions, clefs, trebleNotes} from "../constants";
+import {useDisclosure, Button, Flex, MenuItem} from "@chakra-ui/react";
 import {IGuitarSettings, IUser, IGuitarNote} from "../interfacesAndTypes";
 import {useUser, useFirestore, useFirestoreDocData} from "reactfire";
 import {checkAnswer, getRandomGuitarNote} from "../helpers";
@@ -24,6 +11,8 @@ import {Options} from "./Options";
 import {Guitar} from "./Guitar";
 import {useHistory} from "react-router-dom";
 import {GuitarSettings} from "./GuitarSettings";
+import {SelectedGuitarString} from "./SelectedGuitarString";
+import {GuitarAnswerStatus} from "./GuitarAnswerStatus";
 
 const SoloModeGuitar = () => {
   const [answer, setAnswer] = React.useState("");
@@ -35,7 +24,6 @@ const SoloModeGuitar = () => {
   const [displayingNotes, setDisplayingNotes] = React.useState(false);
   const [displayingFretNumbers, setDisplayingFretNumbers] =
     React.useState(false);
-
   const [total, setTotal] = React.useState(0);
   const [correct, setCorrect] = React.useState(0);
 
@@ -119,25 +107,6 @@ const SoloModeGuitar = () => {
     setCorrect(0);
   };
 
-  const determineArrowPosition = () => {
-    switch (selectedString) {
-      case 1:
-        return lineHeightInt * 6.45 + "rem";
-      case 2:
-        return lineHeightInt * 5.25 + "rem";
-      case 3:
-        return lineHeightInt * 4.03 + "rem";
-      case 4:
-        return lineHeightInt * 2.8 + "rem";
-      case 5:
-        return lineHeightInt * 1.6 + "rem";
-      case 6:
-        return lineHeightInt * 0.35 + "rem";
-      default:
-        return lineHeightInt * 0.35 + "rem";
-    }
-  };
-
   const noteRange =
     userDoc?.guitarSettings.highFret - userDoc?.guitarSettings.lowFret;
 
@@ -180,23 +149,18 @@ const SoloModeGuitar = () => {
           Keyboard &rarr;
         </Button>
       </Flex>
-      {/* <Flex direction="column" position="relative"> */}
-      <Staff
-        selectedClef={clefs.TREBLE}
-        selectedNote={selectedNote}
-        showLinesOnStaff={showLinesOnStaff}
-        showSpacesOnStaff={showSpacesOnStaff}
-      />
-      {/* <Flex
-          w="90%"
-          position="absolute"
-          bottom="8rem"
-          justify="flex-start"
-          fontSize={{base: "1.3rem", md: "2rem"}}
-          fontWeight="700"
-          marginLeft={{base: "9rem", sm: "10rem", md: "15rem"}}
-        >{`String ${selectedString}`}</Flex> */}
-      {/* </Flex> */}
+      <Flex direction="column" position="relative">
+        <Staff
+          selectedClef={clefs.TREBLE}
+          selectedNote={selectedNote}
+          showLinesOnStaff={showLinesOnStaff}
+          showSpacesOnStaff={showSpacesOnStaff}
+        />
+        <SelectedGuitarString
+          noteRangeAllowsDuplicates={noteRangeAllowsDuplicates}
+          selectedString={selectedString}
+        />
+      </Flex>
 
       <Flex w="100%" justify="space-between" position="relative">
         <Flex
@@ -232,52 +196,21 @@ const SoloModeGuitar = () => {
             canControl
           />
         </Flex>
-        <Heading
-          as="h2"
-          marginRight="1rem"
-          alignSelf="flex-end"
-          position="absolute"
-          fontSize={{base: "1.5rem", md: "2rem"}}
-          right={{base: "0", md: "5%"}}
-          bottom={{base: "0", md: "1rem"}}
-        >
-          {!answerStatus
-            ? null
-            : answerStatus === answerStatusOptions.CORRECT
-            ? "Correct!"
-            : answerStatus === answerStatusOptions.OUT_OF_RANGE
-            ? "Out of range"
-            : answerStatus === answerStatusOptions.WRONG_STRING
-            ? "Wrong string"
-            : "Incorrect :("}
-        </Heading>
+        <GuitarAnswerStatus answerStatus={answerStatus} />
       </Flex>
-      <Box position="relative">
-        <Guitar
-          answer={answer}
-          answerStatus={answerStatus}
-          displayingNotes={displayingNotes}
-          selectedNote={selectedNote}
-          handleSelectNote={handleSelectNote}
-          fretNumber={fretNumber}
-          selectedString={selectedString}
-          displayingFretNumbers={displayingFretNumbers}
-          noteRangeAllowsDuplicates={noteRangeAllowsDuplicates}
-          setAnswerStatus={setAnswerStatus}
-        />
-        {noteRangeAllowsDuplicates ? (
-          <Box
-            position="absolute"
-            fontSize="5rem"
-            fontWeight="900"
-            bottom={determineArrowPosition()}
-            zIndex="5"
-            color="var(--grey-dark)"
-          >
-            <ArrowForwardIcon fontSize={{base: "5rem"}} />
-          </Box>
-        ) : null}
-      </Box>
+
+      <Guitar
+        answer={answer}
+        answerStatus={answerStatus}
+        displayingNotes={displayingNotes}
+        selectedNote={selectedNote}
+        handleSelectNote={handleSelectNote}
+        fretNumber={fretNumber}
+        selectedString={selectedString}
+        displayingFretNumbers={displayingFretNumbers}
+        noteRangeAllowsDuplicates={noteRangeAllowsDuplicates}
+        setAnswerStatus={setAnswerStatus}
+      />
 
       <GuitarSettings
         isOpen={isOpen}
