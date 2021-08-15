@@ -32,10 +32,14 @@ const GuitarString: React.FC<GuitarStringProps> = ({
         bg="grey"
         backgroundImage={
           selectedString === outerInd + 1 && noteRangeAllowsDuplicates
-            ? "linear-gradient(to left, var(--main-color-very-dark) 40%, var(--main-color) 70%, var(--main-color-very-dark) 90%)"
+            ? "linear-gradient(to left, var(--wild-pink) 40%, var(--wild-pink-brighter) 70%, var(--wild-pink) 90%)"
             : "linear-gradient(to left, var(--guitar-string-grey) 40%, var(--guitar-shine) 70%, var(--guitar-string-grey) 90%)"
         }
-        filter="drop-shadow(0px 2px 4px black)"
+        filter={
+          selectedString === outerInd + 1 && noteRangeAllowsDuplicates
+            ? "drop-shadow(0px 4px 8px var(--wild-pink-dark))"
+            : "drop-shadow(0px 2px 4px black)"
+        }
         zIndex="5"
       >
         <Box
@@ -43,7 +47,7 @@ const GuitarString: React.FC<GuitarStringProps> = ({
           h="100%"
           backgroundImage={
             selectedString === outerInd + 1 && noteRangeAllowsDuplicates
-              ? "linear-gradient(to top, transparent 15%, var(--main-color) 50%, transparent 85%)"
+              ? "linear-gradient(to top, transparent 15%, var(--wild-pink-brighter) 50%, transparent 85%)"
               : "linear-gradient(to top, transparent 15%, white 50%, transparent 85%)"
           }
           opacity=".3"

@@ -39,8 +39,6 @@ const SoloModeGuitar = () => {
 
   const notes = Object.keys(trebleNotes);
 
-  const fretNumber = 13;
-
   React.useEffect(() => {
     if (userDoc) {
       try {
@@ -205,7 +203,6 @@ const SoloModeGuitar = () => {
         displayingNotes={displayingNotes}
         selectedNote={selectedNote}
         handleSelectNote={handleSelectNote}
-        fretNumber={fretNumber}
         selectedString={selectedString}
         displayingFretNumbers={displayingFretNumbers}
         noteRangeAllowsDuplicates={noteRangeAllowsDuplicates}
@@ -218,7 +215,6 @@ const SoloModeGuitar = () => {
         onSubmit={updateSettings}
         selectedNote={selectedNote}
         currentSettings={userDoc?.guitarSettings}
-        fretNumber={fretNumber}
       />
     </Flex>
   );

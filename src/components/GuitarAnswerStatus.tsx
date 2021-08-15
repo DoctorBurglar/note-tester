@@ -19,10 +19,6 @@ const GuitarAnswerStatus: React.FC<{answerStatus: string}> = ({
         ? null
         : answerStatus === answerStatusOptions.CORRECT
         ? "Correct!"
-        : answerStatus === answerStatusOptions.OUT_OF_RANGE
-        ? "Out of range"
-        : answerStatus === answerStatusOptions.WRONG_STRING
-        ? "Wrong string"
         : "Incorrect :("}
     </Heading>
   );

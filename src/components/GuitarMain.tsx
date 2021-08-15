@@ -18,6 +18,9 @@ type GuitarMainProps = {
   setAnswerStatus: React.Dispatch<React.SetStateAction<string>>;
   handleScroll: (event: React.SyntheticEvent) => void;
   guitarRef: React.LegacyRef<HTMLDivElement> | undefined;
+  selectedNote: string;
+  answer: string;
+  answerStatus: string;
 };
 
 const GuitarMain: React.FC<GuitarMainProps> = ({
@@ -30,6 +33,9 @@ const GuitarMain: React.FC<GuitarMainProps> = ({
   setAnswerStatus,
   guitarRef,
   handleScroll,
+  selectedNote,
+  answer,
+  answerStatus,
 }) => {
   return (
     <Flex
@@ -74,6 +80,9 @@ const GuitarMain: React.FC<GuitarMainProps> = ({
                     outerInd={outerInd}
                     selectedString={selectedString}
                     setAnswerStatus={setAnswerStatus}
+                    selectedNote={selectedNote}
+                    answer={answer}
+                    answerStatus={answerStatus}
                   />
                 );
               })}
