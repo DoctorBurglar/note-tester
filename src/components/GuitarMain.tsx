@@ -62,6 +62,7 @@ const GuitarMain: React.FC<GuitarMainProps> = ({
         {standardTuningGuitar.map((string, outerInd) => {
           return (
             <GuitarString
+              key={string[0].name}
               noteRangeAllowsDuplicates={noteRangeAllowsDuplicates}
               outerInd={outerInd}
               selectedString={selectedString}
@@ -70,6 +71,7 @@ const GuitarMain: React.FC<GuitarMainProps> = ({
               {string.map((note, innerInd) => {
                 return (
                   <FretArea
+                    key={note.name}
                     note={note}
                     displayingFretNumbers={displayingFretNumbers}
                     displayingNotes={displayingNotes}

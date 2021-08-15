@@ -56,6 +56,9 @@ const FretArea: React.FC<FretAreaProps> = ({
   };
 
   const handleFretAreaClick = () => {
+    if (answerStatus !== "") {
+      return;
+    }
     if (
       fretIsInRange(outerInd, innerInd) &&
       (outerInd + 1 === selectedString || !noteRangeAllowsDuplicates)
@@ -73,7 +76,6 @@ const FretArea: React.FC<FretAreaProps> = ({
 
   return (
     <Box
-      key={note.name}
       position="relative"
       cursor={!fretIsInRange(outerInd, innerInd) ? "" : "pointer"}
       w={15 - 0.6 * innerInd + "rem"}

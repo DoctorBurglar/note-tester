@@ -23,7 +23,6 @@ const GuitarFretForScrollModel: React.FC<GuitarFretForScrollModelProps> = ({
 }) => {
   return (
     <Box
-      key={note.name}
       position="relative"
       cursor={!fretIsInRange(outerInd, innerInd) ? "" : "pointer"}
       w={15 - 0.6 * innerInd + "%"}

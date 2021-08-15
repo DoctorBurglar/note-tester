@@ -21,7 +21,13 @@ const GuitarForScrollModel: React.FC<GuitarForScrollModelProps> = ({
   fretIsInRange,
 }) => {
   return (
-    <Flex minWidth="100%" maxWidth="100%" minHeight="70px" margin=".5rem auto">
+    <Flex
+      minWidth="100%"
+      maxWidth="100%"
+      minHeight="70px"
+      margin=".5rem auto"
+      paddingTop=".3rem"
+    >
       <Flex w="100vw" position="relative" className="noHighlightOnClick">
         <Box
           position="absolute"
@@ -37,6 +43,7 @@ const GuitarForScrollModel: React.FC<GuitarForScrollModelProps> = ({
           {standardTuningGuitar.map((string, outerInd) => {
             return (
               <GuitarStringForScrollModel
+                key={string[0].name}
                 noteRangeAllowsDuplicates={noteRangeAllowsDuplicates}
                 outerInd={outerInd}
                 selectedString={selectedString}
@@ -45,6 +52,7 @@ const GuitarForScrollModel: React.FC<GuitarForScrollModelProps> = ({
                 {string.map((note, innerInd) => {
                   return (
                     <GuitarFretForScrollModel
+                      key={note.name}
                       displayingFretNumbers={displayingFretNumbers}
                       fretBoardHeight={fretBoardHeight}
                       fretHeight={fretHeight}

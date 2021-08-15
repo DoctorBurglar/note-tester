@@ -18,7 +18,6 @@ const GuitarStringForScrollModel: React.FC<GuitarStringForScrollModelProps> = ({
 }) => {
   return (
     <Flex
-      key={string[0].name}
       position="relative"
       bg="var(--guitar-brown)"
       backgroundImage="linear-gradient(to right, var(--guitar-brown) 5%, rgb(255, 255, 255, 0.3) 8%,var(--guitar-brown) 8.9%, var(--guitar-brown) 10%)"
