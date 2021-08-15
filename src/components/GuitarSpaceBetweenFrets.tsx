@@ -32,26 +32,22 @@ const GuitarSpaceBetweenFrets: React.FC<GuitarSpaceBetweenFretsProps> = ({
   const thisNoteIsSelected =
     answer === note.name && selectedString === note.stringNumber;
 
-  const determineFretStatus = ():
-    | "PICKED_CORRECT"
-    | "WRONG"
-    | "UNPICKED_CORRECT"
-    | "" => {
+  const determineFretColor = () => {
     const guitarNotesArray = Object.keys(guitarNotes);
 
     if (thisNoteIsSelected && answerStatus === answerStatusOptions.CORRECT) {
-      return "PICKED_CORRECT";
+      return "var(--main-color)";
     } else if (
       thisNoteIsSelected &&
       answerStatus === answerStatusOptions.INCORRECT
     ) {
-      return "WRONG";
+      return "var(--wrong-note-color)";
     } else if (
       note.name === selectedNote &&
       selectedString === note.stringNumber &&
       answerStatus !== ""
     ) {
-      return "UNPICKED_CORRECT";
+      return "var(--main-color)";
     } else if (
       answerStatus !== "" &&
       selectedString === note.stringNumber &&
@@ -67,7 +63,7 @@ const GuitarSpaceBetweenFrets: React.FC<GuitarSpaceBetweenFretsProps> = ({
         ][1] ===
         selectedNote
     ) {
-      return "UNPICKED_CORRECT";
+      return "var(--main-color)";
     } else {
       return "";
     }
@@ -76,25 +72,17 @@ const GuitarSpaceBetweenFrets: React.FC<GuitarSpaceBetweenFretsProps> = ({
   return (
     <Box
       onClick={handleFretAreaClick}
-      key={note.name + innerInd}
+      key={note.name}
       h={`${fretHeight}rem`}
       w="100%"
       display="inline-block"
       position="relative"
       zIndex={answerStatus !== "" ? "0" : "7"}
-      opacity=".8"
-      bg={
-        determineFretStatus() === "PICKED_CORRECT"
-          ? "var(--main-color)"
-          : determineFretStatus() === "WRONG"
-          ? "var(--wrong-note-color)"
-          : // TODO: add logic for flats
-          determineFretStatus() === "UNPICKED_CORRECT"
-          ? "var(--main-color)"
-          : ""
-      }
+      bg={determineFretColor()}
+      borderRadius="5px"
       boxSizing="border-box"
       _hover={
+        answer === "" &&
         fretIsInRange(outerInd, innerInd) &&
         (outerInd + 1 === selectedString || !noteRangeAllowsDuplicates)
           ? {
