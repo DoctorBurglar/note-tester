@@ -37,6 +37,9 @@ const GuitarMain: React.FC<GuitarMainProps> = ({
   answer,
   answerStatus,
 }) => {
+  const [userClickedOutOfRange, setUserClickedOutOfRange] =
+    React.useState(false);
+
   return (
     <Flex
       w="100vw"
@@ -85,6 +88,8 @@ const GuitarMain: React.FC<GuitarMainProps> = ({
                     selectedNote={selectedNote}
                     answer={answer}
                     answerStatus={answerStatus}
+                    userClickedOutOfRange={userClickedOutOfRange}
+                    setUserClickedOutOfRange={setUserClickedOutOfRange}
                   />
                 );
               })}

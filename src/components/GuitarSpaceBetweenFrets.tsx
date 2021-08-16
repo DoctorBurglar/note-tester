@@ -8,18 +8,19 @@ type GuitarSpaceBetweenFretsProps = {
   innerInd: number;
   outerInd: number;
   fretIsInRange: (outerInd: number, innerInd: number) => boolean;
-  handleFretAreaClick: () => void;
   selectedString: number;
   noteRangeAllowsDuplicates: boolean;
   selectedNote: string;
   answer: string;
   answerStatus: string;
+  handleSelectNote: (note: IGuitarNote) => void;
+  userClickedOutOfRange: boolean;
+  setUserClickedOutOfRange: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const GuitarSpaceBetweenFrets: React.FC<GuitarSpaceBetweenFretsProps> = ({
   noteRangeAllowsDuplicates,
   selectedString,
-  handleFretAreaClick,
   outerInd,
   fretIsInRange,
   innerInd,
@@ -27,14 +28,57 @@ const GuitarSpaceBetweenFrets: React.FC<GuitarSpaceBetweenFretsProps> = ({
   selectedNote,
   answer,
   answerStatus,
+  handleSelectNote,
+  userClickedOutOfRange,
+  setUserClickedOutOfRange,
   children,
 }) => {
   const thisNoteIsSelected =
     answer === note.name && selectedString === note.stringNumber;
 
+  const handleInvalidFret = () => {
+    setUserClickedOutOfRange(true);
+    setTimeout(() => {
+      setUserClickedOutOfRange(false);
+    }, 1000);
+  };
+
+  const handleFretAreaClick = () => {
+    if (answerStatus !== "") {
+      return;
+    }
+    if (answerStatus === "" && !fretIsInRange(outerInd, innerInd)) {
+      console.log("whoop");
+      handleInvalidFret();
+      return;
+    }
+    if (
+      fretIsInRange(outerInd, innerInd) &&
+      (outerInd + 1 === selectedString || !noteRangeAllowsDuplicates)
+    ) {
+      handleSelectNote(note);
+    } else {
+      return;
+    }
+  };
+
   const determineFretColor = () => {
     const guitarNotesArray = Object.keys(guitarNotes);
+    if (userClickedOutOfRange && fretIsInRange(outerInd, innerInd)) {
+      return "var(--wild-pink)";
+    }
 
+    if (!noteRangeAllowsDuplicates) {
+      if (
+        answer === note.name &&
+        fretIsInRange(outerInd, innerInd) &&
+        answerStatus === answerStatusOptions.INCORRECT
+      ) {
+        return "var(--wrong-note-color)";
+      } else if (!fretIsInRange(outerInd, innerInd)) {
+        return "";
+      }
+    }
     if (thisNoteIsSelected && answerStatus === answerStatusOptions.CORRECT) {
       return "var(--main-color)";
     } else if (
@@ -77,9 +121,8 @@ const GuitarSpaceBetweenFrets: React.FC<GuitarSpaceBetweenFretsProps> = ({
       w="100%"
       display="inline-block"
       position="relative"
-      zIndex={answerStatus !== "" ? "0" : "7"}
+      zIndex={answerStatus !== "" || userClickedOutOfRange ? "0" : "7"}
       bg={determineFretColor()}
-      borderRadius="5px"
       boxSizing="border-box"
       _hover={
         answer === "" &&
