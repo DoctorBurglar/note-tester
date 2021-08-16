@@ -145,6 +145,8 @@ export enum guitarNotes {
   C6 = "C6",
   D6 = "D6",
   E6 = "E6",
+  F6 = "F6",
+  G6 = "G6",
 }
 
 export enum guestKeyboard {
@@ -284,7 +286,13 @@ export enum guitarPresets {
   CUSTOM = "Custom",
 
   FIRST_POSITION = "First position",
+  SECOND_POSITION = "Second position",
+  THIRD_POSITION = "Third position",
+  FOURTH_POSITION = "Fourth position",
   FIFTH_POSITION = "Fifth position",
+  SIXTH_POSITION = "Sixth position",
+  SEVENTH_POSITION = "Seventh position",
+  EIGHTH_POSITION = "Eighth position",
   NINTH_POSITION = "Ninth position",
 
   STRING_1_AND_2_FIRST_POSITION = "String 1 and 2 in first position",

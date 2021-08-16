@@ -423,7 +423,7 @@ const createGuitarFromOpenStrings = (openStrings: string[], toFret: number) => {
   return guitarStringArray;
 };
 
-export const fretNumber = 13;
+export const fretNumber = 15;
 
 const standardTuning = ["E5", "B4", "G4", "D4", "A3", "E3"];
 
@@ -644,11 +644,47 @@ export const getGuitarNoteRange = (preset: string) => {
       guitarRange.lowFret = 0;
       guitarRange.highFret = 4;
       break;
+    case guitarPresets.SECOND_POSITION:
+      guitarRange.lowGuitarString = 6;
+      guitarRange.highGuitarString = 1;
+      guitarRange.lowFret = 2;
+      guitarRange.highFret = 5;
+      break;
+    case guitarPresets.THIRD_POSITION:
+      guitarRange.lowGuitarString = 6;
+      guitarRange.highGuitarString = 1;
+      guitarRange.lowFret = 3;
+      guitarRange.highFret = 6;
+      break;
+    case guitarPresets.FOURTH_POSITION:
+      guitarRange.lowGuitarString = 6;
+      guitarRange.highGuitarString = 1;
+      guitarRange.lowFret = 4;
+      guitarRange.highFret = 7;
+      break;
     case guitarPresets.FIFTH_POSITION:
       guitarRange.lowGuitarString = 6;
       guitarRange.highGuitarString = 1;
       guitarRange.lowFret = 5;
       guitarRange.highFret = 8;
+      break;
+    case guitarPresets.SIXTH_POSITION:
+      guitarRange.lowGuitarString = 6;
+      guitarRange.highGuitarString = 1;
+      guitarRange.lowFret = 6;
+      guitarRange.highFret = 9;
+      break;
+    case guitarPresets.SEVENTH_POSITION:
+      guitarRange.lowGuitarString = 6;
+      guitarRange.highGuitarString = 1;
+      guitarRange.lowFret = 7;
+      guitarRange.highFret = 10;
+      break;
+    case guitarPresets.EIGHTH_POSITION:
+      guitarRange.lowGuitarString = 6;
+      guitarRange.highGuitarString = 1;
+      guitarRange.lowFret = 8;
+      guitarRange.highFret = 11;
       break;
     case guitarPresets.NINTH_POSITION:
       guitarRange.lowGuitarString = 6;

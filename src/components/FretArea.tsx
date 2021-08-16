@@ -22,6 +22,8 @@ type FretAreaProps = {
   selectedNote: string;
   answer: string;
   answerStatus: string;
+  userClickedOutOfRange: boolean;
+  setUserClickedOutOfRange: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const FretArea: React.FC<FretAreaProps> = ({
@@ -37,43 +39,10 @@ const FretArea: React.FC<FretAreaProps> = ({
   displayingNotes,
   selectedNote,
   answerStatus,
+  userClickedOutOfRange,
+  setUserClickedOutOfRange,
   answer,
 }) => {
-  const handleOutOfRangeAnswer = () => {
-    console.log("out of range");
-    // setAnswerStatus(answerStatusOptions.OUT_OF_RANGE);
-    // setTimeout(() => {
-    //   setAnswerStatus("");
-    // }, 1000);
-  };
-
-  const handleWrongStringAnswer = () => {
-    console.log("wrong string");
-    // setAnswerStatus(answerStatusOptions.WRONG_STRING);
-    // setTimeout(() => {
-    //   setAnswerStatus("");
-    // }, 1000);
-  };
-
-  const handleFretAreaClick = () => {
-    if (answerStatus !== "") {
-      return;
-    }
-    if (
-      fretIsInRange(outerInd, innerInd) &&
-      (outerInd + 1 === selectedString || !noteRangeAllowsDuplicates)
-    ) {
-      handleSelectNote(note);
-    } else if (
-      fretIsInRange(outerInd, innerInd) &&
-      outerInd + 1 !== selectedString
-    ) {
-      handleWrongStringAnswer();
-    } else {
-      handleOutOfRangeAnswer();
-    }
-  };
-
   return (
     <Box
       position="relative"
@@ -83,7 +52,7 @@ const FretArea: React.FC<FretAreaProps> = ({
       <Flex>
         <GuitarSpaceBetweenFrets
           fretIsInRange={fretIsInRange}
-          handleFretAreaClick={handleFretAreaClick}
+          handleSelectNote={handleSelectNote}
           innerInd={innerInd}
           note={note}
           noteRangeAllowsDuplicates={noteRangeAllowsDuplicates}
@@ -92,6 +61,8 @@ const FretArea: React.FC<FretAreaProps> = ({
           selectedNote={selectedNote}
           answer={answer}
           answerStatus={answerStatus}
+          userClickedOutOfRange={userClickedOutOfRange}
+          setUserClickedOutOfRange={setUserClickedOutOfRange}
         >
           <GuitarNoteName displayingNotes={displayingNotes} note={note} />
         </GuitarSpaceBetweenFrets>
