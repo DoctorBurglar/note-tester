@@ -31,6 +31,9 @@ const Guitar: React.FC<GuitarProps> = ({
 }) => {
   const [scrollLeft, setScrollLeft] = React.useState(0);
 
+  const [userClickedOutOfRange, setUserClickedOutOfRange] =
+    React.useState(false);
+
   const guitarRef = React.useRef<HTMLDivElement>(null)!;
 
   const {data} = useUser();
@@ -64,6 +67,10 @@ const Guitar: React.FC<GuitarProps> = ({
           fretIsInRange={fretIsInRange}
           noteRangeAllowsDuplicates={noteRangeAllowsDuplicates}
           selectedString={selectedString}
+          answer={answer}
+          answerStatus={answerStatus}
+          selectedNote={selectedNote}
+          userClickedOutOfRange={userClickedOutOfRange}
         />
       </ScrollModel>
       <GuitarMain
@@ -79,6 +86,8 @@ const Guitar: React.FC<GuitarProps> = ({
         selectedNote={selectedNote}
         answer={answer}
         answerStatus={answerStatus}
+        userClickedOutOfRange={userClickedOutOfRange}
+        setUserClickedOutOfRange={setUserClickedOutOfRange}
       />
     </>
   );

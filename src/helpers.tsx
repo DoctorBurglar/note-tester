@@ -869,3 +869,82 @@ export const determineBorderBottom = (
       : "none";
   }
 };
+
+type determineFretColorArgOnject = {
+  userClickedOutOfRange: boolean;
+  outerInd: number;
+  innerInd: number;
+  fretIsInRange: (outerInd: number, innerInd: number) => boolean;
+  answer: string;
+  answerStatus: string;
+  noteRangeAllowsDuplicates: boolean;
+  thisNoteIsSelected: boolean;
+  selectedNote: string;
+  selectedString: number;
+  note: IGuitarNote;
+};
+
+export const determineFretColor: (
+  fretInfo: determineFretColorArgOnject
+) => string = ({
+  userClickedOutOfRange,
+  outerInd,
+  innerInd,
+  fretIsInRange,
+  answer,
+  answerStatus,
+  noteRangeAllowsDuplicates,
+  thisNoteIsSelected,
+  selectedNote,
+  selectedString,
+  note,
+}) => {
+  const guitarNotesArray = Object.keys(guitarNotes);
+  if (userClickedOutOfRange && fretIsInRange(outerInd, innerInd)) {
+    return "var(--main-color-medium)";
+  }
+
+  if (!noteRangeAllowsDuplicates) {
+    if (
+      answer === note.name &&
+      fretIsInRange(outerInd, innerInd) &&
+      answerStatus === answerStatusOptions.INCORRECT
+    ) {
+      return "var(--wrong-note-color)";
+    } else if (!fretIsInRange(outerInd, innerInd)) {
+      return "";
+    }
+  }
+  if (thisNoteIsSelected && answerStatus === answerStatusOptions.CORRECT) {
+    return "var(--main-color)";
+  } else if (
+    thisNoteIsSelected &&
+    answerStatus === answerStatusOptions.INCORRECT
+  ) {
+    return "var(--wrong-note-color)";
+  } else if (
+    note.name === selectedNote &&
+    selectedString === note.stringNumber &&
+    answerStatus !== ""
+  ) {
+    return "var(--main-color)";
+  } else if (
+    answerStatus !== "" &&
+    selectedString === note.stringNumber &&
+    note.name[1] === "s" &&
+    guitarNotesArray.indexOf(note.name[0] + note.name[2]) <
+      guitarNotesArray.length - 1 &&
+    guitarNotesArray[
+      guitarNotesArray.indexOf(note.name[0] + note.name[2]) + 1
+    ][0] +
+      "b" +
+      guitarNotesArray[
+        guitarNotesArray.indexOf(note.name[0] + note.name[2]) + 1
+      ][1] ===
+      selectedNote
+  ) {
+    return "var(--main-color)";
+  } else {
+    return "";
+  }
+};
