@@ -1,6 +1,7 @@
 import * as React from "react";
 import {Box, Flex, Heading} from "@chakra-ui/react";
 import {IGuitarNote} from "../interfacesAndTypes";
+import {determineFretColor} from "../helpers";
 
 type GuitarFretForScrollModelProps = {
   note: IGuitarNote;
@@ -10,6 +11,12 @@ type GuitarFretForScrollModelProps = {
   fretBoardHeight: number;
   displayingFretNumbers: boolean;
   fretIsInRange: (outerInd: number, innerInd: number) => boolean;
+  answer: string;
+  answerStatus: string;
+  selectedNote: string;
+  selectedString: number;
+  userClickedOutOfRange: boolean;
+  noteRangeAllowsDuplicates: boolean;
 };
 
 const GuitarFretForScrollModel: React.FC<GuitarFretForScrollModelProps> = ({
@@ -20,7 +27,16 @@ const GuitarFretForScrollModel: React.FC<GuitarFretForScrollModelProps> = ({
   fretBoardHeight,
   displayingFretNumbers,
   fretIsInRange,
+  answer,
+  answerStatus,
+  selectedNote,
+  selectedString,
+  userClickedOutOfRange,
+  noteRangeAllowsDuplicates,
 }) => {
+  const thisNoteIsSelected =
+    answer === note.name && selectedString === note.stringNumber;
+
   return (
     <Box
       position="relative"
@@ -34,8 +50,21 @@ const GuitarFretForScrollModel: React.FC<GuitarFretForScrollModelProps> = ({
           w="100%"
           display="inline-block"
           position="relative"
-          zIndex="7"
+          zIndex={answerStatus !== "" || userClickedOutOfRange ? "0" : "7"}
           boxSizing="border-box"
+          bg={determineFretColor({
+            userClickedOutOfRange,
+            thisNoteIsSelected,
+            selectedString,
+            selectedNote,
+            outerInd,
+            noteRangeAllowsDuplicates,
+            note,
+            innerInd,
+            fretIsInRange,
+            answerStatus,
+            answer,
+          })}
         ></Box>
         {innerInd === 0 && outerInd === 0 ? (
           <Box

@@ -21,6 +21,8 @@ type GuitarMainProps = {
   selectedNote: string;
   answer: string;
   answerStatus: string;
+  userClickedOutOfRange: boolean;
+  setUserClickedOutOfRange: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const GuitarMain: React.FC<GuitarMainProps> = ({
@@ -36,10 +38,9 @@ const GuitarMain: React.FC<GuitarMainProps> = ({
   selectedNote,
   answer,
   answerStatus,
+  setUserClickedOutOfRange,
+  userClickedOutOfRange,
 }) => {
-  const [userClickedOutOfRange, setUserClickedOutOfRange] =
-    React.useState(false);
-
   return (
     <Flex
       w="100vw"

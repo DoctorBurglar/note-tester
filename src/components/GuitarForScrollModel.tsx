@@ -12,6 +12,10 @@ type GuitarForScrollModelProps = {
   selectedString: number;
   displayingFretNumbers: boolean;
   fretIsInRange: (outerInd: number, innerInd: number) => boolean;
+  answer: string;
+  answerStatus: string;
+  selectedNote: string;
+  userClickedOutOfRange: boolean;
 };
 
 const GuitarForScrollModel: React.FC<GuitarForScrollModelProps> = ({
@@ -19,6 +23,10 @@ const GuitarForScrollModel: React.FC<GuitarForScrollModelProps> = ({
   selectedString,
   displayingFretNumbers,
   fretIsInRange,
+  answer,
+  answerStatus,
+  selectedNote,
+  userClickedOutOfRange,
 }) => {
   return (
     <Flex
@@ -60,6 +68,12 @@ const GuitarForScrollModel: React.FC<GuitarForScrollModelProps> = ({
                       innerInd={innerInd}
                       note={note}
                       outerInd={outerInd}
+                      answer={answer}
+                      answerStatus={answerStatus}
+                      selectedNote={selectedNote}
+                      selectedString={selectedString}
+                      noteRangeAllowsDuplicates={noteRangeAllowsDuplicates}
+                      userClickedOutOfRange={userClickedOutOfRange}
                     />
                   );
                 })}
