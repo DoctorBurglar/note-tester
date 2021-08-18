@@ -15,16 +15,17 @@ const Header: React.FC<HeaderProps> = ({children, isNotAuthenticated}) => {
   return (
     <Flex
       w="100%"
+      h={{base: "7rem", md: "5rem"}}
       bg="var(--grey-dark)"
       align="center"
       justify="space-between"
-      padding="1rem"
-      direction={{base: "column", sm: "row"}}
+      padding={{base: "none", md: "1rem"}}
+      direction="row"
     >
       <Flex align="center">
         <Image
-          boxSize="3rem"
-          marginLeft={{base: "none", sm: "1.5rem", md: "2rem"}}
+          boxSize="3.5rem"
+          marginLeft={{base: "2rem", sm: "1.5rem", md: "2rem"}}
           src="https://storage.googleapis.com/teach-me-notes/TeachMeNotesIcon.png"
         ></Image>
         <Heading
@@ -32,19 +33,20 @@ const Header: React.FC<HeaderProps> = ({children, isNotAuthenticated}) => {
           marginLeft="1rem"
           color="var(--white)"
           fontWeight="300"
-          fontSize="2.5rem"
+          display={{base: "none", sm: "flex"}}
+          fontSize={{base: "2rem", md: "2.5rem"}}
         >
           TeachMeNotes.com
         </Heading>
       </Flex>
 
-      <Flex align="center" marginTop={{base: "1rem", sm: "none"}}>
+      <Flex justify="flex-end" align="center" minWidth="16rem">
         {isHomePage || isNotAuthenticated ? null : (
           <Link
             as={NavLink}
             to="/"
             color="white"
-            marginRight={{base: "1rem", md: "4rem"}}
+            marginRight={{base: "2rem", md: "4rem"}}
             fontSize="1.3rem"
           >
             Sessions

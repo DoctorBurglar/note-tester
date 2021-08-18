@@ -14,7 +14,7 @@ const SignOut: React.FC = () => {
   return (
     <Button
       padding=".3rem 1rem"
-      marginRight={{base: "none", sm: "1.5rem", md: "2rem"}}
+      marginRight={{base: "1.5rem", md: "2rem"}}
       borderRadius="5px"
       fontSize="1rem"
       onClick={handleSignOut}
