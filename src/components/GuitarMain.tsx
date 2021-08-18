@@ -43,12 +43,13 @@ const GuitarMain: React.FC<GuitarMainProps> = ({
 }) => {
   return (
     <Flex
-      w="100vw"
-      overflowX="scroll"
+      w="90%"
+      maxWidth="var(--max-width)"
+      margin="-1rem auto 0 auto"
+      overflowX="auto"
       overflowY="visible"
       position="relative"
       className="noHighlightOnClick"
-      marginTop="-1rem"
       ref={guitarRef}
       onScroll={handleScroll}
     >

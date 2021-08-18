@@ -168,7 +168,7 @@ const Sessions: React.FC = () => {
       <Flex w="95%" justify="center" flexWrap="wrap" maxWidth="120rem">
         <SessionType
           title="Solo"
-          description="Test your knowledge of notes in bass and/or treble clef."
+          description="Test your knowledge of note reading on piano or guitar."
         >
           <SessionButton onClick={startSoloSession} bg="purple">
             Solo Session
