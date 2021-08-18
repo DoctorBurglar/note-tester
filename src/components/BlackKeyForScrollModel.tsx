@@ -10,7 +10,7 @@ const BlackKeyForScrollModel: React.FC<{background: string}> = ({
       left="100%"
       w="70%"
       border="1px solid black"
-      bg={background}
+      bg={background !== "" ? background : "black"}
       h="60%"
       transform="translateX(-50%) translateY(-1px)"
       borderRadius="0 0 3px 3px"

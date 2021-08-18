@@ -794,7 +794,7 @@ export const determineBlackKeyBackgroundColor = (
     ) {
       backgroundColor = "var(--wrong-note-color)";
     } else {
-      backgroundColor = "black";
+      backgroundColor = "";
     }
   } else if (
     note[0] + "s" + note[1] === answer &&
@@ -809,7 +809,7 @@ export const determineBlackKeyBackgroundColor = (
   ) {
     backgroundColor = "var(--wrong-note-color)";
   } else {
-    backgroundColor = "black";
+    backgroundColor = "";
   }
   return backgroundColor;
 };

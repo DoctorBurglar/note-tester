@@ -42,13 +42,6 @@ const SoloModeKeyboard = () => {
       : Object.keys(bassNotes);
 
   React.useEffect(() => {
-    // for this component the "on" field only determines if the settings have ever been set"
-    if (userDoc && !userDoc.soloSettings.on) {
-      onOpen();
-    }
-  }, [onOpen, userDoc?.soloSettings.on, userDoc]);
-
-  React.useEffect(() => {
     if (
       userDoc &&
       // only run this if the document has set at least one clef before

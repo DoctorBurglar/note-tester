@@ -14,6 +14,10 @@ export const WhiteKey = styled(Flex)`
     display: none !important;
   }
 
+  &:hover {
+    background-color: var(--grey-very-light);
+  }
+
   &:hover > .accidentals {
     display: flex !important;
   }
@@ -39,6 +43,10 @@ export const BlackKey = styled(Box)`
 
   & > .black-accidentals {
     display: none !important;
+  }
+
+  &:hover {
+    background-color: var(--grey-very-dark);
   }
 
   &:hover > .black-accidentals {

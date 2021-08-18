@@ -133,12 +133,12 @@ const Keyboard: React.FC<KeyboardProps> = ({
 
       <Flex
         w="100vw"
-        h="17rem"
+        h="18rem"
         justify="flex-start"
         direction="column"
         align="center"
-        overflowX="scroll"
-        overFlowY="visible"
+        overflowX="auto"
+        overflowY="visible"
         onScroll={handleScroll}
         position="relative"
         ref={keyboardRef}
@@ -150,7 +150,7 @@ const Keyboard: React.FC<KeyboardProps> = ({
           alignItems="stretch"
           position="relative"
           cursor="pointer"
-          overFlowY="visible"
+          overflowY="visible"
           className="noHighlightOnClick"
         >
           {notes.map((note, ind) => {
