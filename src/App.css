@@ -73,3 +73,25 @@ html {
 .noHighlightOnClick {
   -webkit-tap-highlight-color: transparent;
 }
+
+.firebaseui-idp-text-long {
+  min-width: 16rem;
+}
+
+.firebaseui-idp-icon {
+  min-width: 1.5rem;
+}
+
+/* .firebaseui-idp-text-long {
+  display: none !important;
+} */
+
+/* .firebaseui-idp-text-short {
+  display: inline-block !important;
+  display: none;
+  min-width: 7rem;
+}
+
+.firebaseui-idp-button {
+  display: flex !important;
+} */

@@ -1,6 +1,7 @@
 import * as React from "react";
 import {useAuth} from "reactfire";
 import {StyledFirebaseAuth} from "react-firebaseui";
+import "firebaseui/dist/firebaseui.css";
 
 const Login: React.FC = () => {
   const auth = useAuth;
