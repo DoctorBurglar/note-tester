@@ -5,7 +5,8 @@ import {Header} from "./Header";
 
 const WelcomeScreen = () => {
   const featureArray = [
-    "Hand pick the notes for your student to identify",
+    "Practice your note reading ability on piano or guitar",
+    "If you're a teacher, you can host a session to test someone else",
     "Display mnemonics on the staff to help beginners get started",
     "Optionally show the names of the notes on the keyboard",
     "Practice reading up to 4 ledger lines above or below the staff",

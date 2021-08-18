@@ -160,10 +160,16 @@ const SoloModeGuitar = () => {
         />
       </Flex>
 
-      <Flex w="100%" justify="space-between" position="relative">
+      <Flex
+        w="90%"
+        maxWidth="var(--max-width)"
+        margin="0 auto"
+        justify="space-between"
+        position="relative"
+      >
         <Flex
           marginBottom="1rem"
-          marginLeft="5%"
+          marginLeft="2rem"
           direction="column"
           marginTop={{base: "-4.5rem", md: "-4.5rem"}}
         >

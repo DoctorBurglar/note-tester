@@ -144,10 +144,16 @@ const SoloModeKeyboard = () => {
         showLinesOnStaff={showLinesOnStaff}
         showSpacesOnStaff={showSpacesOnStaff}
       />
-      <Flex w="100%" justify="space-between" position="relative">
+      <Flex
+        w="90%"
+        justify="space-between"
+        position="relative"
+        margin="0 auto"
+        maxWidth="var(--max-width)"
+      >
         <Flex
           marginBottom="1rem"
-          marginLeft="5%"
+          marginLeft="2rem"
           direction="column"
           marginTop={{base: "-4.5rem", md: "-4.5rem"}}
         >
