@@ -39,3 +39,23 @@ export function useWindowSize() {
   }, []); // Empty array ensures that effect is only run on mount
   return windowSize;
 }
+
+export const useToggleBooleanEveryTenSeconds = (
+  setStateCallback: React.Dispatch<React.SetStateAction<boolean>>
+) => {
+  React.useEffect(() => {
+    const initialTimeout = setTimeout(() => {
+      setStateCallback((prevBool) => !prevBool);
+    }, 10000);
+    const interval = setInterval(() => {
+      setStateCallback((prevBool) => !prevBool);
+      setTimeout(() => {
+        setStateCallback((prevBool) => !prevBool);
+      }, 10000);
+    }, 20000);
+    return () => {
+      clearInterval(interval);
+      clearTimeout(initialTimeout);
+    };
+  }, [setStateCallback]);
+};

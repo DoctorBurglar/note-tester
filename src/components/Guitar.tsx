@@ -61,6 +61,7 @@ const Guitar: React.FC<GuitarProps> = ({
         originalComponentWidthInRem={80}
         scrollLeft={scrollLeft}
         componentRef={guitarRef}
+        instrumentPercentageOfScreen={90}
       >
         <GuitarForScrollModel
           displayingFretNumbers={displayingFretNumbers}

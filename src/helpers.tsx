@@ -425,6 +425,7 @@ const createGuitarFromOpenStrings = (openStrings: string[], toFret: number) => {
 
 export const fretNumber = 15;
 
+// tuning arrays follow this format: ['string1', 'string2', etc...]
 const standardTuning = ["E5", "B4", "G4", "D4", "A3", "E3"];
 
 export const standardTuningGuitar = createGuitarFromOpenStrings(
