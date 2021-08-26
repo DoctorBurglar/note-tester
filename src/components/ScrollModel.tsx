@@ -7,12 +7,14 @@ type ScrollModelProps = {
   originalComponentWidthInRem: number;
   scrollLeft: number;
   componentRef: React.RefObject<HTMLDivElement>;
+  instrumentPercentageOfScreen: number;
 };
 
 const ScrollModel: React.FC<ScrollModelProps> = ({
   originalComponentWidthInRem,
   scrollLeft,
   componentRef,
+  instrumentPercentageOfScreen,
   children,
 }) => {
   const {width: windowWidth} = useWindowSize();
@@ -21,8 +23,19 @@ const ScrollModel: React.FC<ScrollModelProps> = ({
     getComputedStyle(document.documentElement).fontSize
   );
 
+  console.log(
+    scrollLeft,
+    originalComponentWidthInRem,
+    componentRef,
+    remInPixels,
+    windowWidth
+  );
+
   const viewBoxWidth =
-    (windowWidth / (originalComponentWidthInRem * remInPixels)) * 100 + "%";
+    ((windowWidth * (instrumentPercentageOfScreen / 100)) /
+      (originalComponentWidthInRem * remInPixels)) *
+      100 +
+    "%";
   const viewBoxWidthInverse = 100 - Number.parseFloat(viewBoxWidth) + "%";
 
   let maxScrollLeft = 0;

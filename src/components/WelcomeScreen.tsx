@@ -1,15 +1,15 @@
-import * as React from "react";
-import {Flex, Image, Heading, UnorderedList, ListItem} from "@chakra-ui/react";
+import {Flex, Heading, UnorderedList, ListItem} from "@chakra-ui/react";
 import {Login} from "./Login";
 import {Header} from "./Header";
+import {KeyboardOrGuitarPicture} from "./KeyboardOrGuitarPicture";
 
 const WelcomeScreen = () => {
   const featureArray = [
-    "Practice your note reading ability on piano or guitar",
-    "If you're a teacher, you can host a session to test someone else",
-    "Display mnemonics on the staff to help beginners get started",
-    "Optionally show the names of the notes on the keyboard",
-    "Practice reading up to 4 ledger lines above or below the staff",
+    "Practice note reading on piano or guitar",
+    "Host sessions to teach others",
+    "Helpful mnemonics for beginners",
+    "Display note names on keyboard or guitar while learning",
+    "Up to four ledger lines above/below staff",
     "Absolutely free, no credit card required",
   ];
 
@@ -20,7 +20,7 @@ const WelcomeScreen = () => {
       </Header>
       <Flex
         w="90%"
-        maxWidth="80rem"
+        maxWidth="90rem"
         margin="1rem auto"
         direction="column"
         align="center"
@@ -36,11 +36,11 @@ const WelcomeScreen = () => {
         </Heading>
         <Flex
           justifyContent="center"
-          align={{base: "center", md: "flex-start"}}
-          direction={{base: "column-reverse", md: "row"}}
+          align={{base: "center", lg: "flex-start"}}
+          direction={{base: "column-reverse", lg: "row"}}
         >
           <Flex
-            w={{base: "100", md: "40%"}}
+            w={{base: "100", lg: "40%"}}
             direction="column"
             margin="2rem"
             marginLeft={{base: "3rem"}}
@@ -69,21 +69,22 @@ const WelcomeScreen = () => {
             justify="flex-start"
             direction="column"
             align="center"
-            w={{base: "90", md: "50%"}}
+            w={{base: "90", lg: "50%"}}
           >
-            <Image
-              w="100%"
-              marginTop={{base: "", md: "2rem", lg: "2rem", xl: "2rem"}}
-              src="https://storage.googleapis.com/teach-me-notes/NoteTester.png"
-            ></Image>
+            <KeyboardOrGuitarPicture />
+
             <Heading
               as="h2"
-              color="var(--main-color-dark)"
+              color="var(--grey-dark)"
               fontSize="2rem"
               textAlign="center"
               marginTop={{base: "4rem", md: "2rem"}}
             >
-              Click "Sign in with Google" to get started
+              Click{" "}
+              <span style={{color: "var(--main-color-dark)"}}>
+                "Sign in with Google"
+              </span>{" "}
+              to get started
             </Heading>
           </Flex>
         </Flex>

@@ -3,16 +3,20 @@ import {Staff} from "./Staff";
 import {Header} from "./Header";
 import {Score} from "./Score";
 import {answerStatusOptions, clefs, trebleNotes} from "../constants";
-import {useDisclosure, Button, Flex, MenuItem} from "@chakra-ui/react";
+import {useDisclosure, Flex, MenuItem} from "@chakra-ui/react";
 import {IGuitarSettings, IUser, IGuitarNote} from "../interfacesAndTypes";
 import {useUser, useFirestore, useFirestoreDocData} from "reactfire";
 import {checkAnswer, getRandomGuitarNote} from "../helpers";
 import {Options} from "./Options";
 import {Guitar} from "./Guitar";
-import {useHistory} from "react-router-dom";
 import {GuitarSettings} from "./GuitarSettings";
 import {SelectedGuitarString} from "./SelectedGuitarString";
-import {GuitarAnswerStatus} from "./GuitarAnswerStatus";
+import {InstrumentSwitchButton} from "./InstrumentSwitchButton";
+import {SettingsButton} from "./SettingsButton";
+import {ButtonsBox} from "./ButtonsBox";
+import {SoloModeAboveKeyboardDisplayBox} from "./SoloModeAboveKeyboardDisplayBox";
+import {SoloModeScoreAndOptionsBox} from "./SoloModeScoreAndOptionsBox";
+import {AnswerStatusDisplay} from "./AnswerStatusDisplay";
 
 const SoloModeGuitar = () => {
   const [answer, setAnswer] = React.useState("");
@@ -26,8 +30,6 @@ const SoloModeGuitar = () => {
     React.useState(false);
   const [total, setTotal] = React.useState(0);
   const [correct, setCorrect] = React.useState(0);
-
-  const history = useHistory();
 
   const {isOpen, onOpen, onClose} = useDisclosure();
 
@@ -119,34 +121,13 @@ const SoloModeGuitar = () => {
     >
       <Header />
 
-      <Flex
-        position="relative"
-        h="0"
-        margin="1.5rem 0 -1rem 0"
-        padding="0 2rem"
-        direction="column"
-        bg="green"
-      >
-        <Button
-          onClick={onOpen}
-          marginBottom="1rem"
-          position="relative"
-          zIndex="20"
-          minHeight="2.5rem"
-          w="8rem"
-        >
-          Settings
-        </Button>
-        <Button
-          position="relative"
-          zIndex="20"
-          onClick={() => history.push("/solo-mode/keyboard")}
-          minHeight="2.5rem"
-          w="8rem"
-        >
-          Keyboard &rarr;
-        </Button>
-      </Flex>
+      <ButtonsBox>
+        <SettingsButton onOpen={onOpen} />
+        <InstrumentSwitchButton target="keyboard">
+          Keyboard
+        </InstrumentSwitchButton>
+      </ButtonsBox>
+
       <Flex direction="column" position="relative">
         <Staff
           selectedClef={clefs.TREBLE}
@@ -160,19 +141,8 @@ const SoloModeGuitar = () => {
         />
       </Flex>
 
-      <Flex
-        w="90%"
-        maxWidth="var(--max-width)"
-        margin="0 auto"
-        justify="space-between"
-        position="relative"
-      >
-        <Flex
-          marginBottom="1rem"
-          marginLeft="2rem"
-          direction="column"
-          marginTop={{base: "-4.5rem", md: "-4.5rem"}}
-        >
+      <SoloModeAboveKeyboardDisplayBox>
+        <SoloModeScoreAndOptionsBox>
           <Options
             displayingNotes={displayingNotes}
             showLinesOnStaff={showLinesOnStaff}
@@ -199,9 +169,10 @@ const SoloModeGuitar = () => {
             identifiedNotes={correct}
             canControl
           />
-        </Flex>
-        <GuitarAnswerStatus answerStatus={answerStatus} />
-      </Flex>
+        </SoloModeScoreAndOptionsBox>
+
+        <AnswerStatusDisplay answer={answer} answerStatus={answerStatus} />
+      </SoloModeAboveKeyboardDisplayBox>
 
       <Guitar
         answer={answer}

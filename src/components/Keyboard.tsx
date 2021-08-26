@@ -1,5 +1,5 @@
 import * as React from "react";
-import {Flex, Box} from "@chakra-ui/react";
+import {Box} from "@chakra-ui/react";
 import {WhiteKeyComp} from "./WhiteKeyComp";
 import {BlackKeyComp} from "./BlackKeyComp";
 import {LowestBlackKey} from "./LowestBlackKey";
@@ -11,6 +11,7 @@ import {LowestBlackKeyOverlay} from "./LowestBlackKeyOverlay";
 import {ScrollModel} from "./ScrollModel";
 import {KeyboardForScrollModel} from "./KeyboardForScrollModel";
 import {whiteKeyMinWidth} from "../constants";
+import {KeyboardMainContainer} from "./KeyboardMainContainer";
 
 type KeyboardProps = {
   notes: string[];
@@ -119,6 +120,7 @@ const Keyboard: React.FC<KeyboardProps> = ({
         }
         scrollLeft={scrollLeft}
         componentRef={keyboardRef}
+        instrumentPercentageOfScreen={100}
       >
         <KeyboardForScrollModel
           answer={answer}
@@ -130,120 +132,100 @@ const Keyboard: React.FC<KeyboardProps> = ({
           thisWhiteKeyIsSelected={thisWhiteKeyIsSelected}
         />
       </ScrollModel>
-
-      <Flex
-        w="100vw"
-        h="18rem"
-        justify="flex-start"
-        direction="column"
-        align="center"
-        overflowX="auto"
-        overflowY="visible"
-        onScroll={handleScroll}
-        position="relative"
-        ref={keyboardRef}
+      <KeyboardMainContainer
+        instrumentRef={keyboardRef}
+        handleScroll={handleScroll}
       >
-        <Flex
-          width={["95%", null, null, null, "90%"]}
-          maxWidth="var(--max-width)"
-          minHeight="13rem"
-          alignItems="stretch"
-          position="relative"
-          cursor="pointer"
-          overflowY="visible"
-          className="noHighlightOnClick"
-        >
-          {notes.map((note, ind) => {
-            return (
-              <Box position="relative" key={note} w="100%">
-                <WhiteKeyComp
+        {notes.map((note, ind) => {
+          return (
+            <Box position="relative" key={note} w="100%">
+              <WhiteKeyComp
+                note={note}
+                ind={ind}
+                thisWhiteKeyIsSelected={thisWhiteKeyIsSelected}
+                setSelectedNote={setSelectedNote}
+                notes={notes}
+                isGuestKeyboard={isGuestKeyboard}
+                displayingNotes={displayingNotes}
+                answer={answer}
+                answerStatus={answerStatus}
+                selectedNote={selectedNote}
+              >
+                {!isGuestKeyboard ? (
+                  <WhiteKeyOverlay
+                    handleWhiteAccidental={
+                      note[0] === "B" || note[0] === "E"
+                        ? handleWhiteFlat
+                        : handleWhiteSharp
+                    }
+                    displayingNotes={displayingNotes}
+                    ind={ind}
+                    note={note}
+                    selectedNote={selectedNote}
+                    thisWhiteKeyIsSelected={thisWhiteKeyIsSelected}
+                  >
+                    {" "}
+                    {note[0] === "B" || note[0] === "E" ? (
+                      <Flat width={1} fill="black" />
+                    ) : (
+                      <Sharp fill="black" width={1.3} height={2.8} />
+                    )}
+                  </WhiteKeyOverlay>
+                ) : null}
+              </WhiteKeyComp>
+
+              {note[0] !== "B" && note[0] !== "E" ? (
+                <BlackKeyComp
+                  thisBlackKeyIsSelected={thisBlackKeyIsSelected}
                   note={note}
                   ind={ind}
-                  thisWhiteKeyIsSelected={thisWhiteKeyIsSelected}
                   setSelectedNote={setSelectedNote}
-                  notes={notes}
                   isGuestKeyboard={isGuestKeyboard}
-                  displayingNotes={displayingNotes}
+                  notes={notes}
                   answer={answer}
                   answerStatus={answerStatus}
                   selectedNote={selectedNote}
                 >
                   {!isGuestKeyboard ? (
-                    <WhiteKeyOverlay
-                      handleWhiteAccidental={
-                        note[0] === "B" || note[0] === "E"
-                          ? handleWhiteFlat
-                          : handleWhiteSharp
-                      }
-                      displayingNotes={displayingNotes}
+                    <BlackKeyOverlay
+                      handleFlat={handleFlat}
+                      ind={ind}
+                      note={note}
+                      thisBlackKeyIsSelected={thisBlackKeyIsSelected}
+                      notes={notes}
+                      selectedNote={selectedNote}
+                      setSelectedNote={setSelectedNote}
+                    />
+                  ) : null}
+                </BlackKeyComp>
+              ) : null}
+
+              {/*Special case lowest black key */}
+              {note[0] !== "C" && note[0] !== "F" && ind === 0 ? (
+                <LowestBlackKey
+                  ind={ind}
+                  note={note}
+                  setSelectedNote={setSelectedNote}
+                  selectedNote={selectedNote}
+                  thisBlackKeyIsSelected={thisBlackKeyIsSelected}
+                  isGuestKeyboard={isGuestKeyboard}
+                  answer={answer}
+                  answerStatus={answerStatus}
+                >
+                  {!isGuestKeyboard ? (
+                    <LowestBlackKeyOverlay
                       ind={ind}
                       note={note}
                       selectedNote={selectedNote}
-                      thisWhiteKeyIsSelected={thisWhiteKeyIsSelected}
-                    >
-                      {" "}
-                      {note[0] === "B" || note[0] === "E" ? (
-                        <Flat width={1} fill="black" />
-                      ) : (
-                        <Sharp fill="black" width={1.3} height={2.8} />
-                      )}
-                    </WhiteKeyOverlay>
+                      thisBlackKeyIsSelected={thisBlackKeyIsSelected}
+                    />
                   ) : null}
-                </WhiteKeyComp>
-
-                {note[0] !== "B" && note[0] !== "E" ? (
-                  <BlackKeyComp
-                    thisBlackKeyIsSelected={thisBlackKeyIsSelected}
-                    note={note}
-                    ind={ind}
-                    setSelectedNote={setSelectedNote}
-                    isGuestKeyboard={isGuestKeyboard}
-                    notes={notes}
-                    answer={answer}
-                    answerStatus={answerStatus}
-                    selectedNote={selectedNote}
-                  >
-                    {!isGuestKeyboard ? (
-                      <BlackKeyOverlay
-                        handleFlat={handleFlat}
-                        ind={ind}
-                        note={note}
-                        thisBlackKeyIsSelected={thisBlackKeyIsSelected}
-                        notes={notes}
-                        selectedNote={selectedNote}
-                        setSelectedNote={setSelectedNote}
-                      />
-                    ) : null}
-                  </BlackKeyComp>
-                ) : null}
-
-                {/*Special case lowest black key */}
-                {note[0] !== "C" && note[0] !== "F" && ind === 0 ? (
-                  <LowestBlackKey
-                    ind={ind}
-                    note={note}
-                    setSelectedNote={setSelectedNote}
-                    selectedNote={selectedNote}
-                    thisBlackKeyIsSelected={thisBlackKeyIsSelected}
-                    isGuestKeyboard={isGuestKeyboard}
-                    answer={answer}
-                    answerStatus={answerStatus}
-                  >
-                    {!isGuestKeyboard ? (
-                      <LowestBlackKeyOverlay
-                        ind={ind}
-                        note={note}
-                        selectedNote={selectedNote}
-                        thisBlackKeyIsSelected={thisBlackKeyIsSelected}
-                      />
-                    ) : null}
-                  </LowestBlackKey>
-                ) : null}
-              </Box>
-            );
-          })}
-        </Flex>
-      </Flex>
+                </LowestBlackKey>
+              ) : null}
+            </Box>
+          );
+        })}
+      </KeyboardMainContainer>
     </>
   );
 };
